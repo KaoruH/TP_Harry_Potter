@@ -4,19 +4,19 @@ import app.poderes.Poder;
 
 public class Hechizo extends Poder{
 
-    public Hechizo(String nombre, int nivelDanio, int nivelCuracion, int energiaMagica) {
+
+    public Hechizo(String nombre, boolean esOscuro, int energiaMagica) {
         super(nombre);
-        this.nivelDanio = nivelDanio;
-        this.nivelCuracion = nivelCuracion;
-        this.energiaMagica = energiaMagica;
-    }    
+        this.esOscuro = esOscuro;
+        this.energiaMagica = energiaMagica;  
+    }
 
     private boolean esOscuro;
     private int nivelDanio;
     private int nivelCuracion;
     private int energiaMagica;
 
-    public boolean isEsOscuro() {
+    public boolean getEsOscuro() {
         return esOscuro;
     }
 
