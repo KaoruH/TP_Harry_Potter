@@ -197,8 +197,7 @@ public class JuegoHP {
         System.out.println("Edad: " + this.brujoElegido.getEdad());
         System.out.println("Hechizos:");
         mostrarHechizosBrujo();
-        System.out.print("Brujo Oscuro: ");
-        transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro());
+        System.out.println("Brujo Oscuro: " + transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro()));
         System.out.println("Mascota: " + this.brujoElegido.getMascota().getNombre());
 
         System.out.println("_______________________________________________________________________");
@@ -209,12 +208,12 @@ public class JuegoHP {
 
     // Esto convierte true para si y false para no
 
-    public void transformarTrueEnSiYFalseEnNo(boolean valor){
+    public String transformarTrueEnSiYFalseEnNo(boolean valor){
 
         if(valor == true){
-            System.out.print("SI");
+            return "SI";
         } else{
-            System.out.print("NO");
+            return "NO";
         }
 
     }
