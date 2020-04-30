@@ -2,6 +2,11 @@ package app.personajes;
 
 public abstract class Personaje {
 
+    public Personaje(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
     private String nombre;
 
     private int salud = 100;
@@ -36,5 +41,9 @@ public abstract class Personaje {
     public void setEdad(int edad) {
         this.edad = edad;
     }
+
+   
+
+    
 
 }

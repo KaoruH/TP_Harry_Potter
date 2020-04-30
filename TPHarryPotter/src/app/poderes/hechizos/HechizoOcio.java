@@ -2,9 +2,10 @@ package app.poderes.hechizos;
 
 public class HechizoOcio extends Hechizo{
 
-    public HechizoOcio(String nombre, int nivelDanio, int nivelCuracion, int energiaMagica) {
-        super(nombre, nivelDanio, nivelCuracion, energiaMagica);
+    public HechizoOcio(String nombre, boolean esOscuro, int energiaMagica) {
+        super(nombre, esOscuro, energiaMagica);
         // TODO Auto-generated constructor stub
     }
 
+    
 }

@@ -9,6 +9,13 @@ import app.transportes.*;
 
 public class Wizard extends Persona implements IHaceMagia{
 
+
+    public Wizard(String nombre, int edad, boolean magoOscuro, Poder poderInicial) {
+        super(nombre, edad);
+        this.magoOscuro = magoOscuro;
+        this.poderInicial = poderInicial;
+    }
+
     private int energiaMagica = 150;
 
     private List<Hechizo> hechizos = new ArrayList<>();
@@ -92,5 +99,7 @@ public class Wizard extends Persona implements IHaceMagia{
         // TODO Auto-generated method stub
 
     }
+
+    
 
 }

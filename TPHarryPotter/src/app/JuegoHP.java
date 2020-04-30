@@ -20,10 +20,11 @@ public class JuegoHP {
 
     public void inicializarBrujosBloque1() {
 
-        Poder poderInicial = new Expelliarmus("Expelliarmus", false, 10, 10);
+        Poder poderInicial = new Expelliarmus("Expelliarmus", false, 10);
 
         poderInicial.setDescripcion(
                 "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
+
 
         Wizard brujo = new Wizard("Harry Potter", 17, false, poderInicial);
 
@@ -32,7 +33,7 @@ public class JuegoHP {
         brujo.getHechizos().add(hechizo);
         this.getBrujos().add(brujo);
 
-        poderInicial = new WingardumLeviosa("Wingwardum Leviosa", false, 10, 7);
+        poderInicial = new WingardumLeviosa("Wingwardum Leviosa", false, 10);
         poderInicial.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
 
         brujo = new Wizard("Hermione Granger", 17, false, poderInicial);
@@ -41,7 +42,7 @@ public class JuegoHP {
         brujo.getHechizos().add(hechizo);
         this.getBrujos().add(brujo);
 
-        poderInicial = new VulneraSanetur("Vulnera Sanentur", false, 10, 10);
+        poderInicial = new VulneraSanetur("Vulnera Sanentur", false, 10);
 
         brujo = new Wizard("Ronald Weasley", 17, false, poderInicial);
 

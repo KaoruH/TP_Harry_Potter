@@ -11,7 +11,7 @@ public class Hechizo extends Poder{
         this.energiaMagica = energiaMagica;  
     }
 
-    private boolean esOscuro;
+	private boolean esOscuro;
     private int nivelDanio;
     private int nivelCuracion;
     private int energiaMagica;

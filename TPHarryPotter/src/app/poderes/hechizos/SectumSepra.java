@@ -2,9 +2,11 @@ package app.poderes.hechizos;
 
 public class SectumSepra extends HechizoAtaque{
 
-    public SectumSepra(String nombre, int nivelDanio, int nivelCuracion, int energiaMagica) {
-        super(nombre, nivelDanio, nivelCuracion, energiaMagica);
+    public SectumSepra(String nombre, boolean esOscuro, int energiaMagica) {
+        super(nombre, esOscuro, energiaMagica);
         // TODO Auto-generated constructor stub
     }
+
+    
 
 }
