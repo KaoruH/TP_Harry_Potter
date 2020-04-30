@@ -9,7 +9,7 @@ public abstract class Personaje {
 
     private String nombre;
 
-    private int salud = 100;
+    private int salud = 80; // max 100 complementa con mascota y artefactos
 
     private int edad;
 

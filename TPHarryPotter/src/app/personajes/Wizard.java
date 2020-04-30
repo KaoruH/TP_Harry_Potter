@@ -16,7 +16,7 @@ public class Wizard extends Persona implements IHaceMagia{
         this.poderInicial = poderInicial;
     }
 
-    private int energiaMagica = 150;
+    private int energiaMagica = 100; //max 150 - posible aumentar con artefactos/mascota:
 
     private List<Hechizo> hechizos = new ArrayList<>();
 
@@ -27,6 +27,8 @@ public class Wizard extends Persona implements IHaceMagia{
     private Artefacto artefacto;
 
     private boolean magoOscuro;
+
+    private Mascota mascota;
 
     public int getEnergiaMagica() {
         return energiaMagica;
@@ -68,7 +70,7 @@ public class Wizard extends Persona implements IHaceMagia{
         this.artefacto = artefacto;
     }
 
-    public boolean isMagoOscuro() {
+    public boolean getMagoOscuro() {
         return magoOscuro;
     }
 
@@ -78,26 +80,34 @@ public class Wizard extends Persona implements IHaceMagia{
 
     @Override
     public void setPoder(Poder poder) {
-        // TODO Auto-generated method stub
+
 
     }
 
     @Override
     public void aprender(Hechizo h) {
-        // TODO Auto-generated method stub
+
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
-        // TODO Auto-generated method stub
+
 
     }
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
-        // TODO Auto-generated method stub
 
+
+    }
+
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
     }
 
     

@@ -4,7 +4,7 @@ public class Metamorfosis extends Poder{
 
     public Metamorfosis(String nombre) {
         super(nombre);
-        // TODO Auto-generated constructor stub
+
     }
 
 }

@@ -10,13 +10,17 @@ public class JuegoHP {
     public static Scanner teclado = new Scanner(System.in);
 
     private List<Wizard> brujos = new ArrayList<>();
+    private List<Mascota> mascotas = new ArrayList<>();
     private Wizard brujoElegido;
 
-    public void inicializarBloque1() {
+    public void inicializarJuegoHP() {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
+        this.inicializarArtefactos();
         this.inicializarApertura();
     }
+
+    // Esto carga los brujos del primer bloque a la lista de brujos del juego
 
     public void inicializarBrujosBloque1() {
 
@@ -28,7 +32,7 @@ public class JuegoHP {
 
         Wizard brujo = new Wizard("Harry Potter", 17, false, poderInicial);
 
-        Hechizo hechizo = this.convertirPoderInicial(poderInicial);
+        Hechizo hechizo = this.castearPoderAHechizo(poderInicial);
 
         brujo.getHechizos().add(hechizo);
         this.getBrujos().add(brujo);
@@ -38,7 +42,7 @@ public class JuegoHP {
 
         brujo = new Wizard("Hermione Granger", 17, false, poderInicial);
 
-        hechizo = this.convertirPoderInicial(poderInicial);
+        hechizo = this.castearPoderAHechizo(poderInicial);
         brujo.getHechizos().add(hechizo);
         this.getBrujos().add(brujo);
 
@@ -46,11 +50,13 @@ public class JuegoHP {
 
         brujo = new Wizard("Ronald Weasley", 17, false, poderInicial);
 
-        hechizo = this.convertirPoderInicial(poderInicial);
+        hechizo = this.castearPoderAHechizo(poderInicial);
         brujo.getHechizos().add(hechizo);
         this.getBrujos().add(brujo);
 
     }
+
+    // Esto exibe en pantalla la apertura del juego donde se elige un personaje y una mascota
 
     public void inicializarApertura() {
 
@@ -63,63 +69,174 @@ public class JuegoHP {
         System.out.println(" ");
         System.out.println("*Recibiste una carta de Hogwarts*");
         System.out.println("'Hogwarts? O-M-G! HOGWARTS!! Recibí una carta de Hogwarts!' - exclama vós.");
-        System.out.println("  Curioso como sos, la abres inmediatamente.");
+        System.out.println(" ");
+        System.out.println("Curioso como sos, la abres inmediatamente.");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
         System.out.println("'Estimad@ " + this.getBrujoElegido().getNombre() + ", nos complace");
         System.out.println("informarle que ha sido aceptado en Hogwarts School of Witchcraft and Wizardry.");
         System.out.println("Venga!'");
-        System.out.println("  Mientras lee, otra carta se desliza del sobre.");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Mientras lee, otra carta se desliza del sobre.");
+        System.out.println(" ");
         System.out.println("*Recibiste una carta de Hagrid*");
-        System.out.println("'Querido " + this.getBrujoElegido().getNombre() + ", se suponía que debía guiarte a Hogwarts, pero tuve");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("'Querid@ " + this.getBrujoElegido().getNombre() + ", se suponía que debía guiarte a Hogwarts, pero tuve");
         System.out.println("una pequeña emergencia. Ya compré todos sus materiales y los");
         System.out.println("envié a Hogwarts. En cuanto a su mascota, al final de esa carta");
         System.out.println("puede elegirla. Tu poder inicial también se activará para ayudarte");
         System.out.println("a llegar al Hogwarts Express con seguridad.");
+        System.out.println("_______________________________________________________________________");
+        System.out.println("*Tu poder inicial, " + this.brujoElegido.getPoderInicial().getNombre() + " está activado*");
+        System.out.println("Bonus: "); // TODO Completar
+        System.out.println("Descripción:" + this.brujoElegido.getPoderInicial().getDescripcion());
         this.eligirUnaMascota();
-        System.out.println("Tu poder inicial está activado");
         this.mostrarStatus();
         
-        
-        
     }
+
+    // Esto carga las mascotas eligibles en bloque uno
 
     public void inicializarMascotas(){
 
-        //TODO
+        Mascota mascota = new Buho("Edwiges", 2, 10, 5);
+
+        this.mascotas.add(mascota);
+
+        mascota = new Gato("Crookshanks", 3, 5, 10);
+
+        this.mascotas.add(mascota);
+
+        mascota = new Rata("Scabbers", 35, 0, 5);
+
+        this.mascotas.add(mascota);
+
+        mascota = new Sapo("Trevor", 2, 7, 7);
+
+        this.mascotas.add(mascota);
         
     }
+
+    // Esto carga todos los Artefactos ---
+
+    public void inicializarArtefactos(){
+        //TODO
+    }
+
+    // Esto Elige un personaje en el primer bloque
 
     public void eligirUnPersonaje(){
 
         System.out.println(" ");
         System.out.println("En primer lugar, elige un personage (1, 2 o 3):");
+        
+        int contador = 0;
 
-        for(int i=0;i<this.brujos.size();i++){
+        for (Wizard brujo : brujos) {
+            contador++;
 
-            System.out.println((i + 1) + " " + this.brujos.get(i).getNombre());
-        } 
-
+            System.out.println((contador + " " + brujo.getNombre()));
+            
+        }
         int a;
 
         a = teclado.nextInt();
         
         this.setBrujoElegido(this.brujos.get(a - 1));
 
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Tu personaje eligido es " + this.getBrujoElegido().getNombre());
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+
     }
+
+    // Esto Elige una mascota en el primer bloque
 
     public void eligirUnaMascota(){
 
-        //TODO
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+
+        System.out.println("Elige una mascota (1, 2, 3 o 4):");
+
+        int contador = 0;
+
+        for (Mascota mascota : mascotas) {
+            contador++;
+
+            System.out.println((contador + " " + mascota.getNombre()));
+            
+        }
+
+        int a;
+
+        a = teclado.nextInt();
+
+        this.brujoElegido.setMascota(this.getMascotas().get(a - 1));
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Tu mascota eligida es " + this.brujoElegido.getMascota().getNombre());
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
 
     }
+
+    // Esto exibe en pantalla los datos del jugador
 
     public void mostrarStatus(){
 
         System.out.println("Tu status actual es:");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Nombre: " + this.brujoElegido.getNombre());
+        System.out.println("Edad: " + this.brujoElegido.getEdad());
+        System.out.println("Hechizos:");
+        mostrarHechizosBrujo();
+        System.out.print("Brujo Oscuro: ");
+        transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro());
+        System.out.println("Mascota: " + this.brujoElegido.getMascota().getNombre());
 
-        //TODO
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+
+        //TODO poner Artefacto y ver que falta
     }
 
-    public Hechizo convertirPoderInicial(Poder poderInicial) {
+    // Esto convierte true para si y false para no
+
+    public void transformarTrueEnSiYFalseEnNo(boolean valor){
+
+        if(valor == true){
+            System.out.print("SI");
+        } else{
+            System.out.print("NO");
+        }
+
+    }
+
+    // Esto lista los hechizos del brujo
+
+    public void mostrarHechizosBrujo(){
+
+        int contador = 0;
+
+        for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
+            contador++;
+
+            System.out.println((contador + " " + hechizo.getNombre()));
+            
+        }
+
+    }
+
+    // Esto castea Poder a Hechizo
+
+    public Hechizo castearPoderAHechizo(Poder poderInicial) {
 
         if (poderInicial instanceof Hechizo) {
 
@@ -131,6 +248,8 @@ public class JuegoHP {
         return null;
 
     }
+
+    // GETTERS AND SETTERS
 
     public List<Wizard> getBrujos() {
         return brujos;
@@ -146,6 +265,14 @@ public class JuegoHP {
 
     public void setBrujoElegido(Wizard brujoElegido) {
         this.brujoElegido = brujoElegido;
+    }
+
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
     }
 
 }

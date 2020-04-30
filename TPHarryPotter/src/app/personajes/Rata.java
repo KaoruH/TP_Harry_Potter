@@ -1,10 +1,9 @@
 package app.personajes;
 
-public class Rata extends Criatura {
+public class Rata extends Mascota {
 
-    public Rata(String nombre, int edad) {
-        super(nombre, edad);
-        // TODO Auto-generated constructor stub
+    public Rata(String nombre, int edad, int bonusVida, int bonusEnergiaMagica) {
+        super(nombre, edad, bonusVida, bonusEnergiaMagica);
     }
 
 }

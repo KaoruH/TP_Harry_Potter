@@ -5,6 +5,6 @@ public class App {
         
         JuegoHP juego = new JuegoHP();
 
-        juego.inicializarBloque1();
+        juego.inicializarJuegoHP();
     }
 }

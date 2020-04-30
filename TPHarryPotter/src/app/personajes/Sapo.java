@@ -1,10 +1,9 @@
 package app.personajes;
 
-public class Sapo extends Criatura {
+public class Sapo extends Mascota {
 
-    public Sapo(String nombre, int edad) {
-        super(nombre, edad);
-        // TODO Auto-generated constructor stub
+    public Sapo(String nombre, int edad, int bonusVida, int bonusEnergiaMagica) {
+        super(nombre, edad, bonusVida, bonusEnergiaMagica);
     }
 
 }

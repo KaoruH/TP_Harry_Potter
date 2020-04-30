@@ -1,10 +1,8 @@
 package app.personajes;
 
-public class Buho extends Criatura{
+public class Buho extends Mascota{
 
-    public Buho(String nombre, int edad) {
-        super(nombre, edad);
-        // TODO Auto-generated constructor stub
+    public Buho(String nombre, int edad, int bonusVida, int bonusEnergiaMagica) {
+        super(nombre, edad, bonusVida, bonusEnergiaMagica);
     }
-
 }

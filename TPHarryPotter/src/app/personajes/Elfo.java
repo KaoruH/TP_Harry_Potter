@@ -10,7 +10,7 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     public Elfo(String nombre, int edad) {
         super(nombre, edad);
-        // TODO Auto-generated constructor stub
+
     }
 
     private int energiaMagica = 150;
