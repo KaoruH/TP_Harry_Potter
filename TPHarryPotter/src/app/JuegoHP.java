@@ -13,7 +13,6 @@ public class JuegoHP {
 
     private List<Wizard> brujos = new ArrayList<>();
     private List<Mascota> mascotas = new ArrayList<>();
-    private List<Artefacto> artefactos = new ArrayList<>();
     private Wizard brujoElegido;
 
     public void inicializarBaseJuegoHP() {
@@ -48,6 +47,7 @@ public class JuegoHP {
 
         Varita varita = new Varita("Varita de Harry", 0.1, 0.1);
         // TODO hay que definir si se hacen nuevos objetos o no de estas varitas
+        // iya: creo que no, para no complexar más 
         varita.setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
 
         brujo.setVarita(varita);
@@ -115,7 +115,34 @@ public class JuegoHP {
         // comentado
         this.mostrarStatus();
         System.out.println("Ahora estamos estamos listos! Adelante!");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+    }
 
+    public void recibirObjetivo() {
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println("Escuchas algo raro. Que es? Te conviene seguir el sonido ");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("Dobby> 'Hola, " + this.getBrujoElegido().getNombre() + "! Perdoname! Me llamo Dobby,");
+        System.out.println("soy un elfo domestico. No tengas miedo, no te quiero hacer mal.");
+        System.out.println("Supe que recibiste su carta de Hogwards, pero tenga cuidado.");
+        System.out.println("Van acontecer cosas horribles por la escuela y creo que eres");
+        System.out.println("la unica persona que puede salvar a Hogwards.'");
+        System.out.println("Vos> 'cosas horribles? Solo yo? por que? Dobby?'");
+        System.out.println("Dobby> 'Si! No tengo mucho tiempo. Solamente me escuche con atención");
+        System.out.println("Su objetivo es encontrar las 4 Reliquias de la Muerte");
+        System.out.println("Para eso, va a tener que hacer amigos confiables y buscarlas.'");
+        System.out.println("Vos> 'Calma! Hay que explicarme eso!'");
+        System.out.println("Dobby> '" + this.getBrujoElegido().getNombre() + ", escuchaste?");
+        System.out.println("Cuidate! Y solo confies em Dumbledore! Él me envió acá...'");
+        System.out.println("...");
+        System.out.println("_______________________________________________________________________");
+        System.out.println("El elfo dejate de subto.");
+        System.out.println("Y ahora? Acepatas tu objectivo?");
+        System.out.println(" [Ingrese 'yes' para aceptar el ojectivo] ");
+        teclado.next("yes");
     }
 
     // Esto carga las mascotas eligibles en bloque uno
@@ -320,7 +347,7 @@ public class JuegoHP {
     }
 
     /*
-     * Elige la varita -- Estoy sacando pues es demasiado... No fue chequeado.
+     * Elige la varita -- Estoy sacando pues es demasiado... No fue chequeado. dale
      * 
      * public void eligirVarita() {
      * 
@@ -349,7 +376,7 @@ public class JuegoHP {
 
     }
 
-    // Esto abre o no la carta de Hogwarts
+    // Esto abre o no la carta de Hogwarts perfecto
 
     public void recibisteCartaHogwarts() {
 
