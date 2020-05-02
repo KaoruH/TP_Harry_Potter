@@ -11,19 +11,65 @@ public class JuegoHP {
 
     public static Scanner teclado = new Scanner(System.in);
 
-    private List<Wizard> brujos = new ArrayList<>();
+    private List<Wizard> brujosAElegir = new ArrayList<>();
+    private List<Personaje> npcs = new ArrayList<>();
     private List<Mascota> mascotas = new ArrayList<>();
     private Wizard brujoElegido;
 
-    public void inicializarBaseJuegoHP() {
+    public void inicializarApertura() {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
         // this.inicializarArtefactos(); -- leer descripcion en método
         this.inicializarBienvenida();
-        this.aplicarBonusMascota();
+        this.aplicarBonusMascota(); //TODO
+
     }
 
     public void inicializarPrimerBloque() {
+
+        // crear otros inicializar como en el inicializar Apertura
+
+        int a;
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Estás dentro de tu casa y tenés que sair.");
+        System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
+        a = teclado.nextInt();
+        if (a == 2) {
+
+            System.out.println("Todas las ventanas de la planta baja estan cerradas y no abren.");
+            System.out.println("Subiste al último piso y saltaste por la ventana;");
+
+            Hechizo hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
+            hechizo.setDescripcion("Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
+            hechizo.setNivelCuracion(0);
+            hechizo.setNivelDanio(0);
+
+            this.brujoElegido.aprender(hechizo);
+
+            System.out.println(" [ Perdiste 5 puntos de vida ] ");
+
+            int b = this.brujoElegido.getSalud() - 5;  // crear método en wizard? sufrirDanio
+            this.brujoElegido.setSalud(b);
+
+            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre()+ " ] ");
+            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste " + hechizo.getEnergiaMagica() + " de energia mágica ] ");
+
+            b = this.brujoElegido.getEnergiaMagica() - hechizo.getEnergiaMagica();
+            this.brujoElegido.setEnergiaMagica(b);
+            
+        } else{
+
+            System.out.println("Saliste por la puerta principal");
+
+        }
+
+    }
+
+    public void inicializarHistoriaPrimerBloque(){
+
+        //TODO
 
     }
 
@@ -109,6 +155,7 @@ public class JuegoHP {
         this.eligirUnPersonaje();
         this.recibisteCartaHogwarts();
         this.recibisteCartaHagrid();
+        this.recibisteTuPrimerMision();
         this.confirmacionPoderInicial();
         this.eligirUnaMascota();
         // this.eligirVarita(); -- Saqué pues es demasiado, pero dejé el método
@@ -242,7 +289,7 @@ public class JuegoHP {
 
         int contador = 0;
 
-        for (Wizard brujo : brujos) {
+        for (Wizard brujo : brujosAElegir) {
             contador++;
 
             System.out.println((contador + " " + brujo.getNombre()));
@@ -252,7 +299,7 @@ public class JuegoHP {
 
         a = teclado.nextInt();
 
-        this.setBrujoElegido(this.brujos.get(a - 1));
+        this.setBrujoElegido(this.brujosAElegir.get(a - 1));
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
@@ -297,7 +344,7 @@ public class JuegoHP {
 
     public void mostrarStatus() {
 
-        System.out.println("Tu status actual es:");
+        System.out.println(" [ Tu status actual es: ] ");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("Nombre: " + this.brujoElegido.getNombre());
@@ -381,7 +428,7 @@ public class JuegoHP {
 
         int numero;
 
-        System.out.println("*Recibiste una carta de Hogwarts*");
+        System.out.println(" [ Recibiste una carta de Hogwarts ] ");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("Quieres leer la carta de Hogwarts? Insira 1 para si y 2 para no.");
@@ -407,7 +454,7 @@ public class JuegoHP {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println("*Recibiste una carta de Hagrid*");
+        System.out.println(" [ Recibiste una carta de Hagrid ] ");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("Quieres leer la carta de Hagrid? Insira 1 para si y 2 para no.");
@@ -423,7 +470,7 @@ public class JuegoHP {
             System.out.println("una pequeña emergencia. Ya compré todos sus materiales y los");
             System.out.println("envié a Hogwarts. Cuanto a su mascota, podés elegirla");
             System.out.println("al final de esta carta. Tu poder inicial también se confirmará");
-            System.out.println("para ayudarte a llegar al Hogwarts Express con seguridad.");
+            System.out.println("para ayudarte a llegar al expreso de Hogwarts a salvo.");
 
         }
     }
@@ -441,14 +488,24 @@ public class JuegoHP {
         System.out.println("Descripción:" + this.brujoElegido.getPoderInicial().getDescripcion());
     }
 
+    //Recibe Primer mision
+
+    public void recibisteTuPrimerMision(){
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("!! [ Recibiste tu primer misión: llegar vivo hasta llegar vivo al expreso de Hogwarts! ] !!");
+
+    }
+
     // GETTERS AND SETTERS
 
     public List<Wizard> getBrujos() {
-        return brujos;
+        return brujosAElegir;
     }
 
     public void setBrujos(List<Wizard> brujos) {
-        this.brujos = brujos;
+        this.brujosAElegir = brujos;
     }
 
     public Wizard getBrujoElegido() {

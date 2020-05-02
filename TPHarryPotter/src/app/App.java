@@ -5,7 +5,7 @@ public class App {
 
         JuegoHP juego = new JuegoHP();
 
-        juego.inicializarBaseJuegoHP();
+        juego.inicializarApertura();
 
         // cambiamos el "inicializarApertura" de JuegoHP para acá? (partes y llamamos
         // las partes de acá)
