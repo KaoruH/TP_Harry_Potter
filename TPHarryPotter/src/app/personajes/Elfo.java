@@ -64,7 +64,18 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) { // Está igual que en Wizard
 
-        int a = personaje.getSalud() - hechizo.getNivelDanio();
+        int b;
+        int c = hechizo.getNivelDanio();
+
+        if (this.artefacto != null) {
+
+            b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+        } else {
+
+            b = c;
+        }
+
+        int a = personaje.getSalud() - b;
 
         personaje.setSalud(a);
 
@@ -77,7 +88,19 @@ public class Elfo extends Criatura implements IHaceMagia {
 
             if (hechizo1.getNombre().equals(hechizo)) {
 
-                int a = personaje.getSalud() - hechizo1.getNivelDanio();
+                int b;
+                int c = hechizo1.getNivelDanio();
+
+                if (this.artefacto != null) {
+
+                    b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+
+                } else {
+
+                    b = c;
+                }
+
+                int a = personaje.getSalud() - b;
 
                 personaje.setSalud(a);
 

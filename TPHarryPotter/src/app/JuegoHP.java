@@ -47,7 +47,7 @@ public class JuegoHP {
 
         Varita varita = new Varita("Varita de Harry", 0.1, 0.1);
         // TODO hay que definir si se hacen nuevos objetos o no de estas varitas
-        // iya: creo que no, para no complexar más 
+        // iya: creo que no, para no complexar más
         varita.setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
 
         brujo.setVarita(varita);
@@ -121,28 +121,43 @@ public class JuegoHP {
 
     public void recibirObjetivo() {
 
+        String a = this.getBrujoElegido().getNombre();
+
         System.out.println("_______________________________________________________________________");
-        System.out.println("Escuchas algo raro. Que es? Te conviene seguir el sonido ");
-        System.out.println("...");
-        System.out.println("...");
-        System.out.println("Dobby> 'Hola, " + this.getBrujoElegido().getNombre() + "! Perdoname! Me llamo Dobby,");
-        System.out.println("soy un elfo domestico. No tengas miedo, no te quiero hacer mal.");
-        System.out.println("Supe que recibiste su carta de Hogwards, pero tenga cuidado.");
-        System.out.println("Van acontecer cosas horribles por la escuela y creo que eres");
-        System.out.println("la unica persona que puede salvar a Hogwards.'");
-        System.out.println("Vos> 'cosas horribles? Solo yo? por que? Dobby?'");
-        System.out.println("Dobby> 'Si! No tengo mucho tiempo. Solamente me escuche con atención");
+        System.out.println(" ");
+        System.out.println("*Escuchas algo raro*");
+        System.out.println("Vos: ?? Que sonido es ese?");
+        System.out.println("*Seguís el sonido*");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println("*Chocaste con un elfo*");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println("Dobby: 'Hola, " + a + "! Perdoname! Me llamo Dobby,soy un elfo domestico.");
+        System.out.println("No tengas miedo, no te quiero hacer mal. Supe que recibiste su carta de");
+        System.out.println("Hogwards, pero tenga cuidado. Van acontecer cosas horribles por la");
+        System.out.println("escuela y creo que eres la unica persona que puede salvar a Hogwards.'");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println("Vos: 'cosas horribles? Solo yo? por que? Dobby?'");
+        System.out.println("Dobby: 'Si! No tengo mucho tiempo. Solamente me escuche con atención");
         System.out.println("Su objetivo es encontrar las 4 Reliquias de la Muerte");
         System.out.println("Para eso, va a tener que hacer amigos confiables y buscarlas.'");
-        System.out.println("Vos> 'Calma! Hay que explicarme eso!'");
-        System.out.println("Dobby> '" + this.getBrujoElegido().getNombre() + ", escuchaste?");
-        System.out.println("Cuidate! Y solo confies em Dumbledore! Él me envió acá...'");
-        System.out.println("...");
-        System.out.println("_______________________________________________________________________");
-        System.out.println("El elfo dejate de subto.");
-        System.out.println("Y ahora? Acepatas tu objectivo?");
-        System.out.println(" [Ingrese 'yes' para aceptar el ojectivo] ");
-        teclado.next("yes");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println("Vos: 'Calma! Hay que explicarme eso!'");
+        System.out.println("Dobby: '" + a + ", escuchaste?");
+        System.out.println("Cuidate! Y solo confies em Dumbledore! Él me envió acá-'");
+        System.out.println("*El elfo dejate de subto*");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println("Y ahora? Aceptas tu objectivo?");
+        System.out.println(" [Ingrese '1' para aceptar el ojectivo] ");
+        teclado.next("1");
     }
 
     // Esto carga las mascotas eligibles en bloque uno
@@ -324,7 +339,7 @@ public class JuegoHP {
         for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
             contador++;
 
-            System.out.println(contador + " " + hechizo.getNombre() + " | Nivel de daño: " + hechizo.getNivelDanio()
+            System.out.println(contador + " - " + hechizo.getNombre() + " | Nivel de daño: " + hechizo.getNivelDanio()
                     + " | Nivel de cura: " + hechizo.getNivelCuracion());
 
         }
@@ -345,22 +360,6 @@ public class JuegoHP {
         return null;
 
     }
-
-    /*
-     * Elige la varita -- Estoy sacando pues es demasiado... No fue chequeado. dale
-     * 
-     * public void eligirVarita() {
-     * 
-     * int contador = 0;
-     * 
-     * System.out.println("Elige un personage una varita:");
-     * 
-     * for (Varita varita : artefacto) { contador++;
-     * 
-     * System.out.println((contador + " " + artefacto.getNombre()));
-     * 
-     * } }
-     */
 
     // Aplica el bonus de energia magica y salud de las mascotas al personaje
 

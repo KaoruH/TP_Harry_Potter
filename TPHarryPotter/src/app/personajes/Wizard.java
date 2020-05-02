@@ -97,7 +97,18 @@ public class Wizard extends Persona implements IHaceMagia {
     public void atacar(Personaje personaje, Hechizo hechizo) { // toma la salud del personaje atacado y resta el nivel
                                                                // de danio del hechizo
 
-        int a = personaje.getSalud() - hechizo.getNivelDanio();
+        int b;
+        int c = hechizo.getNivelDanio();
+
+        if (this.artefacto != null) {
+
+            b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+        } else {
+
+            b = c;
+        }
+
+        int a = personaje.getSalud() - b;
 
         personaje.setSalud(a);
 
@@ -110,7 +121,19 @@ public class Wizard extends Persona implements IHaceMagia {
 
             if (hechizo1.getNombre().equals(hechizo)) {
 
-                int a = personaje.getSalud() - hechizo1.getNivelDanio();
+                int b;
+                int c = hechizo1.getNivelDanio();
+
+                if (this.artefacto != null) {
+
+                    b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+
+                } else {
+
+                    b = c;
+                }
+
+                int a = personaje.getSalud() - b;
 
                 personaje.setSalud(a);
 

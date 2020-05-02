@@ -2,7 +2,7 @@ package app.poderes.hechizos;
 
 import app.poderes.Poder; 
 
-public class Hechizo extends Poder{
+public abstract class Hechizo extends Poder{
 
 
     public Hechizo(String nombre, boolean esOscuro, int energiaMagica) {
