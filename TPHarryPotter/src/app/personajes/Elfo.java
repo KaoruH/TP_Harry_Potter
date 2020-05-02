@@ -45,34 +45,49 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     @Override
     public Poder getPoderInicial() {
-        // TODO Auto-generated method stub
-        return null;
+
+        return null; // Devuelve null porque el elfo no tiene PoderInicial y el método pide return
     }
 
     @Override
-    public void setPoder(Poder poder) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void aprender(Hechizo h) {
-        // TODO Auto-generated method stub
+    public void setPoder(Poder poder) { // El elfo no tiene "Poder"... Tenemos que crear uno?
 
     }
 
     @Override
-    public void atacar(Personaje personaje, Hechizo hechizo) {
-        // TODO Auto-generated method stub
+    public void aprender(Hechizo h) { // Está igual que en Wizard
+
+        this.hechizos.add(h);
 
     }
 
     @Override
-    public void atacar(Personaje personaje, String hechizo) {
-        // TODO Auto-generated method stub
+    public void atacar(Personaje personaje, Hechizo hechizo) { // Está igual que en Wizard
+
+        int a = personaje.getSalud() - hechizo.getNivelDanio();
+
+        personaje.setSalud(a);
 
     }
 
-    
+    @Override
+    public void atacar(Personaje personaje, String hechizo) { // Está igual que en Wizard
+
+        for (Hechizo hechizo1 : this.hechizos) {
+
+            if (hechizo1.getNombre().equals(hechizo)) {
+
+                int a = personaje.getSalud() - hechizo1.getNivelDanio();
+
+                personaje.setSalud(a);
+
+            }
+
+            // TODO -- else { System.out.println("Este hechizo no fue encontrado");} -- Es
+            // necesario?
+
+        }
+
+    }
 
 }

@@ -7,8 +7,7 @@ import app.poderes.*;
 import app.poderes.hechizos.*;
 import app.transportes.*;
 
-public class Wizard extends Persona implements IHaceMagia{
-
+public class Wizard extends Persona implements IHaceMagia {
 
     public Wizard(String nombre, int edad, boolean magoOscuro, Poder poderInicial) {
         super(nombre, edad);
@@ -16,7 +15,7 @@ public class Wizard extends Persona implements IHaceMagia{
         this.poderInicial = poderInicial;
     }
 
-    private int energiaMagica = 100; //max 150 - posible aumentar con artefactos/mascota:
+    private int energiaMagica = 100; // max 150 - posible aumentar con artefactos/mascota:
 
     private List<Hechizo> hechizos = new ArrayList<>();
 
@@ -29,6 +28,8 @@ public class Wizard extends Persona implements IHaceMagia{
     private boolean magoOscuro;
 
     private Mascota mascota;
+
+    private Varita varita;
 
     public int getEnergiaMagica() {
         return energiaMagica;
@@ -79,26 +80,46 @@ public class Wizard extends Persona implements IHaceMagia{
     }
 
     @Override
-    public void setPoder(Poder poder) {
+    public void setPoder(Poder poder) { // puede servir para cambiar poder inicial? Si si, descomentar:
 
-
-    }
-
-    @Override
-    public void aprender(Hechizo h) {
-
+        // this.poderInicial = poder;
 
     }
 
     @Override
-    public void atacar(Personaje personaje, Hechizo hechizo) {
+    public void aprender(Hechizo h) { // adiciona el hechizo a la lista de hechizos
 
+        this.hechizos.add(h);
+
+    }
+
+    @Override
+    public void atacar(Personaje personaje, Hechizo hechizo) { // toma la salud del personaje atacado y resta el nivel
+                                                               // de danio del hechizo
+
+        int a = personaje.getSalud() - hechizo.getNivelDanio();
+
+        personaje.setSalud(a);
 
     }
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
 
+        for (Hechizo hechizo1 : this.hechizos) {
+
+            if (hechizo1.getNombre().equals(hechizo)) {
+
+                int a = personaje.getSalud() - hechizo1.getNivelDanio();
+
+                personaje.setSalud(a);
+
+            }
+
+            // TODO -- else { System.out.println("Este hechizo no fue encontrado");} -- Es
+            // necesario?
+
+        }
 
     }
 
@@ -110,6 +131,12 @@ public class Wizard extends Persona implements IHaceMagia{
         this.mascota = mascota;
     }
 
-    
+    public Varita getVarita() {
+        return varita;
+    }
+
+    public void setVarita(Varita varita) {
+        this.varita = varita;
+    }
 
 }

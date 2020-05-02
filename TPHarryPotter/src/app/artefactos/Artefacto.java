@@ -3,7 +3,13 @@ package app.artefactos;
 import app.interfaces.*;
 import app.poderes.*;
 
-public class Artefacto implements IEsMagico{
+public class Artefacto implements IEsMagico {
+
+    public Artefacto(String nombre, double amplificadorDeDanio, double amplificadorDeCuración) {
+        this.nombre = nombre;
+        this.amplificadorDeDanio = amplificadorDeDanio;
+        this.amplificadorDeCuración = amplificadorDeCuración;
+    }
 
     private String nombre;
 
@@ -12,6 +18,8 @@ public class Artefacto implements IEsMagico{
     private double amplificadorDeCuración;
 
     private Poder poder;
+
+    private String descripcion;
 
     public String getNombre() {
         return nombre;
@@ -47,14 +55,22 @@ public class Artefacto implements IEsMagico{
 
     @Override
     public boolean esInvisibleAMuggles() {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean esInvisible() {
-        // TODO Auto-generated method stub
+
         return false;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

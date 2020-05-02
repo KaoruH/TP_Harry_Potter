@@ -1,6 +1,8 @@
 package app;
 
 import java.util.*;
+
+import app.artefactos.*;
 import app.personajes.*;
 import app.poderes.*;
 import app.poderes.hechizos.*;
@@ -11,30 +13,45 @@ public class JuegoHP {
 
     private List<Wizard> brujos = new ArrayList<>();
     private List<Mascota> mascotas = new ArrayList<>();
+    private List<Artefacto> artefactos = new ArrayList<>();
     private Wizard brujoElegido;
 
-    public void inicializarJuegoHP() {
+    public void inicializarBaseJuegoHP() {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
-        this.inicializarArtefactos();
-        this.inicializarApertura();
+        // this.inicializarArtefactos(); -- leer descripcion en método
+        this.inicializarBienvenida();
+        this.aplicarBonusMascota();
+    }
+
+    public void inicializarPrimerBloque() {
+
     }
 
     // Esto carga los brujos del primer bloque a la lista de brujos del juego
 
     public void inicializarBrujosBloque1() {
 
-        Poder poderInicial = new Expelliarmus("Expelliarmus", false, 10);
+        Poder poderInicial = new Expelliarmus("Expelliarmus", false, 10); // TODO chequear valores que se sacan
 
         poderInicial.setDescripcion(
                 "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
-
 
         Wizard brujo = new Wizard("Harry Potter", 17, false, poderInicial);
 
         Hechizo hechizo = this.castearPoderAHechizo(poderInicial);
 
+        hechizo.setNivelDanio(10); // TODO chequear valor de daño
+        hechizo.setNivelCuracion(0);
+
         brujo.getHechizos().add(hechizo);
+
+        Varita varita = new Varita("Varita de Harry", 0.1, 0.1);
+        // TODO hay que definir si se hacen nuevos objetos o no de estas varitas
+        varita.setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
+
+        brujo.setVarita(varita);
+
         this.getBrujos().add(brujo);
 
         poderInicial = new WingardumLeviosa("Wingwardum Leviosa", false, 10);
@@ -43,63 +60,67 @@ public class JuegoHP {
         brujo = new Wizard("Hermione Granger", 17, false, poderInicial);
 
         hechizo = this.castearPoderAHechizo(poderInicial);
+
+        hechizo.setNivelDanio(5); // TODO
+        hechizo.setNivelCuracion(0);
+
         brujo.getHechizos().add(hechizo);
+
+        varita = new Varita("Varita de Ronald", 0.1, 0.1); // TODO
+        varita.setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
+
+        brujo.setVarita(varita);
+
         this.getBrujos().add(brujo);
 
         poderInicial = new VulneraSanetur("Vulnera Sanentur", false, 10);
+        poderInicial.setDescripcion(
+                "Hechizo sanador que parece una canción, y que corresponde al contrahechizo de la maldición sectumsempra.");
 
         brujo = new Wizard("Ronald Weasley", 17, false, poderInicial);
 
         hechizo = this.castearPoderAHechizo(poderInicial);
+
+        hechizo.setNivelDanio(0);
+        hechizo.setNivelCuracion(10); // TODO
+
         brujo.getHechizos().add(hechizo);
+
+        varita = new Varita("Varita de Ronald", 0.1, 0.1); // TODO
+        varita.setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
+
+        brujo.setVarita(varita);
+
         this.getBrujos().add(brujo);
 
     }
 
-    // Esto exibe en pantalla la apertura del juego donde se elige un personaje y una mascota
+    // Esto exibe en pantalla la apertura del juego donde se elige un personaje y
+    // una mascota
 
-    public void inicializarApertura() {
+    public void inicializarBienvenida() {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("!! Bienvenido al mundo TP_Harry_Potter by Iya y Tati !!");
         System.out.println("Recién transmigraste a este mundo mágico, pero no tema, buena suerte!");
         System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
         this.eligirUnPersonaje();
-        System.out.println(" ");
-        System.out.println("*Recibiste una carta de Hogwarts*");
-        System.out.println("'Hogwarts? O-M-G! HOGWARTS!! Recibí una carta de Hogwarts!' - exclama vós.");
-        System.out.println(" ");
-        System.out.println("Curioso como sos, la abres inmediatamente.");
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("'Estimad@ " + this.getBrujoElegido().getNombre() + ", nos complace");
-        System.out.println("informarle que ha sido aceptado en Hogwarts School of Witchcraft and Wizardry.");
-        System.out.println("Venga!'");
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Mientras lee, otra carta se desliza del sobre.");
-        System.out.println(" ");
-        System.out.println("*Recibiste una carta de Hagrid*");
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("'Querid@ " + this.getBrujoElegido().getNombre() + ", se suponía que debía guiarte a Hogwarts, pero tuve");
-        System.out.println("una pequeña emergencia. Ya compré todos sus materiales y los");
-        System.out.println("envié a Hogwarts. En cuanto a su mascota, al final de esa carta");
-        System.out.println("puede elegirla. Tu poder inicial también se activará para ayudarte");
-        System.out.println("a llegar al Hogwarts Express con seguridad.");
-        System.out.println("_______________________________________________________________________");
-        System.out.println("*Tu poder inicial, " + this.brujoElegido.getPoderInicial().getNombre() + " está activado*");
-        System.out.println("Bonus: "); // TODO Completar
-        System.out.println("Descripción:" + this.brujoElegido.getPoderInicial().getDescripcion());
+        this.recibisteCartaHogwarts();
+        this.recibisteCartaHagrid();
+        this.confirmacionPoderInicial();
         this.eligirUnaMascota();
+        // this.eligirVarita(); -- Saqué pues es demasiado, pero dejé el método
+        // comentado
         this.mostrarStatus();
-        
+        System.out.println("Ahora estamos estamos listos! Adelante!");
+
     }
 
     // Esto carga las mascotas eligibles en bloque uno
 
-    public void inicializarMascotas(){
+    public void inicializarMascotas() {
 
         Mascota mascota = new Buho("Edwiges", 2, 10, 5);
 
@@ -113,37 +134,82 @@ public class JuegoHP {
 
         this.mascotas.add(mascota);
 
-        mascota = new Sapo("Trevor", 2, 7, 7);
+        mascota = new Sapo("Trevor", 5, 7, 7);
 
         this.mascotas.add(mascota);
-        
+
     }
 
     // Esto carga todos los Artefactos ---
 
-    public void inicializarArtefactos(){
-        //TODO
+    public void inicializarArtefactos() {
+
+        /*
+         * Yo adicioné las varitas a cada personaje... Si hay una lista de artefactos,
+         * hay que adicionarlas en "inicializarBrujos" o algo asi
+         * 
+         * Artefacto artefacto = new Varita("Varita de Harry", 0.1, 0.1); artefacto.
+         * setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
+         * 
+         * this.artefactos.add(artefacto);
+         * 
+         * artefacto = new Varita("Varita de Ronald", 0.1, 0.1); artefacto.
+         * setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
+         * 
+         * this.artefactos.add(artefacto);
+         * 
+         * artefacto = new Varita("Varita de Hermione", 0.1, 0.1); artefacto.
+         * setDescripcion("27,3cm, hecha de vid, con núcleo de fibra de corazón de dragón."
+         * );
+         * 
+         * this.artefactos.add(artefacto);
+         */
+
+        /*
+         * Definir si se va a subir los conforme los bloques o si se sube todo a la vez.
+         * Si se sube todo junto esto de abajo, entonces hay que cambiar el medoto
+         * eligirVarita eligirunPersonaje...
+         * 
+         * Artefacto artefacto = new VaritaSauco("Varita de Saúco", 0.8, 0.1);
+         * artefacto.setDescripcion(
+         * "Fabricada de Saúco, mide treinta y cuatro centímetros y medio de largo y su núcleo es un pelo de cola de Thestral."
+         * );
+         * 
+         * this.artefactos.add(artefacto);
+         * 
+         * artefacto = new PiedraResurreccion("Piedra de la resurreccion", 0, 0.3);
+         * artefacto.setDescripcion(
+         * "Tiene el poder de traer a la gente de vuelta de la muerte como espíritus definidos, no como personas vivas."
+         * );
+         * 
+         * this.artefactos.add(artefacto);
+         * 
+         * artefacto = new CapaInvisibilidad("Capa de Invisibilidad", 0, 0.3);
+         * artefacto.setDescripcion("Prenda mágica que hace invisible lo que cubre.");
+         * 
+         * this.artefactos.add(artefacto);
+         */
+
     }
 
     // Esto Elige un personaje en el primer bloque
 
-    public void eligirUnPersonaje(){
+    public void eligirUnPersonaje() {
 
-        System.out.println(" ");
         System.out.println("En primer lugar, elige un personage (1, 2 o 3):");
-        
+
         int contador = 0;
 
         for (Wizard brujo : brujos) {
             contador++;
 
             System.out.println((contador + " " + brujo.getNombre()));
-            
+
         }
         int a;
 
         a = teclado.nextInt();
-        
+
         this.setBrujoElegido(this.brujos.get(a - 1));
 
         System.out.println("_______________________________________________________________________");
@@ -156,11 +222,10 @@ public class JuegoHP {
 
     // Esto Elige una mascota en el primer bloque
 
-    public void eligirUnaMascota(){
+    public void eligirUnaMascota() {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-
         System.out.println("Elige una mascota (1, 2, 3 o 4):");
 
         int contador = 0;
@@ -169,7 +234,7 @@ public class JuegoHP {
             contador++;
 
             System.out.println((contador + " " + mascota.getNombre()));
-            
+
         }
 
         int a;
@@ -188,7 +253,7 @@ public class JuegoHP {
 
     // Esto exibe en pantalla los datos del jugador
 
-    public void mostrarStatus(){
+    public void mostrarStatus() {
 
         System.out.println("Tu status actual es:");
         System.out.println("_______________________________________________________________________");
@@ -199,20 +264,25 @@ public class JuegoHP {
         mostrarHechizosBrujo();
         System.out.println("Brujo Oscuro: " + transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro()));
         System.out.println("Mascota: " + this.brujoElegido.getMascota().getNombre());
-
+        System.out.println("Varita: " + this.brujoElegido.getVarita().getDescripcion());
+        if (this.brujoElegido.getArtefacto() != null) { // Hay que mejorar esta Linea. Duda cuanto a la responsabilidad
+            System.out.println("Artefacto: " + this.brujoElegido.getArtefacto().getNombre());
+        }
+        if (this.brujoElegido.getEscoba() != null) { // Hay que mejorar esta Linea
+            System.out.println("Escoba: " + this.brujoElegido.getEscoba().getNombre());
+        }
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
 
-        //TODO poner Artefacto y ver que falta
     }
 
     // Esto convierte true para si y false para no
 
-    public String transformarTrueEnSiYFalseEnNo(boolean valor){
+    public String transformarTrueEnSiYFalseEnNo(boolean valor) {
 
-        if(valor == true){
+        if (valor == true) {
             return "SI";
-        } else{
+        } else {
             return "NO";
         }
 
@@ -220,15 +290,16 @@ public class JuegoHP {
 
     // Esto lista los hechizos del brujo
 
-    public void mostrarHechizosBrujo(){
+    public void mostrarHechizosBrujo() {
 
         int contador = 0;
 
         for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
             contador++;
 
-            System.out.println((contador + " " + hechizo.getNombre()));
-            
+            System.out.println(contador + " " + hechizo.getNombre() + " | Nivel de daño: " + hechizo.getNivelDanio()
+                    + " | Nivel de cura: " + hechizo.getNivelCuracion());
+
         }
 
     }
@@ -246,6 +317,102 @@ public class JuegoHP {
 
         return null;
 
+    }
+
+    /*
+     * Elige la varita -- Estoy sacando pues es demasiado... No fue chequeado.
+     * 
+     * public void eligirVarita() {
+     * 
+     * int contador = 0;
+     * 
+     * System.out.println("Elige un personage una varita:");
+     * 
+     * for (Varita varita : artefacto) { contador++;
+     * 
+     * System.out.println((contador + " " + artefacto.getNombre()));
+     * 
+     * } }
+     */
+
+    // Aplica el bonus de energia magica y salud de las mascotas al personaje
+
+    public void aplicarBonusMascota() {
+
+        int a = this.brujoElegido.getEnergiaMagica() + this.brujoElegido.getMascota().getBonusEnergiaMagica();
+
+        this.brujoElegido.setEnergiaMagica(a);
+
+        a = this.brujoElegido.getSalud() + this.brujoElegido.getMascota().getBonusVida();
+
+        this.brujoElegido.setSalud(a);
+
+    }
+
+    // Esto abre o no la carta de Hogwarts
+
+    public void recibisteCartaHogwarts() {
+
+        int numero;
+
+        System.out.println("*Recibiste una carta de Hogwarts*");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Quieres leer la carta de Hogwarts? Insira 1 para si y 2 para no.");
+
+        numero = teclado.nextInt();
+
+        if (numero == 1) {
+
+            System.out.println("_______________________________________________________________________");
+            System.out.println(" ");
+            System.out.println("'Estimad@ " + this.getBrujoElegido().getNombre() + ", nos complace");
+            System.out.println("informarle que ha sido aceptado en Hogwarts School of Witchcraft and Wizardry.");
+            System.out.println("Venga!'");
+
+        }
+    }
+
+    // Esto pregunta si el usuario quiere leer la carta de Hagrid
+
+    public void recibisteCartaHagrid() {
+
+        int numero;
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("*Recibiste una carta de Hagrid*");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Quieres leer la carta de Hagrid? Insira 1 para si y 2 para no.");
+
+        numero = teclado.nextInt();
+
+        if (numero == 1) {
+
+            System.out.println("_______________________________________________________________________");
+            System.out.println(" ");
+            System.out.println("'Querid@ " + this.getBrujoElegido().getNombre()
+                    + ", se suponía que debía guiarte a Hogwarts, pero tuve");
+            System.out.println("una pequeña emergencia. Ya compré todos sus materiales y los");
+            System.out.println("envié a Hogwarts. Cuanto a su mascota, podés elegirla");
+            System.out.println("al final de esta carta. Tu poder inicial también se confirmará");
+            System.out.println("para ayudarte a llegar al Hogwarts Express con seguridad.");
+
+        }
+    }
+
+    // "Activa" y exibe en pantalla el poder inicial
+
+    public void confirmacionPoderInicial() {
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println(
+                "*Tu poder inicial, " + this.brujoElegido.getPoderInicial().getNombre() + ", está confirmado*");
+        System.out.println("Daño: " + this.brujoElegido.getHechizos().get(0).getNivelDanio() + "  |  Curación: "
+                + this.brujoElegido.getHechizos().get(0).getNivelCuracion());
+        System.out.println("Descripción:" + this.brujoElegido.getPoderInicial().getDescripcion());
     }
 
     // GETTERS AND SETTERS
