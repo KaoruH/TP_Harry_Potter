@@ -6,33 +6,89 @@ import app.artefactos.*;
 import app.personajes.*;
 import app.poderes.*;
 import app.poderes.hechizos.*;
+//import app.transportes.*; TODO
 
 public class JuegoHP {
 
     public static Scanner teclado = new Scanner(System.in);
 
     private List<Wizard> brujosAElegir = new ArrayList<>();
-    private List<Personaje> npcs = new ArrayList<>();
+    //private List<Personaje> npcs = new ArrayList<>(); TODO
     private List<Mascota> mascotas = new ArrayList<>();
     private Wizard brujoElegido;
+
+    // Ver si debo crear siempre una nueva variable (int, string) para cada método o
+    // si puedo reutilizarlas
 
     public void inicializarApertura() {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
         // this.inicializarArtefactos(); -- leer descripcion en método
         this.inicializarBienvenida();
-        this.aplicarBonusMascota(); //TODO
+        this.aplicarBonusMascota(); // TODO
 
     }
 
     public void inicializarPrimerBloque() {
 
-        // crear otros inicializar como en el inicializar Apertura
+        inicializarHistoriaPrimerBloque();
+
+    }
+
+    public void inicializarHistoriaPrimerBloque() {
 
         int a;
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
+        salirDeLaCasa();
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Ahora que saliste, tenés que llegar a la estación.");
+        System.out.println("Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
+        a = teclado.nextInt();
+
+        if (a == 2) {
+
+            System.out.println("Caminaste por veinte minutos.");
+            System.out.println(" [ Perdiste 5 puntos de vida ] ");
+
+            int b = this.brujoElegido.getSalud() - 5; // crear método en wizard? sufrirDanio
+            this.brujoElegido.setSalud(b);
+            
+            System.out.println("Cansado, te detuviste para descansar un poco y");
+            System.out.println("al mirar hacia un lado, encontraste algo inesperado.");
+
+            System.out.println(" [ Encontraste una escoba con tu nombre ] ");
+
+            //Escoba escoba = new Escoba(nombre, tipo);  // crear lista y sacar random
+
+            Hechizo hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
+            hechizo.setDescripcion(
+                    "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
+            hechizo.setNivelCuracion(0);
+            hechizo.setNivelDanio(0);
+
+            this.brujoElegido.aprender(hechizo);
+
+            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre() + " ] ");
+            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste "
+                    + hechizo.getEnergiaMagica() + " de energia mágica ] ");
+
+            b = this.brujoElegido.getEnergiaMagica() - hechizo.getEnergiaMagica();
+            this.brujoElegido.setEnergiaMagica(b);
+
+        } else {
+
+            System.out.println("Saliste por la puerta principal");
+
+        }
+
+    }
+
+    public void salirDeLaCasa() {
+        int a;
+
         System.out.println("Estás dentro de tu casa y tenés que sair.");
         System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
         a = teclado.nextInt();
@@ -42,7 +98,8 @@ public class JuegoHP {
             System.out.println("Subiste al último piso y saltaste por la ventana;");
 
             Hechizo hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
-            hechizo.setDescripcion("Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
+            hechizo.setDescripcion(
+                    "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
             hechizo.setNivelCuracion(0);
             hechizo.setNivelDanio(0);
 
@@ -50,26 +107,21 @@ public class JuegoHP {
 
             System.out.println(" [ Perdiste 5 puntos de vida ] ");
 
-            int b = this.brujoElegido.getSalud() - 5;  // crear método en wizard? sufrirDanio
+            int b = this.brujoElegido.getSalud() - 5; // crear método en wizard? sufrirDanio
             this.brujoElegido.setSalud(b);
 
-            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre()+ " ] ");
-            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste " + hechizo.getEnergiaMagica() + " de energia mágica ] ");
+            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre() + " ] ");
+            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste "
+                    + hechizo.getEnergiaMagica() + " de energia mágica ] ");
 
             b = this.brujoElegido.getEnergiaMagica() - hechizo.getEnergiaMagica();
             this.brujoElegido.setEnergiaMagica(b);
-            
-        } else{
 
-            System.out.println("Saliste por la puerta principal");
+        } else {
+
+            System.out.println("Saliste por la puerta principal sin grandes problemas.");
 
         }
-
-    }
-
-    public void inicializarHistoriaPrimerBloque(){
-
-        //TODO
 
     }
 
@@ -146,21 +198,36 @@ public class JuegoHP {
 
     public void inicializarBienvenida() {
 
+        String a = this.getBrujoElegido().getNombre();
+
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("!! Bienvenido al mundo TP_Harry_Potter by Iya y Tati !!");
         System.out.println("Recién transmigraste a este mundo mágico, pero no tema, buena suerte!");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        this.eligirUnPersonaje();
-        this.recibisteCartaHogwarts();
-        this.recibisteCartaHagrid();
+        this.eligirUnPersonaje(); // De acá
+
+        Carta carta = new Carta("Carta de Hogwarts", "Hogwarts");
+        carta.setContenido(System.lineSeparator() + "'Estimad@ " + a + ", nos complace informarle que ha sido"
+                + System.lineSeparator() + " aceptado en Hogwarts School of Witchcraft and Wizardry. Venga!'");
+
+        this.entregarCarta(carta);
+
+        carta = new Carta("Carta de Hagrid", "Hagrid");
+        carta.setContenido(
+                System.lineSeparator() + "'Querid@ " + a + ", se suponía que debía guiarte a Hogwarts, pero tuve"
+                        + System.lineSeparator() + "una pequeña emergencia. Ya compré todos sus materiales y los"
+                        + System.lineSeparator() + "envié a Hogwarts. Cuanto a su mascota, podés elegirla"
+                        + System.lineSeparator() + "al final de esta carta. Tu poder inicial también se confirmará"
+                        + System.lineSeparator() + "para ayudarte a llegar al expreso de Hogwarts a salvo.''");
+
+        this.entregarCarta(carta);
+
         this.recibisteTuPrimerMision();
         this.confirmacionPoderInicial();
         this.eligirUnaMascota();
-        // this.eligirVarita(); -- Saqué pues es demasiado, pero dejé el método
-        // comentado
-        this.mostrarStatus();
+        this.mostrarStatus(); // hasta acá. Poner en App?
         System.out.println("Ahora estamos estamos listos! Adelante!");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
@@ -424,53 +491,20 @@ public class JuegoHP {
 
     // Esto abre o no la carta de Hogwarts perfecto
 
-    public void recibisteCartaHogwarts() {
+    public void entregarCarta(Carta carta) {
 
         int numero;
 
-        System.out.println(" [ Recibiste una carta de Hogwarts ] ");
+        this.brujoElegido.recibirCarta(carta); // TODO finalizar carta con metodo en wizard
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println("Quieres leer la carta de Hogwarts? Insira 1 para si y 2 para no.");
+        System.out.println("Quieres leer la carta de " + carta.getSender() + "? Insira 1 para si y 2 para no.");
 
         numero = teclado.nextInt();
 
-        if (numero == 1) {
+        if (this.brujoElegido.tomarDecision(numero)) {
 
-            System.out.println("_______________________________________________________________________");
-            System.out.println(" ");
-            System.out.println("'Estimad@ " + this.getBrujoElegido().getNombre() + ", nos complace");
-            System.out.println("informarle que ha sido aceptado en Hogwarts School of Witchcraft and Wizardry.");
-            System.out.println("Venga!'");
-
-        }
-    }
-
-    // Esto pregunta si el usuario quiere leer la carta de Hagrid
-
-    public void recibisteCartaHagrid() {
-
-        int numero;
-
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println(" [ Recibiste una carta de Hagrid ] ");
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Quieres leer la carta de Hagrid? Insira 1 para si y 2 para no.");
-
-        numero = teclado.nextInt();
-
-        if (numero == 1) {
-
-            System.out.println("_______________________________________________________________________");
-            System.out.println(" ");
-            System.out.println("'Querid@ " + this.getBrujoElegido().getNombre()
-                    + ", se suponía que debía guiarte a Hogwarts, pero tuve");
-            System.out.println("una pequeña emergencia. Ya compré todos sus materiales y los");
-            System.out.println("envié a Hogwarts. Cuanto a su mascota, podés elegirla");
-            System.out.println("al final de esta carta. Tu poder inicial también se confirmará");
-            System.out.println("para ayudarte a llegar al expreso de Hogwarts a salvo.");
+            System.out.println(carta.getContenido());
 
         }
     }
@@ -488,13 +522,14 @@ public class JuegoHP {
         System.out.println("Descripción:" + this.brujoElegido.getPoderInicial().getDescripcion());
     }
 
-    //Recibe Primer mision
+    // Recibe Primer mision
 
-    public void recibisteTuPrimerMision(){
+    public void recibisteTuPrimerMision() {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println("!! [ Recibiste tu primer misión: llegar vivo hasta llegar vivo al expreso de Hogwarts! ] !!");
+        System.out
+                .println("!! [ Recibiste tu primer misión: llegar vivo hasta llegar vivo al expreso de Hogwarts! ] !!");
 
     }
 

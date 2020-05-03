@@ -146,6 +146,21 @@ public class Wizard extends Persona implements IHaceMagia {
 
     }
 
+    public void recibirCarta(Carta carta){
+
+        System.out.println(" [ Recibiste una carta de " + carta.getSender() + " ] ");
+
+    }
+
+    public boolean tomarDecision(int a){  
+
+        if (a == 1) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     public Mascota getMascota() {
         return mascota;
     }

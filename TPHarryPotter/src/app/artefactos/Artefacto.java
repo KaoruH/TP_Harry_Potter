@@ -11,6 +11,10 @@ public class Artefacto implements IEsMagico {
         this.amplificadorDeCuración = amplificadorDeCuración;
     }
 
+    public Artefacto(String nombre){
+        this.nombre = nombre;
+    }
+
     private String nombre;
 
     private double amplificadorDeDanio;
