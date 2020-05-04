@@ -14,8 +14,8 @@ public class App {
         // E
 
         juego.inicializarPrimerBloque();
-
-        juego.recibirObjetivo();
         
+
+
     }
 }
