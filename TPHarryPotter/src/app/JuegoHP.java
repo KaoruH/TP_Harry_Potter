@@ -640,32 +640,82 @@ public class JuegoHP {
 
     public void inicializarHechizosARecibir() {
 
-        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 10);
+        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 15);
         hechizo.setDescripcion(
                 "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
-        hechizo.setNivelDanio(10);
+        hechizo.setNivelDanio(25);
         hechizo.setNivelCuracion(0);
         this.hechizosRecibir.add(hechizo);
 
         hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10);
         hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
-        hechizo.setNivelDanio(5);
+        hechizo.setNivelDanio(0);
         hechizo.setNivelCuracion(0);
         this.hechizosRecibir.add(hechizo);
 
-        hechizo = new VulneraSanetur("Vulnera Sanentur", false, 10);
+        hechizo = new VulneraSanetur("Vulnera Sanentur", false, 25);
         hechizo.setDescripcion(
                 "Hechizo sanador que parece una canción, y que corresponde al contrahechizo de la maldición sectumsempra.");
         hechizo.setNivelDanio(0);
-        hechizo.setNivelCuracion(10);
+        hechizo.setNivelCuracion(40);
         this.hechizosRecibir.add(hechizo);
 
-        hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
+        hechizo = new ArrestoMomentum("Arresto Momentum", false, 10);
         hechizo.setDescripcion(
                 "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.hechizosRecibir.add(hechizo);
+
+        hechizo = new CaveInimicum("Cave Inimicum", false, 15);
+        hechizo.setDescripcion(
+                "Se mantiene alejados a los enemigos");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Protego("Protego", false, 10);
+        hechizo.setDescripcion(
+                "es un encantamiento que protege al lanzador con un escudo invisible que refleja hechizos y bloquea entidades física");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new SectumSepra("Sectum Sepra", true, 30);
+        hechizo.setDescripcion(
+                "su efecto es el equivalente al de un cuchillo invisible, acuchillando repetidamente y provocando heridas sangrantes en la piel en pocos segundos");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(40);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Stupefy("Stupefy", false, 15);
+        hechizo.setDescripcion(
+                "es un hechizo que deja inconsciente a la víctima y detiene objetos en movimiento.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(25);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Reparifors("Reparifors", false, 10);
+        hechizo.setDescripcion(
+                "es un hechizo curativo que cura pequeñas dolencias generadas por magia, como la parálisis y el envenenamiento. Puede ser usado contra Stupefy");
+        hechizo.setNivelCuracion(20);
+        hechizo.setNivelDanio(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new MaleficioCruciatus("Maleficio Cruciatus", true, 20);
+        hechizo.setDescripcion(
+                "la maldición genera un dolor intenso y agónico en la víctima.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(30);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Incarcerous("Incarcerous", true, 20);
+        hechizo.setDescripcion(
+                "la maldición genera un dolor intenso y agónico en la víctima.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(30);
+        this.hechizosRecibir.add(hechizo);
+
 
     }
 
