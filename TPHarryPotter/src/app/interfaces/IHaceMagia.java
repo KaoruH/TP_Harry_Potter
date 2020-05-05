@@ -23,10 +23,5 @@ public interface IHaceMagia {
 
     void atacar(Personaje personaje, String hechizo);
 
-    //void curarse(Hechizo hechizo);
-
-    //void defenderse();
-
-    //void usarHechizoOcio();
 
 }
