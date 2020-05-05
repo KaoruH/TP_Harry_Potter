@@ -2,14 +2,14 @@ package app.personajes;
 
 public abstract class Personaje {
 
-    public Personaje(String nombre, int edad) {
+    public Personaje(String nombre, int salud) {
         this.nombre = nombre;
-        this.edad = edad;
+        this.salud = salud;
     }
 
     private String nombre;
 
-    private int salud = 80; // max 100 complementa con mascota y artefactos
+    private int salud;  // max 100 complementa con mascota y artefactos
 
     private int edad;
 

@@ -2,8 +2,8 @@ package app.personajes;
 
 public class Mascota extends Personaje {
 
-    public Mascota(String nombre, int edad, int bonusVida, int bonusEnergiaMagica) {
-        super(nombre, edad);
+    public Mascota(String nombre, int salud, int bonusVida, int bonusEnergiaMagica) {
+        super(nombre, salud);
         this.bonusVida = bonusVida;
         this.bonusEnergiaMagica = bonusEnergiaMagica;
     }

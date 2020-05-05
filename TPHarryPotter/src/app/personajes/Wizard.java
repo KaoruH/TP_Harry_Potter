@@ -9,13 +9,14 @@ import app.transportes.*;
 
 public class Wizard extends Persona implements IHaceMagia {
 
-    public Wizard(String nombre, int edad, boolean magoOscuro, Poder poderInicial) {
-        super(nombre, edad);
+    public Wizard(String nombre, int salud, int energiaMagica, boolean magoOscuro, Poder poderInicial) {
+        super(nombre, salud);
+        this.energiaMagica = energiaMagica;
         this.magoOscuro = magoOscuro;
         this.poderInicial = poderInicial;
     }
 
-    private int energiaMagica = 100; // max 150 - posible aumentar con artefactos/mascota:
+    private int energiaMagica;  // max 150 - posible aumentar con artefactos/mascota:
 
     private List<Hechizo> hechizos = new ArrayList<>();
 
@@ -80,9 +81,9 @@ public class Wizard extends Persona implements IHaceMagia {
     }
 
     @Override
-    public void setPoder(Poder poder) { // puede servir para cambiar poder inicial? Si si, descomentar:
+    public void setPoder(Poder poder) { // cambia el poderInicial
 
-        // this.poderInicial = poder;
+        this.poderInicial = poder;
 
     }
 
@@ -90,6 +91,8 @@ public class Wizard extends Persona implements IHaceMagia {
     public void aprender(Hechizo h) { // adiciona el hechizo a la lista de hechizos
 
         this.hechizos.add(h);
+
+        System.out.println(" [ Aprendiste el hechizo " + h.getNombre() + " ] ");
 
     }
 
@@ -111,6 +114,13 @@ public class Wizard extends Persona implements IHaceMagia {
         int a = personaje.getSalud() - b;
 
         personaje.setSalud(a);
+
+        a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
+
+        System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste " + hechizo.getEnergiaMagica()
+                + " de energia mágica ] ");
+        System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
 
     }
 
@@ -137,26 +147,34 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 personaje.setSalud(a);
 
-            }
+                a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
+                this.setEnergiaMagica(a);
 
-            // TODO -- else { System.out.println("Este hechizo no fue encontrado");} -- Es
-            // necesario?
+                System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
+                        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
+                System.out.println(
+                        " [ " + personaje.getNombre() + " tiene " + personaje.getSalud() + " puntos de vida ] ");
+
+            } else {
+
+                System.out.println(" [ El ataque falló ] ");
+            }
 
         }
 
     }
 
-    public void recibirCarta(Carta carta){
+    public boolean recibirCarta() {
 
-        System.out.println(" [ Recibiste una carta de " + carta.getSender() + " ] ");
+        return true;
 
     }
 
-    public boolean tomarDecision(int a){  
+    public boolean tomarDecision(int a) {
 
         if (a == 1) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -175,6 +193,30 @@ public class Wizard extends Persona implements IHaceMagia {
 
     public void setVarita(Varita varita) {
         this.varita = varita;
+    }
+
+    @Override
+    public void curarse(Hechizo hechizo) {
+
+        int a = this.getSalud() + hechizo.getNivelCuracion();
+
+        this.setSalud(a);
+
+        a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
+
+    }
+
+    @Override
+    public void defenderse() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void usarHechizoOcio() {
+        // TODO Auto-generated method stub
+
     }
 
 }

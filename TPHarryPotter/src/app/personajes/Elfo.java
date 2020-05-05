@@ -8,8 +8,8 @@ import app.poderes.hechizos.*;
 
 public class Elfo extends Criatura implements IHaceMagia {
 
-    public Elfo(String nombre, int edad) {
-        super(nombre, edad);
+    public Elfo(String nombre, int salud) {
+        super(nombre, salud);
 
     }
 
@@ -79,6 +79,13 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         personaje.setSalud(a);
 
+        a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
+
+        System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste " + hechizo.getEnergiaMagica()
+                + " de energia mágica ] ");
+        System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
+
     }
 
     @Override
@@ -104,12 +111,43 @@ public class Elfo extends Criatura implements IHaceMagia {
 
                 personaje.setSalud(a);
 
+                a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
+                this.setEnergiaMagica(a);
+
+                System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
+                        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
+                System.out.println(
+                        " [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
+
+            } else {
+
+                System.out.println(" [ El ataque falló ] ");
             }
 
-            // TODO -- else { System.out.println("Este hechizo no fue encontrado");} -- Es
-            // necesario?
-
         }
+
+    }
+
+    @Override
+    public void curarse(Hechizo hechizo) {
+        int a = this.getSalud() + hechizo.getNivelCuracion();
+
+        this.setSalud(a);
+
+        a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
+
+    }
+
+    @Override
+    public void defenderse() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void usarHechizoOcio() {
+        // TODO Auto-generated method stub
 
     }
 

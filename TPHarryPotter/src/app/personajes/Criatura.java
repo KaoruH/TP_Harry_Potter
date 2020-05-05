@@ -4,8 +4,8 @@ import app.interfaces.*;
 
 public class Criatura extends Personaje implements IEsMagico{
 
-    public Criatura(String nombre, int edad) {
-        super(nombre, edad);
+    public Criatura(String nombre, int salud) {
+        super(nombre, salud);
     }
 
     @Override

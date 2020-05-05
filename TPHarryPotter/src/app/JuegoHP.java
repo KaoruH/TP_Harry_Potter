@@ -13,7 +13,7 @@ public class JuegoHP {
     public static Scanner teclado = new Scanner(System.in);
 
     private List<Wizard> brujosAElegir = new ArrayList<>();
-    //private List<Personaje> npcs = new ArrayList<>(); TODO
+    private List<Hechizo> hechizosRecibir = new ArrayList<>();
     private List<Mascota> mascotas = new ArrayList<>();
     private Wizard brujoElegido;
 
@@ -24,68 +24,182 @@ public class JuegoHP {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
         this.inicializarBienvenida();
-        this.aplicarBonusMascota();
-    
-
     }
 
     public void inicializarPrimerBloque() {
 
+        this.inicializarHechizosARecibir();
         this.recibirObjetivo();
-        // crear otros inicializar como en el inicializar Apertura
+        this.salirDeLaCasa();
+        this.llegarALaEstacion();
+        this.entrarEnElExpreso();
+    }
+
+    public void entrarEnElExpreso() {
 
         int a;
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        salirDeLaCasa();
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Ahora que saliste, tenés que llegar a la estación.");
-        System.out.println("Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
+        System.out.println("Ahora falta poco! Sólo tenés que llegar hasta el Expreso de Hogwarts");
+        System.out.println("Qué prefieres hacer: insira 1 para ir directamente a la plataforma 9 3/4 o");
+        System.out.println("2 para pasear un poco?");
         a = teclado.nextInt();
 
-        if (a == 2) {
+        if (a == 1) {
 
-            System.out.println("Caminaste por veinte minutos.");
-            System.out.println(" [ Perdiste 5 puntos de vida ] ");
+            System.out.println("Sin desvíos para ti ya veo. Re responsable! Esto pide una recompensa:");
 
-            int b = this.brujoElegido.getSalud() - 5; // crear método en wizard? sufrirDanio
-            this.brujoElegido.setSalud(b);
-            
-            System.out.println("Cansado, te detuviste para descansar un poco y");
-            System.out.println("al mirar hacia un lado, encontraste algo inesperado.");
-
-            System.out.println(" [ Encontraste una escoba con tu nombre ] ");
-
-            //Escoba escoba = new Escoba(nombre, tipo);  // crear lista y sacar random
-
-            Hechizo hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
-            hechizo.setDescripcion(
-                    "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
-            hechizo.setNivelCuracion(0);
-            hechizo.setNivelDanio(0);
+            Hechizo hechizo = seleccionarHechizoRandom();
 
             this.brujoElegido.aprender(hechizo);
 
-            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre() + " ] ");
-            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste "
-                    + hechizo.getEnergiaMagica() + " de energia mágica ] ");
-
-            b = this.brujoElegido.getEnergiaMagica() - hechizo.getEnergiaMagica();
-            this.brujoElegido.setEnergiaMagica(b);
-
         } else {
 
-            System.out.println("Saliste por la puerta principal");
+            System.out.println("Tomaste tu tiempo para conoscer a la estación King's Cross");
+            System.out.println("y aprovechaste el paseo para comer algo.");
+            System.out.println(" [ Recuperaste 5 puntos de vida ] ");
+
+            int b = this.brujoElegido.getSalud() + 5;
+            this.brujoElegido.setSalud(b);
+
+            System.out.println("Y luego tomó tu camino hasta el expreso.");
 
         }
 
+        System.out.println("Adentraste la pared de la plataforma 9 3/4 y caminaste en direción al expreso.");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(" [ !!!! ] ");
+        System.out.println("Una figura se metío en tu frente");
+        System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi maestro.");
+
+        Elfo monstruo = new Elfo("Monstruo", 80);
+        monstruo.setEnergiaMagica(100);
+        monstruo.getHechizos().add(seleccionarHechizoRandom());
+        monstruo.getHechizos().add(seleccionarHechizoRandom());
+        monstruo.getHechizos().add(seleccionarHechizoRandom());
+
+        empezarLucha(monstruo);
+
+    }
+
+    public void empezarLucha(Personaje personaje) {
+
+        int a;
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println(" [ Iniciaste una lucha contra " + personaje.getNombre() + " ] ");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Insira 1 para ver tu status y 2 para eligir tu primera acción.");
+        a = teclado.nextInt();
+        if (a == 1) {
+
+            mostrarStatus();
+
+        }
+
+        System.out.println("Insira 1 para usar un hechizo, 2 para usar su poder inicial o 3 para no hacer nada.");
+        a = teclado.nextInt();
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        switch (a) { // TODO everything. Hay que separar en métodos menores, hay que arreglar los
+                     // métodos de IHACEMAGIA...
+            case 1:
+
+                mostrarHechizosBrujo();
+                System.out.println("Insira el número del hechizo que quiere usar:");
+                a = teclado.nextInt();
+
+                if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoAtaque) {
+
+                    brujoElegido.atacar(personaje, brujoElegido.getHechizos().get(a - 1));
+
+                } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoCuracion) {
+                    brujoElegido.curarse(brujoElegido.getHechizos().get(a - 1));
+                } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoDefensa) {
+
+                } else {
+
+                }
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public void llegarALaEstacion() {
+        int a;
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Ahora que saliste, tenés que llegar a la estación King's Cross.");
+        System.out.println(
+                "Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
+        a = teclado.nextInt();
+
+        if (a == 1) {
+
+            System.out.println("Caminaste, caminaste, caminaste...");
+            System.out.println(" ");
+            System.out.println(" [ Perdiste 5 puntos de vida por el cansancio ] ");
+            System.out.println(" ");
+
+            int b = this.brujoElegido.getSalud() - 5;
+            this.brujoElegido.setSalud(b);
+
+            System.out.println("Cansado, te detuviste para descansar un poco y");
+            System.out.println("al mirar hacia un lado y algo inesperado ocurrió.");
+            System.out.println(" ");
+
+            Hechizo hechizo = seleccionarHechizoRandom();
+
+            this.brujoElegido.aprender(hechizo);
+            System.out.println(" ");
+
+            System.out.println("Eventualmente llegaste a la estación King's Cross");
+
+        } else {
+
+            System.out.println(
+                    "Estendiste tu varita en la acera y luego el Autobús noctámbulo llegó casi aplastando tu pie");
+            System.out.println(" ");
+            System.out.println(" [ Perdiste 5 puntos de vida en el recorrido ] ");
+            System.out.println(" ");
+            int b = this.brujoElegido.getSalud() - 5;
+            this.brujoElegido.setSalud(b);
+
+            System.out.println("Llegaste a la estación King's Cross re rapido!");
+
+        }
+
+        System.out.println(" ");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println(" ");
     }
 
     public void salirDeLaCasa() {
         int a;
 
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(" ");
         System.out.println("Estás dentro de tu casa y tenés que sair.");
         System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
         a = teclado.nextInt();
@@ -94,31 +208,29 @@ public class JuegoHP {
             System.out.println("Todas las ventanas de la planta baja estan cerradas y no abren.");
             System.out.println("Subiste al último piso y saltaste por la ventana;");
 
-            Hechizo hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
-            hechizo.setDescripcion(
-                    "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
-            hechizo.setNivelCuracion(0);
-            hechizo.setNivelDanio(0);
+            Hechizo hechizo = seleccionarHechizoRandom();
 
             this.brujoElegido.aprender(hechizo);
+            System.out.println(" ");
 
-            System.out.println(" [ Perdiste 5 puntos de vida ] ");
+            System.out.println(" [ Perdiste 5 puntos de vida de vida al caer de la ventana ] ");
 
             int b = this.brujoElegido.getSalud() - 5; // crear método en wizard? sufrirDanio
             this.brujoElegido.setSalud(b);
+            System.out.println(" ");
 
-            System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre() + " ] ");
-            System.out.println(" [ Usaste el hechizo " + hechizo.getNombre() + " y consumiste "
-                    + hechizo.getEnergiaMagica() + " de energia mágica ] ");
-
-            b = this.brujoElegido.getEnergiaMagica() - hechizo.getEnergiaMagica();
-            this.brujoElegido.setEnergiaMagica(b);
+            System.out.println("Saliste por ventana con relativo exito.");
 
         } else {
 
             System.out.println("Saliste por la puerta principal sin grandes problemas.");
 
         }
+
+        System.out.println(" ");
+        System.out.println(" [Ingrese 0 para continuar] ");
+        teclado.next("0");
+        System.out.println(" ");
 
     }
 
@@ -129,41 +241,24 @@ public class JuegoHP {
         Poder poderInicial = new ParseTongue("ParseTongue");
         poderInicial.setDescripcion("Puedes hablar la lengua de las cobras.");
 
-        Wizard brujo = new Wizard("Harry Potter", 17, false, poderInicial);
+        Wizard brujo = new Wizard("Harry Potter", 90, 100, false, poderInicial);
+        brujo.setEdad(17);
 
-    //Poder poderInicial = new Expelliarmus("Expelliarmus", false, 10);
-    //poderInicial.setDescripcion("También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
-    //Wizard brujo = new Wizard("Harry Potter", 17, false, poderInicial);
-    //Hechizo hechizo = this.castearPoderAHechizo(poderInicial);
-    //hechizo.setNivelDanio(10);
-    //hechizo.setNivelCuracion(0);
-    //brujo.getHechizos().add(hechizo);
-
-        Varita varita = new Varita("Varita de Harry", 0.1, 0.1);
-        // TODO hay que definir si se hacen nuevos objetos o no de estas varitas
-        // iya: creo que no, para no complexar más
+        Varita varita = new VaritaAcebo("Varita de Harry", 0, 0);
         varita.setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
 
-        brujo.setPoderInicial(poderInicial);
         brujo.setVarita(varita);
         this.getBrujos().add(brujo);
 
         poderInicial = new Invisibilidad("Invisibilidad");
         poderInicial.setDescripcion("Puedes quedar invisible");
 
-        brujo = new Wizard("Hermione Granger", 17, false, poderInicial);
-        //poderInicial = new WingardumLeviosa("Wingwardum Leviosa", false, 10);
-        //poderInicial.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
-        //brujo = new Wizard("Hermione Granger", 17, false, poderInicial);
-        //hechizo = this.castearPoderAHechizo(poderInicial);
-        //hechizo.setNivelDanio(5); // TODO
-        //hechizo.setNivelCuracion(0);
-        //brujo.getHechizos().add(hechizo);
+        brujo = new Wizard("Hermione Granger", 90, 100, false, poderInicial);
+        brujo.setEdad(17);
 
-        varita = new Varita("Varita de Ronald", 0.1, 0.1); // TODO
-        varita.setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
+        varita = new VaritaVid("Varita de Hermione Granger", 0, 0); // TODO
+        varita.setDescripcion("27,3cm, hecha de vid, con núcleo de fibra de corazón de dragón.");
 
-        brujo.setPoderInicial(poderInicial);
         brujo.setVarita(varita);
 
         this.getBrujos().add(brujo);
@@ -171,20 +266,12 @@ public class JuegoHP {
         poderInicial = new Metamorfosis("Metamorfosis");
         poderInicial.setDescripcion("Puedes transformarse en un gato. Cuidado con los perros!");
 
-        brujo = new Wizard("Ron Weasley", 16, false, poderInicial);
-        //poderInicial = new VulneraSanetur("Vulnera Sanentur", false, 10);
-        //poderInicial.setDescripcion(
-                //"Hechizo sanador que parece una canción, y que corresponde al contrahechizo de la maldición sectumsempra.");
-         //brujo = new Wizard("Ronald Weasley", 17, false, poderInicial);
-        //hechizo = this.castearPoderAHechizo(poderInicial);
-        //hechizo.setNivelDanio(0);
-        //hechizo.setNivelCuracion(10);
-        //brujo.getHechizos().add(hechizo);
+        brujo = new Wizard("Ron Weasley", 90, 100, false, poderInicial);
+        brujo.setEdad(17);
 
-        varita = new Varita("Varita de Ronald", 0.1, 0.1); // TODO
+        varita = new VaritaSauce("Varita de Ronald", 0, 0); // TODO
         varita.setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
 
-        brujo.setPoderInicial(poderInicial);
         brujo.setVarita(varita);
 
         this.getBrujos().add(brujo);
@@ -196,59 +283,54 @@ public class JuegoHP {
 
     public void inicializarBienvenida() {
 
-        String a = this.getBrujoElegido().getNombre();
-
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("!! Bienvenido al mundo TP_Harry_Potter by Iya y Tati !!");
         System.out.println("Recién transmigraste a este mundo mágico, pero no tema, buena suerte!");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        this.eligirUnPersonaje(); // De acá
+        this.eligirUnPersonaje();
+
+        String a = this.getBrujoElegido().getNombre();
 
         Carta carta = new Carta("Carta de Hogwarts", "Hogwarts");
-        carta.setContenido(System.lineSeparator() + "'Estimad@ " + a + ", nos complace informarle que ha sido"
-                + System.lineSeparator() + " aceptado en Hogwarts School of Witchcraft and Wizardry. Venga!'");
+        carta.setContenido("\n'Estimad@ " + a
+                + ", nos complace informarle que ha sido \naceptado en Hogwarts School of Witchcraft and Wizardry. Venga!'");
 
         this.entregarCarta(carta);
 
         carta = new Carta("Carta de Hagrid", "Hagrid");
-        carta.setContenido(
-                System.lineSeparator() + "'Querid@ " + a + ", se suponía que debía guiarte a Hogwarts, pero tuve"
-                        + System.lineSeparator() + "una pequeña emergencia. Ya compré todos sus materiales y los"
-                        + System.lineSeparator() + "envié a Hogwarts. Cuanto a su mascota, podés elegirla"
-                        + System.lineSeparator() + "al final de esta carta. Tu poder inicial también se confirmará"
-                        + System.lineSeparator() + "para ayudarte a llegar al expreso de Hogwarts a salvo.''");
-
+        carta.setContenido("\n'Querid@ " + a
+                + ", se suponía que debía guiarte a Hogwarts, pero tuve \nuna pequeña emergencia. Ya compré todos sus materiales y los envié a \nHogwarts. Cuanto a su mascota, podés elegirla al final de esta carta. Tu poder \ninicial también se confirmará para ayudarte a llegar al expreso de Hogwarts a salvo. \nPS: Te envio tu varita también.'");
         this.entregarCarta(carta);
-
         this.recibisteTuPrimerMision();
         this.confirmacionPoderInicial();
         this.eligirUnaMascota();
-        this.mostrarStatus(); // hasta acá. Poner en App?
+        this.aplicarBonusMascota();
+        this.mostrarStatus();
         System.out.println("Ahora estamos estamos listos! Adelante!");
+        System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
     }
-
 
     // Esto carga las mascotas eligibles en bloque uno
 
     public void inicializarMascotas() {
 
-        Mascota mascota = new Buho("Edwiges", 2, 10, 5);
+        Mascota mascota = new Buho("Edwiges", 50, 10, 5);
 
         this.mascotas.add(mascota);
 
-        mascota = new Gato("Crookshanks", 3, 5, 10);
+        mascota = new Gato("Crookshanks", 50, 5, 10);
 
         this.mascotas.add(mascota);
 
-        mascota = new Rata("Scabbers", 35, 0, 5);
+        mascota = new Rata("Scabbers", 50, 0, 5);
 
         this.mascotas.add(mascota);
 
-        mascota = new Sapo("Trevor", 5, 7, 7);
+        mascota = new Sapo("Trevor", 50, 7, 7);
 
         this.mascotas.add(mascota);
 
@@ -329,8 +411,6 @@ public class JuegoHP {
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("Tu personaje eligido es " + this.getBrujoElegido().getNombre());
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
 
     }
 
@@ -372,12 +452,14 @@ public class JuegoHP {
         System.out.println(" [ Tu status actual es: ] ");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println("Nombre: " + this.brujoElegido.getNombre());
-        System.out.println("Edad: " + this.brujoElegido.getEdad());
+        System.out
+                .println("Nombre: " + this.brujoElegido.getNombre() + "     |   Edad: " + this.brujoElegido.getEdad());
+        System.out.println("Puntos de vida: " + this.brujoElegido.getSalud() + "     |   Energia Mágica: "
+                + this.brujoElegido.getEnergiaMagica());
         System.out.println("Hechizos:");
         mostrarHechizosBrujo();
-        System.out.println("Brujo Oscuro: " + transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro()));
-        System.out.println("Mascota: " + this.brujoElegido.getMascota().getNombre());
+        System.out.println("Brujo Oscuro: " + transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro())
+                + "     |   Mascota: " + this.brujoElegido.getMascota().getNombre());
         System.out.println("Varita: " + this.brujoElegido.getVarita().getDescripcion());
         if (this.brujoElegido.getArtefacto() != null) { // Hay que mejorar esta Linea. Duda cuanto a la responsabilidad
             System.out.println("Artefacto: " + this.brujoElegido.getArtefacto().getNombre());
@@ -396,27 +478,33 @@ public class JuegoHP {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println("*Escuchas algo raro*");
+        System.out.println("*Se Escucha algo raro*");
         System.out.println("Vos: ?? Que sonido es ese?");
         System.out.println("*Seguís el sonido*");
         System.out.println(".");
         System.out.println(".");
         System.out.println(".");
         System.out.println("*Chocaste con un elfo*");
+        System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
+        System.out.println(" ");
         System.out.println("Dobby: 'Hola, " + a + "! Perdoname! Me llamo Dobby,soy un elfo domestico.");
         System.out.println("No tengas miedo, no te quiero hacer mal. Supe que recibiste su carta de");
         System.out.println("Hogwards, pero tenga cuidado. Van acontecer cosas horribles por la");
         System.out.println("escuela y creo que eres la unica persona que puede salvar a Hogwards.'");
+        System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
+        System.out.println(" ");
         System.out.println("Vos: 'cosas horribles? Solo yo? por que? Dobby?'");
-        System.out.println("Dobby: 'Si! No tengo mucho tiempo. Solamente me escuche con atención");
-        System.out.println("Su objetivo es encontrar las 4 Reliquias de la Muerte");
+        System.out.println("Dobby: 'Si! No tengo mucho tiempo. Solamente me escuche con");
+        System.out.println("atención: tu objetivo es encontrar las  Reliquias de la Muerte");
         System.out.println("Para eso, va a tener que hacer amigos confiables y buscarlas.'");
+        System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
+        System.out.println(" ");
         System.out.println("Vos: 'Calma! Hay que explicarme eso!'");
         System.out.println("Dobby: '" + a + ", escuchaste?");
         System.out.println("Cuidate! Y solo confies em Dumbledore! Él me envió acá-'");
@@ -426,9 +514,10 @@ public class JuegoHP {
         System.out.println(".");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
-        System.out.println("Y ahora? Aceptas tu objectivo?");
-        System.out.println(" [Ingrese '1' para aceptar el ojectivo] ");
-        teclado.next("1");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("!! [ Recibiste la gran misión deste juego: encontrar las Reliquias de la Muerte! ] !!");
+        System.out.println(" ");
         System.out.println("Dobby dejó un regalo para ayudarte a llegar a Hogwards");
         System.out.println(" ");
 
@@ -437,8 +526,7 @@ public class JuegoHP {
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.brujoElegido.aprender(hechizo);
-
-        System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre()+ " ] ");
+        System.out.println(" ");
         System.out.println(" [Ingrese 'play' para comenzar] ");
         teclado.next("play");
     }
@@ -460,28 +548,18 @@ public class JuegoHP {
 
         int contador = 0;
 
-        for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
-            contador++;
+        if (this.brujoElegido.getHechizos() != null) {
+            for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
+                contador++;
 
-            System.out.println(contador + " - " + hechizo.getNombre() + " | Nivel de daño: " + hechizo.getNivelDanio()
-                    + " | Nivel de cura: " + hechizo.getNivelCuracion());
+                System.out.println(contador + " - " + hechizo.getNombre() + " | Nivel de daño: "
+                        + hechizo.getNivelDanio() + " + " + this.brujoElegido.getArtefacto().getAmplificadorDeDanio()
+                        + "%" + " | Nivel de cura: " + hechizo.getNivelCuracion() + " + "
+                        + this.brujoElegido.getArtefacto().getAmplificadorDeCuración() + "%");
+
+            }
 
         }
-
-    }
-
-    // Esto castea Poder a Hechizo
-
-    public Hechizo castearPoderAHechizo(Poder poderInicial) {
-
-        if (poderInicial instanceof Hechizo) {
-
-            Hechizo hechizos = (Hechizo) poderInicial;
-
-            return hechizos;
-        }
-
-        return null;
 
     }
 
@@ -505,18 +583,26 @@ public class JuegoHP {
 
         int numero;
 
-        this.brujoElegido.recibirCarta(carta); // TODO finalizar carta con metodo en wizard
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Quieres leer la carta de " + carta.getSender() + "? Insira 1 para si y 2 para no.");
+        if (this.brujoElegido.recibirCarta()) {
 
-        numero = teclado.nextInt();
+            System.out.println("_______________________________________________________________________");
+            System.out.println(" ");
+            System.out.println(" [ Recibiste una carta de " + carta.getSender() + " ] ");
 
-        if (this.brujoElegido.tomarDecision(numero)) {
+            System.out.println("_______________________________________________________________________");
+            System.out.println(" ");
+            System.out.println("Quieres leer la carta de " + carta.getSender() + "? Insira 1 para si y 2 para no.");
 
-            System.out.println(carta.getContenido());
+            numero = teclado.nextInt();
+
+            if (this.brujoElegido.tomarDecision(numero)) {
+
+                System.out.println(carta.getContenido());
+
+            }
 
         }
+
     }
 
     // "Activa" y exibe en pantalla el poder inicial
@@ -527,8 +613,7 @@ public class JuegoHP {
         System.out.println(" ");
         System.out.println(
                 "*Tu poder inicial, " + this.brujoElegido.getPoderInicial().getNombre() + ", está confirmado*");
-        System.out.println("_______________________________________________________________________");
-        
+
     }
 
     // Recibe Primer mision
@@ -537,9 +622,62 @@ public class JuegoHP {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out
-                .println("!! [ Recibiste tu primer misión: llegar vivo hasta llegar vivo al expreso de Hogwarts! ] !!");
+        System.out.println("!! [ Recibiste tu primer misión menor: llegar al expreso de Hogwarts! ] !!");
 
+    }
+
+    // Carga todos los hechizos
+
+    public void inicializarHechizosARecibir() {
+
+        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 10);
+        hechizo.setDescripcion(
+                "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
+        hechizo.setNivelDanio(10);
+        hechizo.setNivelCuracion(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10);
+        hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
+        hechizo.setNivelDanio(5);
+        hechizo.setNivelCuracion(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new VulneraSanetur("Vulnera Sanentur", false, 10);
+        hechizo.setDescripcion(
+                "Hechizo sanador que parece una canción, y que corresponde al contrahechizo de la maldición sectumsempra.");
+        hechizo.setNivelDanio(0);
+        hechizo.setNivelCuracion(10);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new ArrestoMomentum("Arresto Momentum", false, 5);
+        hechizo.setDescripcion(
+                "Es un encantamiento que hace más lento o detiene el movimiento de un objeto o persona.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(0);
+        this.hechizosRecibir.add(hechizo);
+
+    }
+
+    // Selecciona un hechizo aleatorio
+
+    public Hechizo seleccionarHechizoRandom() {
+
+        Random random = new Random();
+
+        int numero = random.nextInt(hechizosRecibir.size());
+
+        Hechizo hechizo = hechizosRecibir.get(numero);
+
+        while (brujoElegido.getHechizos().contains(hechizo)) {
+
+            numero = random.nextInt(hechizosRecibir.size());
+
+            hechizo = hechizosRecibir.get(numero);
+
+        }
+
+        return hechizo;
     }
 
     // GETTERS AND SETTERS
