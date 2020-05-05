@@ -195,7 +195,7 @@ public class Wizard extends Persona implements IHaceMagia {
         this.varita = varita;
     }
 
-    @Override
+   /** @Override  TODO
     public void curarse(Hechizo hechizo) {
 
         int a = this.getSalud() + hechizo.getNivelCuracion();
@@ -218,5 +218,7 @@ public class Wizard extends Persona implements IHaceMagia {
         // TODO Auto-generated method stub
 
     }
+
+    */
 
 }

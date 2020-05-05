@@ -119,7 +119,7 @@ public class JuegoHP {
                     brujoElegido.atacar(personaje, brujoElegido.getHechizos().get(a - 1));
 
                 } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoCuracion) {
-                    brujoElegido.curarse(brujoElegido.getHechizos().get(a - 1));
+                   // brujoElegido.curarse(brujoElegido.getHechizos().get(a - 1));
                 } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoDefensa) {
 
                 } else {
@@ -312,6 +312,7 @@ public class JuegoHP {
         System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
+        System.out.println(" ");
     }
 
     // Esto carga las mascotas eligibles en bloque uno
@@ -548,7 +549,7 @@ public class JuegoHP {
 
         int contador = 0;
 
-        if (this.brujoElegido.getHechizos() != null) {
+        if (this.brujoElegido.getHechizos() != null && this.brujoElegido.getArtefacto() != null) {
             for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
                 contador++;
 
@@ -559,6 +560,15 @@ public class JuegoHP {
 
             }
 
+        } else if (this.brujoElegido.getHechizos() != null) {
+
+            for (Hechizo hechizo : this.brujoElegido.getHechizos()) {
+                contador++;
+
+                System.out.println(contador + " - " + hechizo.getNombre() + " | Nivel de daño: "
+                        + hechizo.getNivelDanio() + " | Nivel de cura: " + hechizo.getNivelCuracion());
+
+            }
         }
 
     }

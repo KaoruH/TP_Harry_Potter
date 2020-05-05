@@ -128,7 +128,7 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     }
 
-    @Override
+    /** @Override
     public void curarse(Hechizo hechizo) {
         int a = this.getSalud() + hechizo.getNivelCuracion();
 
@@ -150,5 +150,6 @@ public class Elfo extends Criatura implements IHaceMagia {
         // TODO Auto-generated method stub
 
     }
+    */
 
 }
