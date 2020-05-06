@@ -1,13 +1,15 @@
 package app.personajes;
 
 import java.util.*;
+
+import app.JuegoHP;
 import app.artefactos.*;
 import app.interfaces.*;
 import app.poderes.*;
 import app.poderes.hechizos.*;
 import app.transportes.*;
 
-public class Wizard extends Persona implements IHaceMagia {
+public class Wizard extends Persona implements IHaceHechizo {
 
     public Wizard(String nombre, int salud, int energiaMagica, boolean magoOscuro, Poder poderInicial) {
         super(nombre, salud);
@@ -103,6 +105,36 @@ public class Wizard extends Persona implements IHaceMagia {
         int b;
         int c = hechizo.getNivelDanio();
 
+        if (hechizo.getEsOscuro() && !this.getMagoOscuro()) {  // si el hechizo es oscuro, el brujo se convierte en oscuro y el daño *2 una vez
+
+            this.setMagoOscuro(true);
+
+            c *= 2;
+
+            JuegoHP juego = new JuegoHP();
+
+            juego.imprimirConversionMagoOscuro(this.getNombre()); // sacar duda si se puede llamar acá asi o si es mejor escribir otro metodo allá
+            
+        }
+
+        if (personaje instanceof Wizard){ // Si el oponente tiene artefacto con amplificador curacion, se resta este del daño
+
+            if (((Wizard) personaje).getArtefacto() != null) {
+
+                b = (int) Math.round(c - (c * ((Wizard) personaje).getArtefacto().getAmplificadorDeCuración()));
+                
+            }
+            
+        } else if(personaje instanceof Elfo){
+
+            if (((Elfo) personaje).getArtefacto() != null) {
+
+                b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
+                
+            }
+
+        }
+
         if (this.artefacto != null) {
 
             b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
@@ -111,16 +143,13 @@ public class Wizard extends Persona implements IHaceMagia {
             b = c;
         }
 
+
         int a = personaje.getSalud() - b;
 
         personaje.setSalud(a);
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
-
-        System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste " + hechizo.getEnergiaMagica()
-                + " de energia mágica ] ");
-        System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
 
     }
 
@@ -133,6 +162,32 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 int b;
                 int c = hechizo1.getNivelDanio();
+
+                if (hechizo1.getEsOscuro() & !this.getMagoOscuro()) { // si el hechizo es oscuro, el brujo se convierte en oscuro y el daño *2 una vez
+
+                    this.setMagoOscuro(true);
+
+                    c *= 2;
+                    
+                }
+
+                if (personaje instanceof Wizard){ // Si el oponente tiene artefacto con amplificador curacion, se resta este del daño
+
+                    if (((Wizard) personaje).getArtefacto() != null) {
+        
+                        b = (int) Math.round(c - (c * ((Wizard) personaje).getArtefacto().getAmplificadorDeCuración()));
+                        
+                    }
+                    
+                } else if(personaje instanceof Elfo){
+        
+                    if (((Elfo) personaje).getArtefacto() != null) {
+        
+                        b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
+                        
+                    }
+        
+                }
 
                 if (this.artefacto != null) {
 
@@ -150,15 +205,16 @@ public class Wizard extends Persona implements IHaceMagia {
                 a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
                 this.setEnergiaMagica(a);
 
-                System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
-                        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
-                System.out.println(
-                        " [ " + personaje.getNombre() + " tiene " + personaje.getSalud() + " puntos de vida ] ");
+                //System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
+                //        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
+                //System.out.println(
+                //        " [ " + personaje.getNombre() + " tiene " + personaje.getSalud() + " puntos de vida ] ");
 
-            } else {
+            } 
+            //else {
 
-                System.out.println(" [ El ataque falló ] ");
-            }
+                //System.out.println(" [ El ataque falló ] ");
+            //}
 
         }
 
@@ -195,7 +251,7 @@ public class Wizard extends Persona implements IHaceMagia {
         this.varita = varita;
     }
 
-   /** @Override  TODO
+   @Override
     public void curarse(Hechizo hechizo) {
 
         int a = this.getSalud() + hechizo.getNivelCuracion();
@@ -208,17 +264,19 @@ public class Wizard extends Persona implements IHaceMagia {
     }
 
     @Override
-    public void defenderse() {
-        // TODO Auto-generated method stub
-
+    public void defenderse(Hechizo hechizo) {
+        
+        int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
     }
 
     @Override
-    public void usarHechizoOcio() {
-        // TODO Auto-generated method stub
+    public void usarHechizoOcio(Hechizo hechizo) {
 
+        int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
     }
 
-    */
+    
 
 }

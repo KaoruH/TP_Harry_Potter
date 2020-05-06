@@ -10,6 +10,16 @@ import app.poderes.hechizos.*;
 
 public class JuegoHP {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     public static Scanner teclado = new Scanner(System.in);
 
     private List<Wizard> brujosAElegir = new ArrayList<>();
@@ -22,7 +32,7 @@ public class JuegoHP {
 
     public void inicializarApertura() {
         this.inicializarBrujosBloque1();
-        this.inicializarMascotas();
+        this.inicializarMascotas(); //TODO el bonus de la mascota no se esta aplicando!
         this.inicializarBienvenida();
     }
 
@@ -77,9 +87,9 @@ public class JuegoHP {
 
         Elfo monstruo = new Elfo("Monstruo", 80);
         monstruo.setEnergiaMagica(100);
-        monstruo.getHechizos().add(seleccionarHechizoRandom());
-        monstruo.getHechizos().add(seleccionarHechizoRandom());
-        monstruo.getHechizos().add(seleccionarHechizoRandom());
+        for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
+            monstruo.getHechizos().add(seleccionarHechizoRandom()); //hay que mejorar esto para que no se add lo mismo hechizo
+        }
 
         empezarLucha(monstruo);
 
@@ -98,48 +108,98 @@ public class JuegoHP {
         a = teclado.nextInt();
         if (a == 1) {
 
-            mostrarStatus();
+            imprimirStatus();
 
         }
 
-        System.out.println("Insira 1 para usar un hechizo, 2 para usar su poder inicial o 3 para no hacer nada.");
-        a = teclado.nextInt();
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        switch (a) { // TODO everything. Hay que separar en métodos menores, hay que arreglar los
-                     // métodos de IHACEMAGIA...
-            case 1:
+
+        boolean turnoP1 = true;
+
+        while (brujoElegido.getSalud() > 0 && personaje.getSalud() > 0) {
+
+            Personaje atacante;
+            Personaje defensor;
+            Hechizo hechizo;
+
+            if (turnoP1) {
+
+                atacante = this.brujoElegido;
+                defensor = personaje;
 
                 mostrarHechizosBrujo();
                 System.out.println("Insira el número del hechizo que quiere usar:");
                 a = teclado.nextInt();
 
-                if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoAtaque) {
+                hechizo = this.brujoElegido.getHechizos().get(a - 1);
 
-                    brujoElegido.atacar(personaje, brujoElegido.getHechizos().get(a - 1));
+                procesarTipoHechizoLanzado(atacante, defensor, hechizo);
 
-                } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoCuracion) {
-                   // brujoElegido.curarse(brujoElegido.getHechizos().get(a - 1));
-                } else if (brujoElegido.getHechizos().get(a - 1) instanceof HechizoDefensa) {
+            } else {
 
-                } else {
+                Random random = new Random();
 
+                atacante = personaje;
+                defensor = this.brujoElegido;
+
+                if (personaje instanceof Wizard) {
+
+                    Wizard brujo = (Wizard) personaje;
+
+                    a = random.nextInt(brujo.getHechizos().size());
+
+                    hechizo = brujo.getHechizos().get(a);
+
+                    procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+
+                } else if (personaje instanceof Elfo) {
+                    Elfo elfo = (Elfo) personaje;
+
+                    a = random.nextInt(elfo.getHechizos().size());
+
+                    hechizo = elfo.getHechizos().get(a);
+
+                    procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+
+                    
                 }
 
-                break;
+            }
 
-            case 2:
+            turnoP1 = !turnoP1; // TODO hay que hacer la excepcion para el hechizo de defensa!
 
-                break;
-
-            case 3:
-
-                break;
-
-            default:
-                break;
         }
 
+        if (this.brujoElegido.getSalud() > 0){
+            System.out.println(" ");
+            System.out.println(" [ " + this.brujoElegido.getNombre() + " gano la lucha ] ");
+            System.out.println(" ");
+        }
+        else {
+            System.out.println(" ");
+            System.out.println(" [ " + personaje.getNombre() + " gano la lucha ] ");
+            System.out.println(" ");
+        }
+
+    }
+
+    public void procesarTipoHechizoLanzado(Personaje atacante, Personaje defensor, Hechizo hechizo) {
+
+        if (hechizo instanceof HechizoAtaque) {
+
+            procesarAtaque(atacante, defensor, hechizo);
+
+        } else if (hechizo instanceof HechizoCuracion) {
+            procesarCuracion(atacante, hechizo);
+
+        } else if (hechizo instanceof HechizoDefensa) {
+            procesarDefensa(atacante, defensor, hechizo);
+
+        } else {
+            procesarHechizoOcio(atacante, hechizo);
+
+        } // TODO ESTABA ACA
     }
 
     public void llegarALaEstacion() {
@@ -303,11 +363,11 @@ public class JuegoHP {
         carta.setContenido("\n'Querid@ " + a
                 + ", se suponía que debía guiarte a Hogwarts, pero tuve \nuna pequeña emergencia. Ya compré todos sus materiales y los envié a \nHogwarts. Cuanto a su mascota, podés elegirla al final de esta carta. Tu poder \ninicial también se confirmará para ayudarte a llegar al expreso de Hogwarts a salvo. \nPS: Te envio tu varita también.'");
         this.entregarCarta(carta);
-        this.recibisteTuPrimerMision();
-        this.confirmacionPoderInicial();
+        this.imprimirRecibirPrimerMision();
+        this.confirmarPoderInicial();
         this.eligirUnaMascota();
         this.aplicarBonusMascota();
-        this.mostrarStatus();
+        this.imprimirStatus();
         System.out.println("Ahora estamos estamos listos! Adelante!");
         System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
@@ -448,7 +508,7 @@ public class JuegoHP {
 
     // Esto exibe en pantalla los datos del jugador
 
-    public void mostrarStatus() {
+    public void imprimirStatus() {
 
         System.out.println(" [ Tu status actual es: ] ");
         System.out.println("_______________________________________________________________________");
@@ -617,7 +677,7 @@ public class JuegoHP {
 
     // "Activa" y exibe en pantalla el poder inicial
 
-    public void confirmacionPoderInicial() {
+    public void confirmarPoderInicial() {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
@@ -628,7 +688,7 @@ public class JuegoHP {
 
     // Recibe Primer mision
 
-    public void recibisteTuPrimerMision() {
+    public void imprimirRecibirPrimerMision() {
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
@@ -668,8 +728,7 @@ public class JuegoHP {
         this.hechizosRecibir.add(hechizo);
 
         hechizo = new CaveInimicum("Cave Inimicum", false, 15);
-        hechizo.setDescripcion(
-                "Se mantiene alejados a los enemigos");
+        hechizo.setDescripcion("Se mantiene alejados a los enemigos");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.hechizosRecibir.add(hechizo);
@@ -689,8 +748,7 @@ public class JuegoHP {
         this.hechizosRecibir.add(hechizo);
 
         hechizo = new Stupefy("Stupefy", false, 15);
-        hechizo.setDescripcion(
-                "es un hechizo que deja inconsciente a la víctima y detiene objetos en movimiento.");
+        hechizo.setDescripcion("es un hechizo que deja inconsciente a la víctima y detiene objetos en movimiento.");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(25);
         this.hechizosRecibir.add(hechizo);
@@ -703,19 +761,16 @@ public class JuegoHP {
         this.hechizosRecibir.add(hechizo);
 
         hechizo = new MaleficioCruciatus("Maleficio Cruciatus", true, 20);
-        hechizo.setDescripcion(
-                "la maldición genera un dolor intenso y agónico en la víctima.");
+        hechizo.setDescripcion("la maldición genera un dolor intenso y agónico en la víctima.");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(30);
         this.hechizosRecibir.add(hechizo);
 
         hechizo = new Incarcerous("Incarcerous", true, 20);
-        hechizo.setDescripcion(
-                "la maldición genera un dolor intenso y agónico en la víctima.");
+        hechizo.setDescripcion("la maldición genera un dolor intenso y agónico en la víctima.");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(30);
         this.hechizosRecibir.add(hechizo);
-
 
     }
 
@@ -738,6 +793,116 @@ public class JuegoHP {
         }
 
         return hechizo;
+    }
+
+    // Para procesar el ataque
+
+    public void procesarAtaque(Personaje atacante, Personaje defensor, Hechizo hechizo) {
+
+        if (atacante instanceof Wizard) {
+
+            Wizard wizard = (Wizard) atacante;
+
+            wizard.atacar(defensor, hechizo);
+
+            imprimirHablaAtaque(wizard, defensor);
+
+        } else if (atacante instanceof Elfo) {
+
+            Elfo elfo = (Elfo) atacante;
+
+            elfo.atacar(defensor, hechizo);
+
+            imprimirHablaAtaque(elfo, defensor);
+        }
+
+    }
+
+    public void imprimirHablaAtaque(Personaje atacante, Personaje defensor) {
+
+        System.out.println(" ");
+        System.out.println(" [ " + atacante.getNombre() + " atacó " + defensor.getNombre() + " ] ");
+        System.out.println(" [ La salud actual de " + defensor.getNombre() + " es de " + defensor.getSalud() + " ] ");
+        System.out.println(" ");
+
+    }
+
+    // Esto va a procesar la curación
+
+    public void procesarCuracion(Personaje atacante, Hechizo hechizo) {
+
+        if (atacante instanceof Wizard) {
+
+            Wizard wizard = (Wizard) atacante;
+
+            wizard.curarse(hechizo);
+
+            imprimirHablaCuracion(wizard);
+
+        } else if (atacante instanceof Elfo) {
+
+            Elfo elfo = (Elfo) atacante;
+
+            elfo.curarse(hechizo);
+
+            imprimirHablaCuracion(elfo);
+        }
+
+    }
+
+    public void imprimirHablaCuracion(Personaje personaje) {
+
+        System.out.println(" ");
+        System.out.println(" [ " + personaje.getNombre() + " usó un hechizo de curación ] ");
+        System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
+        System.out.println(" ");
+
+    }
+
+    public void procesarDefensa(Personaje atacante, Personaje defensor, Hechizo hechizo) {
+
+        if (atacante instanceof Wizard) {
+
+            Wizard wizard = (Wizard) atacante;
+
+            wizard.defenderse(hechizo);
+
+            imprimirHablaDefensa(wizard, defensor);
+
+        } else if (atacante instanceof Elfo) {
+
+            Elfo elfo = (Elfo) atacante;
+
+            elfo.defenderse(hechizo);
+
+            imprimirHablaDefensa(elfo, defensor);
+        }
+
+    }
+
+    public void imprimirHablaDefensa(Personaje atacante, Personaje defensor) {
+
+        System.out.println(" ");
+        System.out.println(" [ " + atacante.getNombre() + " usó un hechizo de defensa ] ");
+        System.out.println(" ");
+        System.out.println(" [ El ataque de " + defensor.getNombre() + " fue defendido ] ");
+        System.out.println(" ");
+    }
+
+    public void procesarHechizoOcio(Personaje atacante, Hechizo hechizo) {
+
+        System.out.println(" ");
+        System.out.println(" [ " + atacante.getNombre() + " usó un hechizo de ócio... ] ");
+        System.out.println(" ");
+    }
+
+
+    public void imprimirConversionMagoOscuro(String nombre){
+
+        System.out.println(" ");
+        System.out.println(" [ " + nombre + " se convertió en un mago oscuro y el daño se multiplicó por 2 (una sóla vez) ] ");
+        System.out.println(" ");
+
     }
 
     // GETTERS AND SETTERS

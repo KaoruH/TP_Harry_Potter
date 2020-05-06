@@ -6,10 +6,8 @@ public interface IHaceHechizo extends IHaceMagia {
      
     void curarse(Hechizo hechizo);
 
-    void defenderse();
+    void defenderse(Hechizo hechizo);
 
-    void usarHechizoOcio();
-
-   
+    void usarHechizoOcio(Hechizo hechizo); 
 
 }

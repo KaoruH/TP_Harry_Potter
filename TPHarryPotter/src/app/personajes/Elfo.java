@@ -6,7 +6,7 @@ import app.interfaces.*;
 import app.poderes.Poder;
 import app.poderes.hechizos.*;
 
-public class Elfo extends Criatura implements IHaceMagia {
+public class Elfo extends Criatura implements IHaceHechizo{
 
     public Elfo(String nombre, int salud) {
         super(nombre, salud);
@@ -82,10 +82,6 @@ public class Elfo extends Criatura implements IHaceMagia {
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
 
-        System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste " + hechizo.getEnergiaMagica()
-                + " de energia mágica ] ");
-        System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
-
     }
 
     @Override
@@ -114,21 +110,21 @@ public class Elfo extends Criatura implements IHaceMagia {
                 a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
                 this.setEnergiaMagica(a);
 
-                System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
-                        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
-                System.out.println(
-                        " [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
+                //System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
+                //        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
+                //System.out.println(
+                //        " [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
 
             } else {
 
-                System.out.println(" [ El ataque falló ] ");
+                //System.out.println(" [ El ataque falló ] ");
             }
 
         }
 
     }
 
-    /** @Override
+    @Override
     public void curarse(Hechizo hechizo) {
         int a = this.getSalud() + hechizo.getNivelCuracion();
 
@@ -140,16 +136,19 @@ public class Elfo extends Criatura implements IHaceMagia {
     }
 
     @Override
-    public void defenderse() {
-        // TODO Auto-generated method stub
-
+    public void defenderse(Hechizo hechizo) {
+        
+        int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
     }
 
     @Override
-    public void usarHechizoOcio() {
-        // TODO Auto-generated method stub
+    public void usarHechizoOcio(Hechizo hechizo) {
 
+        int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        this.setEnergiaMagica(a);
     }
-    */
+
+    
 
 }
