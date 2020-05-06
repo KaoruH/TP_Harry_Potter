@@ -93,9 +93,6 @@ public class Wizard extends Persona implements IHaceHechizo {
     public void aprender(Hechizo h) { // adiciona el hechizo a la lista de hechizos
 
         this.hechizos.add(h);
-
-        System.out.println(" [ Aprendiste el hechizo " + h.getNombre() + " ] ");
-
     }
 
     @Override
@@ -205,16 +202,8 @@ public class Wizard extends Persona implements IHaceHechizo {
                 a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
                 this.setEnergiaMagica(a);
 
-                //System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
-                //        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
-                //System.out.println(
-                //        " [ " + personaje.getNombre() + " tiene " + personaje.getSalud() + " puntos de vida ] ");
-
             } 
-            //else {
 
-                //System.out.println(" [ El ataque falló ] ");
-            //}
 
         }
 
@@ -254,12 +243,16 @@ public class Wizard extends Persona implements IHaceHechizo {
    @Override
     public void curarse(Hechizo hechizo) {
 
-        int a = this.getSalud() + hechizo.getNivelCuracion();
+        if (this.getSalud() <= 100){
+
+            int a = this.getSalud() + hechizo.getNivelCuracion();
 
         this.setSalud(a);
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
+
+        }
 
     }
 

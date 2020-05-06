@@ -7,15 +7,15 @@ import app.poderes.hechizos.*;
 
 public interface IHaceMagia {
 
-    int getEnergiaMagica(); // Wizard y Elfo ya lo tienen como getter
+    int getEnergiaMagica(); 
 
-    void setEnergiaMagica(int energiaMagica); // Wizard y Elfo ya lo tienen como setter
+    void setEnergiaMagica(int energiaMagica); 
 
-    Poder getPoderInicial(); // Wizard ya lo tienen como getter
+    Poder getPoderInicial(); 
 
     void setPoder(Poder poder);
 
-    Artefacto getArtefacto(); // Wizard y Elfo ya lo tienen como getter
+    Artefacto getArtefacto(); 
 
     void aprender(Hechizo h);
 
