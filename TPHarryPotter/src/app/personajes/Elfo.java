@@ -50,7 +50,7 @@ public class Elfo extends Criatura implements IHaceHechizo{
     }
 
     @Override
-    public void setPoder(Poder poder) { // El elfo no tiene "Poder"... Tenemos que crear uno?
+    public void setPoder(Poder poder) { // El elfo no tiene "Poder"... Tenemos que crear uno? si
 
     }
 

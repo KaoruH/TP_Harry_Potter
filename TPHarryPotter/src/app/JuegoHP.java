@@ -22,17 +22,18 @@ public class JuegoHP {
 
     public static Scanner teclado = new Scanner(System.in);
 
-    private List<Wizard> brujosAElegir = new ArrayList<>();
+    private List<Wizard> brujosAElegir = new ArrayList<>(); 
     private List<Hechizo> hechizosRecibir = new ArrayList<>();
     private List<Mascota> mascotas = new ArrayList<>();
-    private Wizard brujoElegido;
+    private Wizard brujoElegido; 
+    private List<Hechizo> hechizosDanioBajo = new ArrayList<>();
 
     // Ver si debo crear siempre una nueva variable (int, string) para cada método o
     // si puedo reutilizarlas
 
     public void inicializarApertura() {
         this.inicializarBrujosBloque1();
-        this.inicializarMascotas(); //TODO el bonus de la mascota no se esta aplicando!
+        this.inicializarMascotas();
         this.inicializarBienvenida();
     }
 
@@ -87,9 +88,8 @@ public class JuegoHP {
 
         Elfo monstruo = new Elfo("Monstruo", 80);
         monstruo.setEnergiaMagica(100);
-        for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
-            monstruo.getHechizos().add(seleccionarHechizoRandom()); //hay que mejorar esto para que no se add lo mismo hechizo
-        }
+
+         //TODO llamar método Random con hechizos bajo
 
         empezarLucha(monstruo);
 
@@ -316,7 +316,7 @@ public class JuegoHP {
         brujo = new Wizard("Hermione Granger", 90, 100, false, poderInicial);
         brujo.setEdad(17);
 
-        varita = new VaritaVid("Varita de Hermione Granger", 0, 0); // TODO
+        varita = new VaritaVid("Varita de Hermione Granger", 0, 0);
         varita.setDescripcion("27,3cm, hecha de vid, con núcleo de fibra de corazón de dragón.");
 
         brujo.setVarita(varita);
@@ -329,7 +329,7 @@ public class JuegoHP {
         brujo = new Wizard("Ron Weasley", 90, 100, false, poderInicial);
         brujo.setEdad(17);
 
-        varita = new VaritaSauce("Varita de Ronald", 0, 0); // TODO
+        varita = new VaritaSauce("Varita de Ronald", 0, 0);
         varita.setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
 
         brujo.setVarita(varita);
@@ -698,9 +698,55 @@ public class JuegoHP {
 
     // Carga todos los hechizos
 
+    public void inicializarHechizosDanioBajo(){
+        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); //ataque
+        hechizo.setDescripcion("paralisa la victima");
+        hechizo.setNivelDanio(25);
+        hechizo.setNivelCuracion(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10); //ocio
+        hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
+        hechizo.setNivelDanio(0);
+        hechizo.setNivelCuracion(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Stupefy("Confusion", false, 15); //ataque
+        hechizo.setDescripcion("Confusion mental por un rato a la victima");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(10);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Stupefy("Fecho explosivo", false, 15); //ataque
+        hechizo.setDescripcion("Genera un fehco de luz como si fuera foguetes");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(20);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Protego("Escudo de protecion", false, 10); //defensa
+        hechizo.setDescripcion("es un encantamiento que protege al lanzador con un escudo invisible que refleja hechizos y bloquea entidades física");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(0);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Stupefy("Fecho de luz verde", false, 15); //ataque
+        hechizo.setDescripcion("hace un fecho de luz de danio");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Stupefy("Fecho de luz roja", false, 15); //ataque
+        hechizo.setDescripcion("hace un fecho de luz de danio");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosRecibir.add(hechizo);
+
+
+    }
+
     public void inicializarHechizosARecibir() {
 
-        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 15);
+        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 15); //ataque
         hechizo.setDescripcion(
                 "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
         hechizo.setNivelDanio(25);
@@ -795,6 +841,33 @@ public class JuegoHP {
         return hechizo;
     }
 
+    public Hechizo randomHechizoBajoDanio(Personaje personaje) {
+
+        Random random = new Random();
+
+        int numero = random.nextInt(hechizosDanioBajo.size());
+
+        Hechizo hechizo = hechizosDanioBajo.get(numero);
+
+        if (personaje instanceof Elfo){
+            Elfo perso = (Elfo) personaje;
+        } else if (personaje instanceof Wizard) {
+            Wizard perso = (Wizard) personaje;
+        }
+
+        while (perso.getHechizos().contains(hechizo)) {  //TODO hacer correcion del casteo perso
+
+            numero = random.nextInt(hechizosDanioBajo.size());
+
+            hechizo = hechizosDanioBajo.get(numero);
+
+        }
+
+        return hechizo;
+    }
+
+
+
     // Para procesar el ataque
 
     public void procesarAtaque(Personaje atacante, Personaje defensor, Hechizo hechizo) {
@@ -849,6 +922,8 @@ public class JuegoHP {
         }
 
     }
+
+
 
     public void imprimirHablaCuracion(Personaje personaje) {
 
