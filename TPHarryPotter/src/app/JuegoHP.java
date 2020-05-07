@@ -36,12 +36,12 @@ public class JuegoHP {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
         this.inicializarBienvenida();
+        this.inicializarHechizosARecibir();
+        this.recibirObjetivo();
     }
 
     public void inicializarPrimerBloque() {
 
-        this.inicializarHechizosARecibir();
-        this.recibirObjetivo();
         this.salirDeLaCasa();
         this.llegarALaEstacion();
         this.entrarEnElExpreso();
@@ -83,8 +83,8 @@ public class JuegoHP {
         System.out.println(".");
         System.out.println(".");
         System.out.println(".");
-        System.out.println(" [ !!!! ] ");
-        System.out.println("Una figura se metío en tu frente");
+        System.out.println(" [ !!!! ] Una figura se metío en tu frente");
+        System.out.println(" ");
         System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi maestro.");
 
         Elfo monstruo = new Elfo("Monstruo", 80);
@@ -139,7 +139,8 @@ public class JuegoHP {
 
                 procesarTipoHechizoLanzado(atacante, defensor, hechizo);
 
-            } else {
+            } else { // TODO ver si es mejor cambiar el if de adentro en else if del if mayor (no lo
+                     // hice por las lineas 144, 146 y 147 que tendria que repetir)
 
                 Random random = new Random();
 
@@ -175,9 +176,6 @@ public class JuegoHP {
 
             }
 
-            // turno1 = !turno1; // TODO hay que hacer la excepcion para el hechizo de
-            // defensa!
-
         }
 
         if (this.brujoElegido.getSalud() > 0) {
@@ -187,7 +185,24 @@ public class JuegoHP {
         } else {
             System.out.println(" ");
             System.out.println(" [ " + personaje.getNombre() + " gano la lucha ] ");
+            System.out.println(" [ " + this.brujoElegido.getNombre() + " murrió ] ");
             System.out.println(" ");
+            System.out.println("Insira 1 para intentar novamiente o 2 para desistir.");
+            a = teclado.nextInt();
+
+            if (a == 1) {
+
+                inicializarPrimerBloque();
+
+            } else {
+
+                System.out.println("_______________________________________________________________________");
+                System.out.println(" ");
+                System.out.println(" [ GAME OVER ] ");
+                System.out.println("_______________________________________________________________________");
+                System.out.println(" ");
+
+            }
         }
 
     }
@@ -220,6 +235,7 @@ public class JuegoHP {
         System.out.println(
                 "Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
         a = teclado.nextInt();
+        System.out.println(" ");
 
         if (a == 1) {
 
@@ -272,10 +288,12 @@ public class JuegoHP {
         System.out.println("Estás dentro de tu casa y tenés que sair.");
         System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
         a = teclado.nextInt();
+        System.out.println(" ");
         if (a == 2) {
 
             System.out.println("Todas las ventanas de la planta baja estan cerradas y no abren.");
             System.out.println("Subiste al último piso y saltaste por la ventana;");
+            System.out.println(" ");
 
             Hechizo hechizo = seleccionarHechizoRandom(this.brujoElegido);
 
@@ -922,16 +940,28 @@ public class JuegoHP {
             imprimirHablaAtaque(elfo, defensor, hechizo);
         }
 
+        /**
+         * TODO considerar cambiar el atacante para IHaceHechizo. Economiza instanceof.
+         * atacante.atacar(defensor, hechizo);
+         * 
+         * Personaje atacante1 = (Personaje) atacante;
+         * 
+         * 
+         * imprimirHablaAtaque(atacante1, defensor, hechizo);
+         */
+
     }
 
     public void imprimirHablaAtaque(Personaje atacante, Personaje defensor, Hechizo hechizo) {
 
+        System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println(" [ " + atacante.getNombre() + " atacó " + defensor.getNombre() + " con el hechizo "
                 + hechizo.getNombre() + " ] ");
         System.out.println(
                 " [ " + atacante.getNombre() + " consumió " + hechizo.getEnergiaMagica() + " de energia mágica ] ");
         System.out.println(" [ La salud actual de " + defensor.getNombre() + " es de " + defensor.getSalud() + " ] ");
+        System.out.println("_______________________________________________________________________");
         System.out.println(" ");
 
     }
@@ -1010,9 +1040,12 @@ public class JuegoHP {
 
     public void imprimirConversionMagoOscuro(String nombre) {
 
+        System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println(" [ " + nombre
                 + " usó un hechizo oscuro y se convertió en un mago oscuro y el daño se multiplicó por 2 en este ataque ] ");
+        System.out.println("_______________________________________________________________________");
+
         System.out.println(" ");
 
     }

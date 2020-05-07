@@ -6,7 +6,7 @@ import app.interfaces.*;
 import app.poderes.Poder;
 import app.poderes.hechizos.*;
 
-public class Elfo extends Criatura implements IHaceHechizo{
+public class Elfo extends Criatura implements IHaceHechizo {
 
     public Elfo(String nombre, int salud) {
         super(nombre, salud);
@@ -67,17 +67,34 @@ public class Elfo extends Criatura implements IHaceHechizo{
         int b;
         int c = hechizo.getNivelDanio();
 
+        if (personaje instanceof Wizard && ((Wizard) personaje).getArtefacto() != null) {
+
+            b = (int) Math.round(c - (c * ((Wizard) personaje).getArtefacto().getAmplificadorDeCuración()));
+
+        } else if (personaje instanceof Elfo && ((Elfo) personaje).getArtefacto() != null) {
+
+            b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
+
+        }
+
         if (this.artefacto != null) {
 
             b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
-        } else {
 
+        } else {
             b = c;
         }
 
         int a = personaje.getSalud() - b;
 
-        personaje.setSalud(a);
+        if (a > 0) {
+
+            personaje.setSalud(a);
+
+        } else {
+
+            personaje.setSalud(0);
+        }
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
@@ -94,6 +111,16 @@ public class Elfo extends Criatura implements IHaceHechizo{
                 int b;
                 int c = hechizo1.getNivelDanio();
 
+                if (personaje instanceof Wizard && ((Wizard) personaje).getArtefacto() != null) {
+
+                    b = (int) Math.round(c - (c * ((Wizard) personaje).getArtefacto().getAmplificadorDeCuración()));
+
+                } else if (personaje instanceof Elfo && ((Elfo) personaje).getArtefacto() != null) {
+
+                    b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
+
+                }
+
                 if (this.artefacto != null) {
 
                     b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
@@ -105,19 +132,18 @@ public class Elfo extends Criatura implements IHaceHechizo{
 
                 int a = personaje.getSalud() - b;
 
-                personaje.setSalud(a);
+                if (a > 0) {
+
+                    personaje.setSalud(a);
+
+                } else {
+
+                    personaje.setSalud(0);
+                }
 
                 a = this.getEnergiaMagica() - hechizo1.getEnergiaMagica();
                 this.setEnergiaMagica(a);
 
-                //System.out.println(" [ Atacaste " + personaje.getNombre() + " y consumiste "
-                //        + hechizo1.getEnergiaMagica() + " de energia mágica ] ");
-                //System.out.println(
-                //        " [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
-
-            } else {
-
-                //System.out.println(" [ El ataque falló ] ");
             }
 
         }
@@ -128,7 +154,14 @@ public class Elfo extends Criatura implements IHaceHechizo{
     public void curarse(Hechizo hechizo) {
         int a = this.getSalud() + hechizo.getNivelCuracion();
 
-        this.setSalud(a);
+        if (a < 100) {
+
+            this.setSalud(a);
+
+        } else {
+
+            this.setSalud(100);
+        }
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
@@ -137,7 +170,7 @@ public class Elfo extends Criatura implements IHaceHechizo{
 
     @Override
     public void defenderse(Hechizo hechizo) {
-        
+
         int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
     }
@@ -148,7 +181,5 @@ public class Elfo extends Criatura implements IHaceHechizo{
         int a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
         this.setEnergiaMagica(a);
     }
-
-    
 
 }
