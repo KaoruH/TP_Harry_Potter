@@ -33,7 +33,7 @@ public class JuegoHP {
     // Ver si debo crear siempre una nueva variable (int, string) para cada método o
     // si puedo reutilizarlas
 
-    public void inicializarApertura() {
+    public void inicializarJuego() {
         this.inicializarBrujosBloque1();
         this.inicializarMascotas();
         this.inicializarBienvenida();
@@ -41,74 +41,425 @@ public class JuegoHP {
         this.recibirObjetivo();
         this.inicializarHechizosDanioBajo();
         this.inicializarHechizosMedioDanio();
+        this.inicializarBloques();
     }
 
-    public void inicializarPrimerBloque() {
+    public void inicializarBloques() { // TODO inicializar bloques
+        for (int i = 1; i <= 4; i++) {
 
-        this.salirDeLaCasa();
-        this.llegarALaEstacion();
-        this.entrarEnElExpreso();
-    
+            inicializarBloqueArmazon(i);
+        }
     }
 
-    public void inicializarSegunBloque() {
-        this.caminoHogwardsExpreso();
+    // public void inicializarSegunBloque() {
+    // this.caminoHogwardsExpreso();
+
+    // }
+
+    public void inicializarBloqueArmazon(int numeroBloque) { // TODO Bloque armazon
+
+        switch (numeroBloque) {
+
+            case 1:
+
+                inicializarSubbloques(1, 3);
+
+                break;
+
+            case 2:
+
+                inicializarSubbloques(4, 6);
+
+                break;
+
+            case 3:
+
+                inicializarSubbloques(7, 9);
+
+                break;
+
+            case 4:
+
+                inicializarSubbloques(10, 12);
+
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
+    public void inicializarSubbloques(int primer, int ultimo) { // TODO subbloques
+
+        for (int i = primer; i <= ultimo; i++) {
+
+            inicializarSubbloqueArmazon(i);
+
+        }
 
     }
 
-    public void entrarEnElExpreso() {
+    public void inicializarSubbloqueArmazon(int numeroSubbloque) { // TODO subbloque armazon
 
-        int a;
+        int a = aperturaSubbloque(numeroSubbloque);
 
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Ahora falta poco! Sólo tenés que llegar hasta el Expreso de Hogwarts");
-        System.out.println("Qué prefieres hacer: insira 1 para ir directamente a la plataforma 9 3/4 o");
-        System.out.println("2 para pasear un poco?");
-        a = teclado.nextInt();
+        if (this.brujoElegido.tomarDecision(a)) {
 
-        if (a == 1) {
-
-            System.out.println("Sin desvíos para ti ya veo. Re responsable! Esto pide una recompensa:");
-
-            Hechizo hechizo = seleccionarHechizoRandom(this.brujoElegido, hechizosRecibir);
-
-            procesarAprender(this.brujoElegido, hechizo);
+            decision1Subbloque(numeroSubbloque);
 
         } else {
 
-            System.out.println("Tomaste tu tiempo para conoscer a la estación King's Cross");
-            System.out.println("y aprovechaste el paseo para comer algo.");
-            System.out.println(" [ Recuperaste 5 puntos de vida ] ");
-
-            int b = this.brujoElegido.getSalud() + 5;
-            this.brujoElegido.setSalud(b);
-
-            System.out.println("Y luego tomó tu camino hasta el expreso.");
+            decision2Subbloque(numeroSubbloque);
 
         }
 
-        System.out.println("Adentraste la pared de la plataforma 9 3/4 y caminaste en direción al expreso.");
-        System.out.println(".");
-        System.out.println(".");
-        System.out.println(".");
-        System.out.println(" [ !!!! ] Una figura se metío en tu frente");
-        System.out.println(" ");
-        System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi maestro.");
-
-        Elfo monstruo = new Elfo("Monstruo", 80);
-        monstruo.setEnergiaMagica(100);
-        for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
-            monstruo.getHechizos().add(seleccionarHechizoRandom(monstruo, hechizosDanioBajo));
-
-        }
-
-        empezarLucha(monstruo);
+        finalSubbloque(numeroSubbloque);
 
     }
 
+    public int aperturaSubbloque(int numeroSubbloque) { // TODO apertura subbloque
 
-    public void empezarLucha(Personaje personaje) {
+        switch (numeroSubbloque) {
+            case 1:
+
+                System.out.println(".");
+                System.out.println(".");
+                System.out.println(".");
+                System.out.println(" ");
+                System.out.println("Estás dentro de tu casa y tenés que sair.");
+                System.out.println(" ");
+                System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
+
+                return teclado.nextInt();
+
+            case 2:
+
+                System.out.println("_______________________________________________________________________");
+                System.out.println(" ");
+                System.out.println("Ahora que saliste, tenés que llegar a la estación King's Cross.");
+                System.out.println(" ");
+                System.out.println(
+                        "Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
+
+                return teclado.nextInt();
+
+            case 3:
+
+                System.out.println("_______________________________________________________________________");
+                System.out.println(" ");
+                System.out.println("Ahora falta poco! Sólo tenés que llegar hasta el Expreso de Hogwarts");
+                System.out.println(" ");
+                System.out.println("Qué prefieres hacer: insira 1 para ir directamente a la plataforma 9 3/4 o");
+                System.out.println("2 para pasear un poco?");
+
+                return teclado.nextInt();
+
+            case 4:
+
+                return teclado.nextInt();
+
+            case 5:
+
+                return teclado.nextInt();
+
+            case 6:
+
+                return teclado.nextInt();
+
+            case 7:
+
+                return teclado.nextInt();
+
+            case 8:
+
+                return teclado.nextInt();
+
+            case 9:
+
+                return teclado.nextInt();
+
+            case 10:
+
+                return teclado.nextInt();
+
+            case 11:
+
+                return teclado.nextInt();
+
+            case 12:
+
+                return teclado.nextInt();
+
+            default:
+                return 1;
+        }
+
+    }
+
+    public void decision1Subbloque(int numeroSubbloque) {
+
+        Hechizo hechizo;
+
+        switch (numeroSubbloque) {
+            case 1:
+
+                System.out.println("Saliste por la puerta principal sin grandes problemas.");
+
+                break;
+
+            case 2:
+
+                System.out.println("Caminaste, caminaste, caminaste...");
+                System.out.println(" ");
+                System.out.println(" [ Perdiste 5 puntos de vida por el cansancio ] ");
+                System.out.println(" ");
+
+                calcularPuntosVida(this.brujoElegido, -5);
+
+                System.out.println("Cansado, te detuviste para descansar un poco y");
+                System.out.println("al mirar hacia un lado y algo inesperado ocurrió.");
+                System.out.println(" ");
+
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
+                System.out.println(" ");
+
+                System.out.println("Eventualmente llegaste a la estación King's Cross");
+
+                break;
+
+            case 3:
+
+                System.out.println("Sin desvíos para ti ya veo. Re responsable! Esto pide una recompensa:");
+                System.out.println(" ");
+
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            case 7:
+
+                break;
+
+            case 8:
+
+                break;
+
+            case 9:
+
+                break;
+
+            case 10:
+
+                break;
+
+            case 11:
+
+                break;
+
+            case 12:
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public void decision2Subbloque(int numeroSubbloque) {
+
+        Hechizo hechizo;
+
+        switch (numeroSubbloque) {
+            case 1:
+
+                System.out.println("Todas las ventanas de la planta baja estan cerradas y no abren.");
+                System.out.println("Subiste al último piso y saltaste por la ventana;");
+                System.out.println(" ");
+
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
+                System.out.println(" ");
+
+                System.out.println(" [ Perdiste 5 puntos de vida de vida al caer de la ventana ] ");
+
+                calcularPuntosVida(this.brujoElegido, -5);
+
+                System.out.println(" ");
+
+                System.out.println("Saliste por ventana con relativo exito.");
+
+                break;
+
+            case 2:
+
+                System.out.println(
+                        "Estendiste tu varita en la acera y luego el Autobús noctámbulo llegó casi aplastando tu pie");
+                System.out.println(" ");
+                System.out.println(" [ Perdiste 5 puntos de vida en el recorrido ] ");
+                System.out.println(" ");
+
+                calcularPuntosVida(this.brujoElegido, -5);
+
+                System.out.println("Llegaste a la estación King's Cross re rapido!");
+
+                break;
+
+            case 3:
+
+                System.out.println("Tomaste tu tiempo para conoscer a la estación King's Cross");
+                System.out.println("y aprovechaste el paseo para comer algo.");
+                System.out.println(" ");
+                System.out.println(" [ Recuperaste 5 puntos de vida ] ");
+                System.out.println(" ");
+
+                calcularPuntosVida(this.brujoElegido, 5);
+
+                System.out.println("Y luego tomó tu camino hasta el expreso.");
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            case 7:
+
+                break;
+
+            case 8:
+
+                break;
+
+            case 9:
+
+                break;
+
+            case 10:
+
+                break;
+
+            case 11:
+
+                break;
+
+            case 12:
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void finalSubbloque(int numeroSubbloque) {
+
+        switch (numeroSubbloque) {
+            case 1:
+            case 2:
+
+                continuar();
+
+                break;
+
+            case 3:
+
+                System.out.println("Adentraste la pared de la plataforma 9 3/4 y caminaste en direción al expreso.");
+                System.out.println(".");
+                System.out.println(".");
+                System.out.println(".");
+                System.out.println(" [ !!!! ] Una figura se metío en tu frente");
+                System.out.println(" ");
+                System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi maestro.");
+
+                Elfo monstruo = new Elfo("Monstruo", 80);
+                monstruo.setEnergiaMagica(100);
+                for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
+                    monstruo.getHechizos().add(hechizoRandomSegunPersonaje(monstruo, hechizosDanioBajo));
+
+                }
+
+                procesarLucha(monstruo, 1);
+
+                break;
+
+            case 4:
+            case 5:
+
+                continuar();
+
+                break;
+
+            case 6:
+
+                Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 0);
+
+                Dementor dementor = new Dementor("Dementor", 90, 90, true, poder);
+                
+                poder = new BesoDelDementor("Beso del Dementor", 30, 20);
+
+                dementor.setUltimate(poder);
+
+                procesarLucha(dementor, 2);
+
+                break;
+
+            case 7:
+            case 8:
+
+                continuar();
+
+                break;
+
+            case 9:
+
+                break;
+
+            case 10:
+            case 11:
+
+                continuar();
+
+                break;
+
+            case 12:
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Va a correr el código de la lucha
+
+    public void procesarLucha(Personaje personaje, int numeroBloque) {
 
         int a;
 
@@ -119,7 +470,7 @@ public class JuegoHP {
         System.out.println(" ");
         System.out.println("Insira 1 para ver tu status y 2 para eligir tu primera acción.");
         a = teclado.nextInt();
-        if (a == 1) {
+        if (this.brujoElegido.tomarDecision(a)) {
 
             imprimirStatus();
 
@@ -151,8 +502,6 @@ public class JuegoHP {
 
             } else {
 
-                Random random = new Random();
-
                 atacante = personaje;
                 defensor = this.brujoElegido;
 
@@ -160,20 +509,21 @@ public class JuegoHP {
 
                     Wizard brujo = (Wizard) personaje;
 
-                    a = random.nextInt(brujo.getHechizos().size());
-
-                    hechizo = brujo.getHechizos().get(a);
+                    hechizo = seleccionarHechizoRandom(brujo.getHechizos());
 
                     procesarTipoHechizoLanzado(atacante, defensor, hechizo);
 
                 } else if (personaje instanceof Elfo) {
                     Elfo elfo = (Elfo) personaje;
 
-                    a = random.nextInt(elfo.getHechizos().size());
-
-                    hechizo = elfo.getHechizos().get(a);
+                    hechizo = seleccionarHechizoRandom(elfo.getHechizos());
 
                     procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+
+                } else if (personaje instanceof Dementor) { // TODO DEMENTOR
+                    Dementor dementor = (Dementor) personaje;
+
+                    procesarAtaqueDementor(dementor, defensor);
 
                 }
 
@@ -187,48 +537,95 @@ public class JuegoHP {
 
         }
 
+        verificarQuienGanio(personaje, numeroBloque);
+
+    }
+
+    // Imprime quien ganó la lucha
+
+    public void verificarQuienGanio(Personaje personaje, int numeroBloque) {
+
         if (this.brujoElegido.getSalud() > 0) {
-            System.out.println(" ");
-            System.out.println(" [ " + this.brujoElegido.getNombre() + " gano la lucha ] ");
-            System.out.println(" ");
+
+            imprimirQuienGanio(this.brujoElegido, personaje);
+
         } else {
-            System.out.println(" ");
-            System.out.println(" [ " + personaje.getNombre() + " gano la lucha ] ");
-            System.out.println(" [ " + this.brujoElegido.getNombre() + " murrió ] ");
-            System.out.println(" ");
-            System.out.println("Insira 1 para intentar novamiente o 2 para desistir.");
-            a = teclado.nextInt();
 
-            if (a == 1) {
+            imprimirQuienGanio(personaje, this.brujoElegido);
 
-                inicializarPrimerBloque();
+            continuarODesistir(numeroBloque);
+        }
+    }
 
-            } else {
+    // Imprime quien ganó y quien murrió
 
-                System.out.println("_______________________________________________________________________");
-                System.out.println(" ");
-                System.out.println(" [ GAME OVER ] ");
-                System.out.println("_______________________________________________________________________");
-                System.out.println(" ");
+    public void imprimirQuienGanio(Personaje ganio, Personaje perdio) {
 
-            }
+        System.out.println(" ");
+        System.out.println(" [ " + perdio.getNombre() + " murrió ] ");
+        System.out.println(" [ " + ganio.getNombre() + " ganó la lucha ] ");
+        System.out.println(" ");
+
+    }
+
+    // Jugador elige Continuar o Desistir
+
+    public void continuarODesistir(int numeroBloque) {
+
+        System.out.println("Insira 1 para intentar novamiente o 2 para desistir.");
+        int a = teclado.nextInt();
+
+        if (this.brujoElegido.tomarDecision(a)) {
+
+            reinicializarBloque(numeroBloque);
+
+        } else {
+
+            gameOver();
+
+        }
+    }
+
+    // Reinicializa el Bloque en que el jugador murrió
+
+    public void reinicializarBloque(int numeroDelBloque) { // TODO verificar numero de bloques total
+
+        switch (numeroDelBloque) {
+            case 1:
+
+                inicializarBloqueArmazon(1);
+
+                break;
+
+            case 2:
+
+                inicializarBloqueArmazon(2);
+
+                break;
+
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+
+            default:
+                break;
         }
 
     }
+
+    // 1/1 segundo bloque
 
     public void caminoHogwardsExpreso() {
-        //TODO historia segun bloque
+        // TODO historia segun bloque
 
-
-        Dementador monstruo = new Dementador("Dementador", 80);
-        monstruo.setEnergiaMagica(100);
-        for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
-            monstruo.getHechizos().add(seleccionarHechizoRandom(monstruo, hechizosDanioMedio));
-
-        }
-
-        empezarLucha(monstruo);
+        // tudo que estava aqui agora está em finalSubbloque o algo asi, case 6
     }
+
+    // Verifica y responde según en tipo de hechizo lanzado
 
     public void procesarTipoHechizoLanzado(Personaje atacante, Personaje defensor, Hechizo hechizo) {
 
@@ -249,99 +646,14 @@ public class JuegoHP {
 
     }
 
-    public void llegarALaEstacion() {
-        int a;
+    // Una pausa breve para que no se llene la pantalla de texto de una sola vez
 
-        System.out.println("_______________________________________________________________________");
-        System.out.println(" ");
-        System.out.println("Ahora que saliste, tenés que llegar a la estación King's Cross.");
-        System.out.println(
-                "Cómo quieres llegar a la estación? Insira 1 para caminar y 2 para llamar al Autobús noctámbulo");
-        a = teclado.nextInt();
-        System.out.println(" ");
-
-        if (a == 1) {
-
-            System.out.println("Caminaste, caminaste, caminaste...");
-            System.out.println(" ");
-            System.out.println(" [ Perdiste 5 puntos de vida por el cansancio ] ");
-            System.out.println(" ");
-
-            int b = this.brujoElegido.getSalud() - 5;
-            this.brujoElegido.setSalud(b);
-
-            System.out.println("Cansado, te detuviste para descansar un poco y");
-            System.out.println("al mirar hacia un lado y algo inesperado ocurrió.");
-            System.out.println(" ");
-
-            Hechizo hechizo = seleccionarHechizoRandom(this.brujoElegido, hechizosRecibir);
-
-            procesarAprender(this.brujoElegido, hechizo);
-            System.out.println(" ");
-
-            System.out.println("Eventualmente llegaste a la estación King's Cross");
-
-        } else {
-
-            System.out.println(
-                    "Estendiste tu varita en la acera y luego el Autobús noctámbulo llegó casi aplastando tu pie");
-            System.out.println(" ");
-            System.out.println(" [ Perdiste 5 puntos de vida en el recorrido ] ");
-            System.out.println(" ");
-            int b = this.brujoElegido.getSalud() - 5;
-            this.brujoElegido.setSalud(b);
-
-            System.out.println("Llegaste a la estación King's Cross re rapido!");
-
-        }
+    public void continuar() {
 
         System.out.println(" ");
         System.out.println(" [Ingrese 0 para continuar] ");
         teclado.next("0");
         System.out.println(" ");
-    }
-
-    public void salirDeLaCasa() {
-        int a;
-
-        System.out.println(".");
-        System.out.println(".");
-        System.out.println(".");
-        System.out.println(" ");
-        System.out.println("Estás dentro de tu casa y tenés que sair.");
-        System.out.println("Por donde quieres salir? Insira 1 para puerta y 2 por la ventana.");
-        a = teclado.nextInt();
-        System.out.println(" ");
-        if (a == 2) {
-
-            System.out.println("Todas las ventanas de la planta baja estan cerradas y no abren.");
-            System.out.println("Subiste al último piso y saltaste por la ventana;");
-            System.out.println(" ");
-
-            Hechizo hechizo = seleccionarHechizoRandom(this.brujoElegido, hechizosRecibir);
-
-            procesarAprender(this.brujoElegido, hechizo);
-            System.out.println(" ");
-
-            System.out.println(" [ Perdiste 5 puntos de vida de vida al caer de la ventana ] ");
-
-            int b = this.brujoElegido.getSalud() - 5; // crear método en wizard? sufrirDanio
-            this.brujoElegido.setSalud(b);
-            System.out.println(" ");
-
-            System.out.println("Saliste por ventana con relativo exito.");
-
-        } else {
-
-            System.out.println("Saliste por la puerta principal sin grandes problemas.");
-
-        }
-
-        System.out.println(" ");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
-        System.out.println(" ");
-
     }
 
     // Esto carga los brujos del primer bloque a la lista de brujos del juego
@@ -419,10 +731,8 @@ public class JuegoHP {
         this.aplicarBonusMascota();
         this.imprimirStatus();
         System.out.println("Ahora estamos estamos listos! Adelante!");
-        System.out.println(" ");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
-        System.out.println(" ");
+
+        continuar();
     }
 
     // Esto carga las mascotas eligibles en bloque uno
@@ -596,26 +906,23 @@ public class JuegoHP {
         System.out.println(".");
         System.out.println(".");
         System.out.println("*Chocaste con un elfo*");
-        System.out.println(" ");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
-        System.out.println(" ");
+
+        continuar();
+
         System.out.println("Dobby: 'Hola, " + a + "! Perdoname! Me llamo Dobby,soy un elfo domestico.");
         System.out.println("No tengas miedo, no te quiero hacer mal. Supe que recibiste su carta de");
         System.out.println("Hogwards, pero tenga cuidado. Van acontecer cosas horribles por la");
         System.out.println("escuela y creo que eres la unica persona que puede salvar a Hogwards.'");
-        System.out.println(" ");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
-        System.out.println(" ");
+
+        continuar();
+
         System.out.println("Vos: 'cosas horribles? Solo yo? por que? Dobby?'");
         System.out.println("Dobby: 'Si! No tengo mucho tiempo. Solamente me escuche con");
         System.out.println("atención: tu objetivo es encontrar las  Reliquias de la Muerte");
         System.out.println("Para eso, va a tener que hacer amigos confiables y buscarlas.'");
-        System.out.println(" ");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
-        System.out.println(" ");
+
+        continuar();
+
         System.out.println("Vos: 'Calma! Hay que explicarme eso!'");
         System.out.println("Dobby: '" + a + ", escuchaste?");
         System.out.println("Cuidate! Y solo confies em Dumbledore! Él me envió acá-'");
@@ -623,8 +930,9 @@ public class JuegoHP {
         System.out.println(".");
         System.out.println(".");
         System.out.println(".");
-        System.out.println(" [Ingrese 0 para continuar] ");
-        teclado.next("0");
+
+        continuar();
+
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
         System.out.println("!! [ Recibiste la gran misión deste juego: encontrar las Reliquias de la Muerte! ] !!");
@@ -637,6 +945,11 @@ public class JuegoHP {
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         procesarAprender(this.brujoElegido, hechizo);
+
+        play();
+    }
+
+    public void play() {
         System.out.println(" ");
         System.out.println(" [Ingrese 'play' para comenzar] ");
         teclado.next("play");
@@ -797,7 +1110,7 @@ public class JuegoHP {
         this.hechizosDanioBajo.add(hechizo);
 
     }
-    
+
     public void inicializarHechizosMedioDanio() {
 
         Hechizo hechizo = new Stupefy("Sugando vida", true, 25); // HACER RADOM DE DANIO
@@ -808,7 +1121,7 @@ public class JuegoHP {
 
     }
 
-    public void inicializarHechizosMedioDanio2(){
+    public void inicializarHechizosMedioDanio2() {
         Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); // ataque
         hechizo.setDescripcion("paralisa la victima");
         hechizo.setNivelDanio(25);
@@ -852,7 +1165,6 @@ public class JuegoHP {
         hechizo.setNivelDanio(15);
         this.hechizosDanioMedio.add(hechizo);
 
-        
     }
 
     public void inicializarHechizosARecibir() {
@@ -931,24 +1243,18 @@ public class JuegoHP {
 
     }
 
-    // Selecciona un hechizo aleatorio
+    // Selecciona un hechizo aleatorio segun el personaje
 
-    public Hechizo seleccionarHechizoRandom(Personaje personaje, List<Hechizo> hechizo1) {
+    public Hechizo hechizoRandomSegunPersonaje(Personaje personaje, List<Hechizo> hechizo1) {
 
-        Random random = new Random();
-
-        int numero = random.nextInt(hechizo1.size());
-
-        Hechizo hechizo = hechizo1.get(numero); // TODO random
+        Hechizo hechizo = seleccionarHechizoRandom(hechizo1);
 
         if (personaje instanceof Elfo) {
             Elfo perso = (Elfo) personaje;
 
             while (perso.getHechizos().contains(hechizo)) {
 
-                numero = random.nextInt(hechizo1.size());
-
-                hechizo = hechizo1.get(numero);
+                hechizo = seleccionarHechizoRandom(hechizo1);
 
             }
         } else if (personaje instanceof Wizard) {
@@ -956,9 +1262,7 @@ public class JuegoHP {
 
             while (perso.getHechizos().contains(hechizo)) {
 
-                numero = random.nextInt(hechizo1.size());
-
-                hechizo = hechizo1.get(numero);
+                hechizo = seleccionarHechizoRandom(hechizo1);
 
             }
         }
@@ -966,8 +1270,19 @@ public class JuegoHP {
         return hechizo;
     }
 
+    // selecciona el hechizo de hecho
 
-    // Para procesar el ataque // CAMBIAR PARA IHACEHECHIZO!!!
+    public Hechizo seleccionarHechizoRandom(List<Hechizo> hechizo1) {
+
+        Random random = new Random();
+
+        int numero = random.nextInt(hechizo1.size());
+
+        return hechizo1.get(numero);
+
+    }
+
+    // Para procesar el ataque
 
     public void procesarAtaque(Personaje atacante, Personaje defensor, Hechizo hechizo) {
 
@@ -987,16 +1302,6 @@ public class JuegoHP {
 
             imprimirHablaAtaque(elfo, defensor, hechizo);
         }
-
-        /**
-         * TODO considerar cambiar el atacante para IHaceHechizo. Economiza instanceof.
-         * atacante.atacar(defensor, hechizo);
-         * 
-         * Personaje atacante1 = (Personaje) atacante;
-         * 
-         * 
-         * imprimirHablaAtaque(atacante1, defensor, hechizo);
-         */
 
     }
 
@@ -1105,6 +1410,50 @@ public class JuegoHP {
         iHaceHechizo.aprender(hechizo);
 
         System.out.println(" [ Aprendiste el hechizo " + hechizo.getNombre() + " ] ");
+    }
+
+    // Calcula el total de puntos de vida después de ganar o perder puntos
+
+    public void calcularPuntosVida(Personaje personaje, int numero) {
+
+        int b = personaje.getSalud() + numero;
+        personaje.setSalud(b);
+    }
+
+    // Fin de juego cuando se muerre y desiste
+
+    public void gameOver() {
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println(" [ GAME OVER ] ");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+    }
+
+    public void procesarAtaqueDementor(Dementor dementor, Personaje defensor){
+
+        int a;
+
+        if (dementor.getSalud() < 10 && defensor.getSalud() < 30) {
+
+            a = dementor.atacar(defensor, dementor.getUltimate());
+            
+        } else {
+            
+            a = dementor.atacar(defensor, dementor.getPoderInicial());
+        }
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println(" [ " + dementor.getNombre() + " atacó " + defensor.getNombre() + " con el poder "
+                + dementor.getPoderInicial().getNombre() + " ] ");
+        System.out.println(
+                " [ " + dementor.getNombre() + " consumió " + a + " de energia mágica ] ");
+        System.out.println(" [ La salud actual de " + defensor.getNombre() + " es de " + defensor.getSalud() + " ] ");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+
     }
 
     // GETTERS AND SETTERS
