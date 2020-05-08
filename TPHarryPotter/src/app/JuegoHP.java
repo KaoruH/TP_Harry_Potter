@@ -28,6 +28,7 @@ public class JuegoHP {
     private List<Mascota> mascotas = new ArrayList<>();
     private Wizard brujoElegido;
     private List<Hechizo> hechizosDanioBajo = new ArrayList<>();
+    private List<Hechizo> hechizosDanioMedio = new ArrayList<>();
 
     // Ver si debo crear siempre una nueva variable (int, string) para cada método o
     // si puedo reutilizarlas
@@ -39,6 +40,7 @@ public class JuegoHP {
         this.inicializarHechizosARecibir();
         this.recibirObjetivo();
         this.inicializarHechizosDanioBajo();
+        this.inicializarHechizosMedioDanio();
     }
 
     public void inicializarPrimerBloque() {
@@ -46,6 +48,12 @@ public class JuegoHP {
         this.salirDeLaCasa();
         this.llegarALaEstacion();
         this.entrarEnElExpreso();
+    
+    }
+
+    public void inicializarSegunBloque() {
+        this.caminoHogwardsExpreso();
+
     }
 
     public void entrarEnElExpreso() {
@@ -98,6 +106,7 @@ public class JuegoHP {
         empezarLucha(monstruo);
 
     }
+
 
     public void empezarLucha(Personaje personaje) {
 
@@ -205,6 +214,20 @@ public class JuegoHP {
             }
         }
 
+    }
+
+    public void caminoHogwardsExpreso() {
+        //TODO historia segun bloque
+
+
+        Dementador monstruo = new Dementador("Dementador", 80);
+        monstruo.setEnergiaMagica(100);
+        for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
+            monstruo.getHechizos().add(seleccionarHechizoRandom(monstruo, hechizosDanioMedio));
+
+        }
+
+        empezarLucha(monstruo);
     }
 
     public void procesarTipoHechizoLanzado(Personaje atacante, Personaje defensor, Hechizo hechizo) {
@@ -773,6 +796,63 @@ public class JuegoHP {
         hechizo.setNivelDanio(15);
         this.hechizosDanioBajo.add(hechizo);
 
+    }
+    
+    public void inicializarHechizosMedioDanio() {
+
+        Hechizo hechizo = new Stupefy("Sugando vida", true, 25); // HACER RADOM DE DANIO
+        hechizo.setDescripcion("Sugando felicidad");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(25);
+        this.hechizosDanioMedio.add(hechizo);
+
+    }
+
+    public void inicializarHechizosMedioDanio2(){
+        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); // ataque
+        hechizo.setDescripcion("paralisa la victima");
+        hechizo.setNivelDanio(25);
+        hechizo.setNivelCuracion(0);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10); // ocio
+        hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
+        hechizo.setNivelDanio(0);
+        hechizo.setNivelCuracion(0);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Stupefy("Confusion", false, 15); // ataque
+        hechizo.setDescripcion("Confusion mental por un rato a la victima");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(10);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Stupefy("Fecho explosivo", false, 15); // ataque
+        hechizo.setDescripcion("Genera un fehco de luz como si fuera foguetes");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(20);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Protego("Escudo de protecion", false, 10); // defensa
+        hechizo.setDescripcion(
+                "es un encantamiento que protege al lanzador con un escudo invisible que refleja hechizos y bloquea entidades física");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(0);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Stupefy("Fecho de luz verde", false, 15); // ataque
+        hechizo.setDescripcion("hace un fecho de luz de danio");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Stupefy("Fecho de luz roja", false, 15); // ataque
+        hechizo.setDescripcion("hace un fecho de luz de danio");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosDanioMedio.add(hechizo);
+
+        
     }
 
     public void inicializarHechizosARecibir() {
