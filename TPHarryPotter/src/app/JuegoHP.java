@@ -29,6 +29,7 @@ public class JuegoHP {
     private Wizard brujoElegido;
     private List<Hechizo> hechizosDanioBajo = new ArrayList<>();
     private List<Hechizo> hechizosDanioMedio = new ArrayList<>();
+    private List<Artefacto> contenedoArtefactos = new ArrayList<>();
 
     // Ver si debo crear siempre una nueva variable (int, string) para cada método o
     // si puedo reutilizarlas
@@ -396,7 +397,7 @@ public class JuegoHP {
                 System.out.println(".");
                 System.out.println(" [ !!!! ] Una figura se metío en tu frente");
                 System.out.println(" ");
-                System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi maestro.");
+                System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi Dueño.");
 
                 Elfo monstruo = new Elfo("Monstruo", 80);
                 monstruo.setEnergiaMagica(100);
@@ -623,6 +624,270 @@ public class JuegoHP {
         // TODO historia segun bloque
 
         // tudo que estava aqui agora está em finalSubbloque o algo asi, case 6
+
+        // pero el dementador es segundo bloque(?)
+   
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Felicitaciones! Lograste llegar al Tren Expreso de Hogward!");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Subiste al Tren y luego fuiste encaminado a una cabine vacia");
+        System.out.println("Mientras se acomodaba, llegaran 2 alumnos preguntando si podrían");
+        System.out.println("quedarse con vos en la cabine.");
+        System.out.println("Este fue el início de una gran amistad! Adelante en el tiempo");
+        System.out.println("todos en Hogwards van a saber historias de 3 amigos en grandes aventuras");
+        System.out.println("que estan por venir. Harry, Ron y Hermione, estes son ustedes.");
+        continuar();
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("Por hacer amigos, aprendiste nuevas cosas");
+        System.out.println(" ");
+        Hechizo hechizo = new ExpectoPatronum("Expecto Patrono", false, 25);
+        hechizo.setDescripcion("Entidad protetora en luz aparece");
+        hechizo.setNivelDanio(35);
+        hechizo.setNivelCuracion(0);
+        procesarAprender(this.brujoElegido, hechizo);
+        System.out.println(" ");
+        continuar();
+
+        System.out.println(" ");
+        System.out.println("Despues de conversar un montón con sus nuevos amigos");
+        System.out.println("acostaran para dormir un poco y...");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("!! El expresso para bruscamiente !!");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("Alumnos gritan y luego se callan!");
+        System.out.println("...");
+        System.out.println("Oyes bajito que alguien fugió de la prision Azkaban");
+        System.out.println("y los Dementadores pararan el tren buscando algo");
+        System.out.println("...");
+        continuar();
+
+        System.out.println("");
+        System.out.println("Todo está oscuro y frío!");
+        System.out.println("'Auuuuuuuuuuuuu!'");
+        System.out.println("Oíste lo que parece un perro en los vagones de carga");
+        System.out.println("[Ingrese 1 para ir hasta los vagones o 2 para quedar-se]");
+        decision = teclado.nextInt(); //return teclado en el switch
+        if (decision == 1) {
+        System.out.println("Como sos MUY CURIOS@, fuiste con sus amigos");
+        System.out.println("en busca del sonido.");
+        System.out.println(" ");
+        continuar();
+
+        } else { 
+        System.out.println(" ");
+        System.out.println("No sos nada destemino, eh!?");
+        System.out.println("Pero sus amigos son! Te llamaron para seguir el sonido");
+        System.out.println("Dices que no quieres ir, pero te golpean la cabeza");
+        System.out.println("Y te hacen ir así mismo!");
+        System.out.println(" [ Perdiste 10 puntos de vida por ser tan medros@ ] ");
+        System.out.println(" ");
+        calcularPuntosVida(this.brujoElegido, -10);
+        continuar();
+        }
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("En uno de los vagones viste un perro cerca de ser atacado por un dementador");
+        System.out.println("[!!!!] Tenés que ayudarlo!");
+
+        Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 0);
+
+                Dementor dementor = new Dementor("Dementor", 90, 90, true, poder);
+                
+                poder = new BesoDelDementor("Beso del Dementor", 30, 20);
+
+                dementor.setUltimate(poder);
+
+                procesarLucha(dementor, 2);
+
+        // condicion de ganar o regresar al inicio del bloque(?)
+
+        //ganaste
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("El perro, conocido como Almofadinhas, se transforma en un burjo");
+        System.out.println("Para su surpresa, él se apresenta como Sirius Black");
+        System.out.println("Y le regala una linda Capa");
+        System.out.println(" ");
+
+        Artefacto artefacto = new CapaInvisibilidad("Capa de invisibilidad", 0, 0.2);
+        artefacto.setPoder(poder);
+        artefacto.setDescripcion("Deja invisible a quien usa");
+        this.contenedoArtefactos.add(artefacto);
+        System.out.println("_______________________________________________________________________");
+        continuar(); //continuar para el tercer bloque > primeros días en hogwards
+
+    }
+
+    public void inicializarTercerBloque() {
+
+        String a = this.getBrujoElegido().getNombre();
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("***   Bienvenid@ a Hogwards!   ***");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("En su llegada mucho le ocorrurió");
+        System.out.println("Vos y sus amigos ingresaron a la casa Grifindor");
+        System.out.println("conoceron algunos de los profesores y partes del castillo");
+        System.out.println("Todo parecia mágico... y era!");
+        System.out.println(" ");
+        continuar();
+
+        System.out.println(" ");
+        System.out.println("Empezaron las clases y tan temprano ya");
+        System.out.println("quedaste conocid@ por perdese entre las escaleras");
+        System.out.println("Pero hiciste amistad con algunos fantasmas del castillo");
+        System.out.println("Uno de ellos te enseño un hechizo");
+
+        Hechizo hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+        procesarAprender(this.brujoElegido, hechizo);
+        continuar();
+
+        System.out.println(" ");
+        System.out.println("En una de las clases ustede escucharan hablar sobre");
+        System.out.println("La camara secreta. Muchos alumnos hablavan cosas sobre ella");
+        System.out.println("pero nadie sabia si era real o como accederla.");
+        System.out.println("...");
+        System.out.println("Ya escuchaste eso pero: sabes que eres curios@, no!? xD");
+        imprimirRecibirSegundaMision();
+        continuar();
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        imprimirBusquedaCamara();
+
+        //opcion 1- hagrid
+        System.out.println(" ");
+        System.out.println("Vos: 'Hola Hagrid!'");
+        System.out.println("Hagrid: 'Hola," + a + "! Que haces aqui?'");
+        System.out.println("Vos: 'Yo y mis amigos estamos buscando informaciones sobre");
+        System.out.println("como encontrar la camara secreta. Pensé que podias ayudarnos!");
+        System.out.println("Hagrid: 'Camara secreta? Hum... creo que no es una buena hora, " + a);
+        System.out.println("tengo algunas cosas que cuidar.'");
+        System.out.println("Vos: 'Pero Hagrid...'");
+        System.out.println("Hagrid habla fuerte: '" + a + ", no te puedo ayudar con esto! Olvidate'");
+        System.out.println("Parece que Hagrid no quier que la encontres.");
+        System.out.println(" ");
+        continuar();
+  
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");      
+        imprimirBusquedaCamara();
+
+        // opcion 2 - biblioteca
+        System.out.println(" ");
+        System.out.println("Muchos y muchos libros, pero solo uno habla de la camara");
+        System.out.println("La página esta rota, pero hay algo que dice:");
+        System.out.println("'... La camara protege un secreto mortal de quien la quier abrir.");
+        System.out.println("El secreto es...'");
+        System.out.println("...");
+        System.out.println("No hay muchas informaciones utiles.");
+        System.out.println("Quien será que está con la otra parte de la página?");
+        System.out.println(" ");
+        continuar();
+        
+        System.out.println("Leíste muchos libros");
+        System.out.println("Por eso aprendiste un nuevo hechizo");
+        System.out.println(" ");
+
+        Hechizo hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+        procesarAprender(this.brujoElegido, hechizo);
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");      
+        imprimirBusquedaCamara();
+
+        //opcion 3 - Baño Feminino desde imprimirbusquedacamara
+        System.out.println(" ");
+        System.out.println("Al entrar en el baño escuchas alguien llorando");
+        System.out.println("Encontras uno de los fantasmas del castillo");
+        System.out.println("Vos> 'Hola? Myrte?'");
+        System.out.println("Myrtle la llorona> 'Que haces aqui, " + a + "? Me deje sola!!!'");
+        System.out.println("Vos> 'Perdon, Myrte! No quiero molestarte, supe que tienes informaciones");
+        System.out.println("de la camara secreta. Es verdad?'");
+        System.out.println("Con un estrondoso grito, la llorona: 'SALGA AHORA! ME DEJE SOLA!!!");
+        System.out.println(" ");
+        System.out.println("Saliste corriendo del baño.");
+        continuar();
+  
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");      
+        imprimirBusquedaCamara();
+
+        //opcion 4 - El Caldero Chorreante
+        System.out.println(" ");
+        System.out.println("Mismo no siendo un lugar mucho amigable, aqui estás!");
+        System.out.println("Sientaste con tus amigos y pidieron unas cervezas amantegadas");
+        System.out.println("Mientras piensan sobre lo que pueden hacer, alguén se aproxima...");
+        System.out.println("...");
+        continuar();
+        System.out.println("Misterioso: 'Hola! Supe que buscan informaciones sobre la camara'");
+        System.out.println("Vos: 'Si! Sabes de algo?' preguntas intentando identificar la persona");
+        System.out.println("Misterioso: 'Sugiro que hablen con la Myrtle la llorona...'");
+        System.out.println("Vos: 'pero...' lo misterioso no dejate terminar la frase");
+        System.out.println("Misterioso: '...pero antes de empezar, hablen sobre Tom Riddle'");
+        System.out.println("Habla las ultimas frases se levantando de la mesa para irse");
+        System.out.println("Vos: 'Quien es Tom Riddle? Y Quien eres vos?'");
+        System.out.println("Misterioso: 'Busquen sobre él y hablen con ella. Soy un amigo...'");
+        continuar();
+        System.out.println(" ");
+        System.out.println("Que raro!!!!");
+        System.out.println("Luego buscaron sobre Tom Riddle y fueron intentar conversar con la Myrte");
+        System.out.println("[ Ingrese 5 para hablar con la Myrte sobre Tom Riddle]");
+        teclado.nextInt();
+        
+        // opicion 5 - Baño feminino desde Caldero Chorreante
+
+        System.out.println(" ");
+        System.out.println("Al entrar haces barullo");
+        System.out.println("Myrtle la llorona: 'Quien es? ...No importa, dejame sola!'");
+        System.out.println("Vos: 'Myrtle?'");
+        System.out.println("Myrtle la llorona: 'Ya dice, ME DEJE SOLA!!!'");
+        System.out.println("Vos> 'Supimos de Tom Riddle y queríamos saber como murriste.");
+        System.out.println("Queremos ayudarte'");
+        System.out.println("impresionante como las palabras que dijiste la dejaron amigable.");
+        continuar();
+
+        System.out.println(" ");
+        System.out.println("La Myrtle contó toda la história");
+        System.out.println("Desde entonces, ya supieron como abrir la Camara");
+        System.out.println("Para ayudarla, prometiste matar la criatura que se esconde");
+        System.out.println("en la Camara. La misma que mató la Myrtle.");
+        System.out.println("[ Ingrese 'Tom Riddle' para abrir la Camara Secreta ] ");
+        teclado.nextLine();
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        procesarLucha(personaje, numeroBloque);      //procesar lucha contra Basilisco
+
+      //ganaste
+      System.out.println("_______________________________________________________________________");
+      System.out.println(" ");
+      System.out.println("La Myrtle se quedó feliz por cumpriren la promesa.");
+      System.out.println("Tan feliz que no más lloró");
+      System.out.println("Y le regalo una piedra valiosa");
+      System.out.println(" ");
+
+      Artefacto artefacto = new PiedraResurreccion("Piedra de la resurreccion", 0, 0.3);
+      artefacto.setDescripcion("Tiene el poder de traer a la gente de vuelta de la muerte como espíritus definidos, no como personas vivas.");
+      this.contenedoArtefactos.add(artefacto);
+
+      System.out.println("_______________________________________________________________________");
+      continuar(); //continuar para el ultimo bloque
+      
+      
+
     }
 
     // Verifica y responde según en tipo de hechizo lanzado
@@ -1053,7 +1318,7 @@ public class JuegoHP {
 
     }
 
-    // Recibe Primer mision
+    // Recibe mision
 
     public void imprimirRecibirPrimerMision() {
 
@@ -1061,6 +1326,24 @@ public class JuegoHP {
         System.out.println(" ");
         System.out.println("!! [ Recibiste tu primer misión menor: llegar al expreso de Hogwarts! ] !!");
 
+    }
+    public void imprimirRecibirSegundaMision() {
+
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println("!! [ Recibiste tu segunda misión menor: Encontrar la camara secreta! ] !!");
+
+    }
+
+    //Imprime busquedas
+
+    public void imprimirBusquedaCamara() {
+        System.out.println("[ Ingrese el número del lugar que quieres buscar informaciones ]");
+        System.out.println("1 - Casa de Hagrid");
+        System.out.println("2 - Biblioteca");
+        System.out.println("1 - Baño feminino");
+        System.out.println("2 - El Caldero Chorreante");
+        teclado.nextInt();
     }
 
     // Carga todos los hechizos
@@ -1128,35 +1411,35 @@ public class JuegoHP {
         hechizo.setNivelCuracion(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10); // ocio
-        hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
+        hechizo = new WingardumLeviosa("Vulto", false, 10); // ocio
+        hechizo.setDescripcion("Hace sombras por todos los lados, confundindo la victma");
         hechizo.setNivelDanio(0);
         hechizo.setNivelCuracion(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Confusion", false, 15); // ataque
-        hechizo.setDescripcion("Confusion mental por un rato a la victima");
-        hechizo.setNivelCuracion(0);
-        hechizo.setNivelDanio(10);
-        this.hechizosDanioMedio.add(hechizo);
-
-        hechizo = new Stupefy("Fecho explosivo", false, 15); // ataque
-        hechizo.setDescripcion("Genera un fehco de luz como si fuera foguetes");
+        hechizo = new Stupefy("Rebatada", false, 10); // ataque
+        hechizo.setDescripcion("Arrebata la victima");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(20);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Protego("Escudo de protecion", false, 10); // defensa
+        hechizo = new Stupefy("Rebatada dupla", false, 20); // ataque
+        hechizo.setDescripcion("Arrebata la victima dos veces");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(30);
+        this.hechizosDanioMedio.add(hechizo);
+
+        hechizo = new Protego("Rechazo", false, 10); // defensa
         hechizo.setDescripcion(
-                "es un encantamiento que protege al lanzador con un escudo invisible que refleja hechizos y bloquea entidades física");
+                "Rechaza hechizo");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Fecho de luz verde", false, 15); // ataque
-        hechizo.setDescripcion("hace un fecho de luz de danio");
+        hechizo = new Stupefy("Jato de água", false, 15); // ataque
+        hechizo.setDescripcion("hace un jato de água fuerte contra la victma");
         hechizo.setNivelCuracion(0);
-        hechizo.setNivelDanio(15);
+        hechizo.setNivelDanio(25);
         this.hechizosDanioMedio.add(hechizo);
 
         hechizo = new Stupefy("Fecho de luz roja", false, 15); // ataque
