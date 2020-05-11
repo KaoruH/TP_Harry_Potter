@@ -273,11 +273,8 @@ public class JuegoHP {
             case 2:
 
                 System.out.println("Caminaste, caminaste, caminaste...");
-                System.out.println(" ");
-                System.out.println(" [ Perdiste 5 puntos de vida por el cansancio ] ");
-                System.out.println(" ");
 
-                calcularPuntosVida(this.brujoElegido, -5);
+                procesarPuntosVida(this.brujoElegido, -5, "por el cansancio");
 
                 System.out.println("Cansado, te detuviste para descansar un poco y");
                 System.out.println("al mirar hacia un lado y algo inesperado ocurrió.");
@@ -310,7 +307,7 @@ public class JuegoHP {
 
                 break;
 
-            case 5:
+            case 5: // Por que en el subbloque 5 y no en el 6 (final del bloque)?
                 System.out.println("Como sos MUY CURIOS@, fuiste con sus amigos");
                 System.out.println("en busca del sonido.");
                 System.out.println(" ");
@@ -319,16 +316,15 @@ public class JuegoHP {
                 System.out.println("En uno de los vagones viste un perro cerca de ser atacado por un dementador");
                 System.out.println("[!!!!] Tenés que ayudarlo!");
 
-                Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 0);
+                Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 10);
 
-                Dementor dementor = new Dementor("Dementor", 90, 90, true, poder);
+                Dementor dementor = new Dementor("Dementor", 90, poder);
 
                 poder = new BesoDelDementor("Beso del Dementor", 30, 20);
 
                 dementor.setUltimate(poder);
 
                 procesarLucha(dementor, 2);
-
 
                 break;
 
@@ -341,7 +337,7 @@ public class JuegoHP {
 
                 break;
 
-            case 7:
+            case 7: // Sólo continuar?
                 continuar();
                 break;
 
@@ -360,7 +356,7 @@ public class JuegoHP {
 
                 break;
 
-            case 9:
+            case 9: // 1 No es la biblioteca?
                 System.out.println(" ");
                 System.out.println("Al entrar en el baño escuchas alguien llorando");
                 System.out.println("Encontras uno de los fantasmas del castillo");
@@ -417,13 +413,8 @@ public class JuegoHP {
                 hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
 
                 procesarAprender(this.brujoElegido, hechizo);
-                System.out.println(" ");
 
-                System.out.println(" [ Perdiste 5 puntos de vida de vida al caer de la ventana ] ");
-
-                calcularPuntosVida(this.brujoElegido, -5);
-
-                System.out.println(" ");
+                procesarPuntosVida(this.brujoElegido, -5, "al caer de la ventana");
 
                 System.out.println("Saliste por ventana con relativo exito.");
 
@@ -433,11 +424,8 @@ public class JuegoHP {
 
                 System.out.println(
                         "Estendiste tu varita en la acera y luego el Autobús noctámbulo llegó casi aplastando tu pie");
-                System.out.println(" ");
-                System.out.println(" [ Perdiste 5 puntos de vida en el recorrido ] ");
-                System.out.println(" ");
 
-                calcularPuntosVida(this.brujoElegido, -5);
+                procesarPuntosVida(this.brujoElegido, -5, "en el recorrido");
 
                 System.out.println("Llegaste a la estación King's Cross re rapido!");
 
@@ -447,11 +435,8 @@ public class JuegoHP {
 
                 System.out.println("Tomaste tu tiempo para conoscer a la estación King's Cross");
                 System.out.println("y aprovechaste el paseo para comer algo.");
-                System.out.println(" ");
-                System.out.println(" [ Recuperaste 5 puntos de vida ] ");
-                System.out.println(" ");
 
-                calcularPuntosVida(this.brujoElegido, 5);
+                procesarPuntosVida(this.brujoElegido, 5, "al comer");
 
                 System.out.println("Y luego tomó tu camino hasta el expreso.");
 
@@ -472,25 +457,23 @@ public class JuegoHP {
                 System.out.println("Pero sus amigos sí son y e llamaron para seguir el sonido");
                 System.out.println("Como no quieres, te golpean la cabeza");
                 System.out.println("Y te hacen ir así mismo!");
-                System.out.println(" [ Perdiste 10 puntos de vida por ser tan medros@ ] ");
 
-                calcularPuntosVida(this.brujoElegido, -10);
-                System.out.println(" ");
+                procesarPuntosVida(this.brujoElegido, -10, "por ser tan medros@");
+
                 continuar();
                 System.out.println(" ");
                 System.out.println("En uno de los vagones viste un perro cerca de ser atacado por un dementador");
                 System.out.println("[!!!!] Tenés que ayudarlo!");
 
-                Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 0);
+                Poder poder = new AbsorberFelicidad("Absorber felicidad", 20, 10);
 
-                Dementor dementor = new Dementor("Dementor", 90, 90, true, poder);
+                Dementor dementor = new Dementor("Dementor", 90, poder);
 
                 poder = new BesoDelDementor("Beso del Dementor", 30, 20);
 
                 dementor.setUltimate(poder);
 
                 procesarLucha(dementor, 2);
-
 
                 break;
 
@@ -516,7 +499,8 @@ public class JuegoHP {
 
                 break;
 
-            case 8:
+            case 8: // no se supone que sea el baño femenino? creo que biblioteca es en el subbloque
+                    // 9
                 System.out.println(" ");
                 System.out.println("Muchos y muchos libros, pero solo uno habla de la camara");
                 System.out.println("La página esta rota, pero hay algo que dice:");
@@ -579,8 +563,7 @@ public class JuegoHP {
                 System.out.println(" ");
                 System.out.println("Monstruo: 'No te voy a dejar pasar. Órdenes de mi Dueño.");
 
-                Elfo monstruo = new Elfo("Monstruo", 80);
-                monstruo.setEnergiaMagica(100);
+                Elfo monstruo = new Elfo("Monstruo", 80, 100);
                 for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
                     monstruo.getHechizos().add(hechizoRandomSegunPersonaje(monstruo, hechizosDanioBajo));
 
@@ -591,6 +574,7 @@ public class JuegoHP {
                 break;
 
             case 4:
+            llenarLosPuntos();
                 System.out.println(" ");
                 System.out.println("Por hacer amigos, aprendiste nuevas cosas");
                 System.out.println(" ");
@@ -603,7 +587,13 @@ public class JuegoHP {
                 continuar();
 
             case 5:
-            case 6:
+
+                continuar();
+
+                break;
+
+            case 6: // hay que ver esto porque está imprimindo lo mismo al final de case 5 y 6. Los
+                    // separé y pude un continue en el case 5.
                 System.out.println("Sirius le regala una linda Capa");
                 System.out.println(" ");
 
@@ -615,19 +605,25 @@ public class JuegoHP {
                 break;
 
             case 7:
+            llenarLosPuntos();
+
+                break;
 
             case 8:
                 System.out.println(" ");
                 System.out.println("Parece que no lograste encontrar la Camara Secreta");
-                System.out.println(" [ Por cansacio perdiste 10 puntos de vida ] ");
 
-                calcularPuntosVida(this.brujoElegido, -10);
-                System.out.println(" ");
+                procesarPuntosVida(this.brujoElegido, -10, "por el cansacio");
+
                 continuar();
 
             case 9:
                 System.out.println(" ");
-                Basilisco monstruo2 = new Basilisco("Basilisco", 90, 100, true);
+
+                Poder poder = new Embestida("Embestida del Basilisco", 25, 15);
+                Basilisco monstruo2 = new Basilisco("Basilisco", 90, poder);
+                poder = new MiradaMortal("Mirada mortal del Basilisco", 30, 20);
+                monstruo2.setUltimate(poder);
                 for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
                     monstruo2.getHechizos().add(hechizoRandomSegunPersonaje(monstruo2, hechizosDanioMedio));
 
@@ -649,6 +645,9 @@ public class JuegoHP {
                 break;
 
             case 10:
+            llenarLosPuntos();
+
+                break;
             case 11:
 
                 continuar();
@@ -699,13 +698,21 @@ public class JuegoHP {
                 atacante = this.brujoElegido;
                 defensor = personaje;
 
-                imprimirHechizosBrujo();
+                if (defensor instanceof Dementor) {
+
+                    imprimirExpectoPatronum();
+
+                } else {
+
+                    imprimirHechizosBrujo();
+                }
+
                 System.out.println("Insira el número del hechizo que quiere usar:");
                 a = teclado.nextInt();
 
                 hechizo = this.brujoElegido.getHechizos().get(a - 1);
 
-                procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+                turno1 = procesarTipoHechizoLanzado(atacante, defensor, hechizo, turno1);
 
             } else {
 
@@ -718,34 +725,52 @@ public class JuegoHP {
 
                     hechizo = seleccionarHechizoRandom(brujo.getHechizos());
 
-                    procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+                    turno1 = procesarTipoHechizoLanzado(atacante, defensor, hechizo, turno1);
 
                 } else if (personaje instanceof Elfo) {
                     Elfo elfo = (Elfo) personaje;
 
                     hechizo = seleccionarHechizoRandom(elfo.getHechizos());
 
-                    procesarTipoHechizoLanzado(atacante, defensor, hechizo);
+                    turno1 = procesarTipoHechizoLanzado(atacante, defensor, hechizo, turno1);
 
-                } else if (personaje instanceof Dementor) { // TODO DEMENTOR
-                    Dementor dementor = (Dementor) personaje;
+                } else {
 
-                    procesarAtaqueDementor(dementor, defensor);
+                    procesarAtaquePoder(atacante, defensor);
 
+                    turno1 = !turno1;
                 }
 
             }
 
-            if (!(hechizo instanceof HechizoDefensa)) {
+            // if (!(hechizo instanceof HechizoDefensa)) {
 
-                turno1 = !turno1;
+            // turno1 = !turno1;
 
-            }
+            // }
 
         }
 
         verificarQuienGanio(personaje, numeroBloque);
 
+    }
+
+    public void imprimirExpectoPatronum() {
+
+        for (Hechizo hechizo3 : this.brujoElegido.getHechizos()) {
+
+            if (hechizo3 instanceof ExpectoPatronum) {
+
+                int e = this.brujoElegido.getHechizos().indexOf(hechizo3) + 1;
+
+                System.out.println(e + " - " + hechizo3.getNombre() + " | Nivel de daño: " + hechizo3.getNivelDanio()
+                        + " | Nivel de cura: " + hechizo3.getNivelCuracion() + " | Energia mágica: "
+                        + hechizo3.getEnergiaMagica() + " | Oscuro: "
+                        + transformarTrueEnSiYFalseEnNo(hechizo3.getEsOscuro()));
+
+            }
+
+        }
     }
 
     // Imprime quien ganó la lucha
@@ -795,26 +820,33 @@ public class JuegoHP {
 
     // Reinicializa el Bloque en que el jugador murrió
 
-    public void reinicializarBloque(int numeroDelBloque) { // TODO verificar numero de bloques total
+    public void reinicializarBloque(int numeroDelBloque) {
 
         switch (numeroDelBloque) {
             case 1:
 
+                llenarLosPuntos();
                 inicializarBloqueArmazon(1);
 
                 break;
 
             case 2:
-
+                llenarLosPuntos();
                 inicializarBloqueArmazon(2);
 
                 break;
 
             case 3:
 
+                llenarLosPuntos();
+                inicializarBloqueArmazon(3);
+
                 break;
 
             case 4:
+
+                llenarLosPuntos();
+                inicializarBloqueArmazon(4);
 
                 break;
 
@@ -824,25 +856,13 @@ public class JuegoHP {
 
     }
 
-    // Verifica y responde según en tipo de hechizo lanzado
+    public void llenarLosPuntos() {
+        this.brujoElegido.setSalud(100);
+        this.brujoElegido.setEnergiaMagica(100);
 
-    public void procesarTipoHechizoLanzado(Personaje atacante, Personaje defensor, Hechizo hechizo) {
-
-        if (hechizo instanceof HechizoAtaque) {
-
-            procesarAtaque(atacante, defensor, hechizo);
-
-        } else if (hechizo instanceof HechizoCuracion) {
-            procesarCuracion(atacante, hechizo);
-
-        } else if (hechizo instanceof HechizoDefensa) {
-            procesarDefensa(atacante, defensor, hechizo);
-
-        } else if (hechizo instanceof HechizoOcio) {
-            procesarHechizoOcio(atacante, hechizo);
-
-        }
-
+        System.out.println(" ");
+        System.out.println(" [ Tus puntos de vida han sido restaurados a 100 y 100 ] ");
+        System.out.println(" ");
     }
 
     // Una pausa breve para que no se llene la pantalla de texto de una sola vez
@@ -1420,7 +1440,7 @@ public class JuegoHP {
         hechizo.setNivelDanio(0);
         this.hechizosRecibir.add(hechizo);
 
-        hechizo = new SectumSepra("Sectum Sepra", true, 30);
+        hechizo = new SectumSepra("Sectumsepra", true, 30);
         hechizo.setDescripcion(
                 "su efecto es el equivalente al de un cuchillo invisible, acuchillando repetidamente y provocando heridas sangrantes en la piel en pocos segundos");
         hechizo.setNivelCuracion(0);
@@ -1450,6 +1470,30 @@ public class JuegoHP {
         hechizo.setDescripcion("la maldición genera un dolor intenso y agónico en la víctima.");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(30);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Glacius("Glacius", false, 15);
+        hechizo.setDescripcion("Capaz de congelar varios centímetros cúbicos de agua sólida en cuestión de segundos.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(20);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Opugno("Opugno", false, 10);
+        hechizo.setDescripcion("Hace con que objector cercanos ataquen el oponente.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new PetrificusTotalus("Petrificus Totalus", false, 10);
+        hechizo.setDescripcion("Paraliza al oponente.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(15);
+        this.hechizosRecibir.add(hechizo);
+
+        hechizo = new Rictusempra("Rictusempra", false, 15);
+        hechizo.setDescripcion("provoca en la víctima fuertes cosquillas, lo cual le genera un ataque de risa.");
+        hechizo.setNivelCuracion(0);
+        hechizo.setNivelDanio(25);
         this.hechizosRecibir.add(hechizo);
 
     }
@@ -1493,26 +1537,84 @@ public class JuegoHP {
 
     }
 
-    // Para procesar el ataque
+    // Verifica y responde según en tipo de hechizo lanzado
 
-    public void procesarAtaque(Personaje atacante, Personaje defensor, Hechizo hechizo) {
+    public boolean procesarTipoHechizoLanzado(Personaje atacante, Personaje defensor, Hechizo hechizo, boolean turno1) {
 
-        if (atacante instanceof Wizard) {
-
+        if (atacante instanceof Wizard && ((Wizard) atacante).getEnergiaMagica() >= hechizo.getEnergiaMagica()) {
             Wizard wizard = (Wizard) atacante;
 
-            wizard.atacar(defensor, hechizo);
+            if (hechizo instanceof HechizoAtaque) {
 
-            imprimirHablaAtaque(wizard, defensor, hechizo);
+                wizard.atacar(defensor, hechizo);
 
-        } else if (atacante instanceof Elfo) {
+                imprimirHablaAtaque(wizard, defensor, hechizo);
 
+                return turno1 = !turno1;
+
+            } else if (hechizo instanceof HechizoCuracion) {
+
+                wizard.curarse(hechizo);
+
+                imprimirHablaCuracion(wizard, hechizo);
+
+                return turno1 = !turno1;
+
+            } else if (hechizo instanceof HechizoDefensa) {
+
+                wizard.defenderse(hechizo);
+
+                imprimirHablaDefensa(wizard, defensor, hechizo);
+
+                return turno1;
+
+            } else if (hechizo instanceof HechizoOcio) {
+                procesarHechizoOcio(atacante, hechizo);
+
+                return turno1 = !turno1;
+            }
+
+        } else if (atacante instanceof Elfo && ((Elfo) atacante).getEnergiaMagica() >= hechizo.getEnergiaMagica()) {
             Elfo elfo = (Elfo) atacante;
 
-            elfo.atacar(defensor, hechizo);
+            if (hechizo instanceof HechizoAtaque) {
 
-            imprimirHablaAtaque(elfo, defensor, hechizo);
+                elfo.atacar(defensor, hechizo);
+
+                imprimirHablaAtaque(elfo, defensor, hechizo);
+
+                return turno1 = !turno1;
+
+            } else if (hechizo instanceof HechizoCuracion) {
+
+                elfo.curarse(hechizo);
+
+                imprimirHablaCuracion(elfo, hechizo);
+
+                return turno1 = !turno1;
+
+            } else if (hechizo instanceof HechizoDefensa) {
+
+                elfo.defenderse(hechizo);
+
+                imprimirHablaDefensa(elfo, defensor, hechizo);
+
+                return turno1;
+
+            } else if (hechizo instanceof HechizoOcio) {
+                procesarHechizoOcio(atacante, hechizo);
+
+                return turno1 = !turno1;
+            }
+
+        } else if (((Elfo) atacante).getEnergiaMagica() <= 0) {
+
+            imprimirHablaSinEnergiaMagica(atacante, hechizo);
+
+            return turno1 = !turno1;
         }
+
+        return turno1 = !turno1;
 
     }
 
@@ -1530,26 +1632,14 @@ public class JuegoHP {
 
     }
 
-    // Esto va a procesar la curación
+    public void imprimirHablaSinEnergiaMagica(Personaje personaje, Hechizo hechizo) {
 
-    public void procesarCuracion(Personaje atacante, Hechizo hechizo) {
-
-        if (atacante instanceof Wizard) {
-
-            Wizard wizard = (Wizard) atacante;
-
-            wizard.curarse(hechizo);
-
-            imprimirHablaCuracion(wizard, hechizo);
-
-        } else if (atacante instanceof Elfo) {
-
-            Elfo elfo = (Elfo) atacante;
-
-            elfo.curarse(hechizo);
-
-            imprimirHablaCuracion(elfo, hechizo);
-        }
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
+        System.out.println(" [ " + personaje.getNombre() + " no tiene suficiente energia mágica para lanzar el hechizo "
+                + hechizo.getNombre() + " ] ");
+        System.out.println("_______________________________________________________________________");
+        System.out.println(" ");
 
     }
 
@@ -1560,27 +1650,6 @@ public class JuegoHP {
                 + " y consumió " + hechizo.getEnergiaMagica() + " de energia mágica ] ");
         System.out.println(" [ La salud actual de " + personaje.getNombre() + " es de " + personaje.getSalud() + " ] ");
         System.out.println(" ");
-
-    }
-
-    public void procesarDefensa(Personaje atacante, Personaje defensor, Hechizo hechizo) {
-
-        if (atacante instanceof Wizard) {
-
-            Wizard wizard = (Wizard) atacante;
-
-            wizard.defenderse(hechizo);
-
-            imprimirHablaDefensa(wizard, defensor, hechizo);
-
-        } else if (atacante instanceof Elfo) {
-
-            Elfo elfo = (Elfo) atacante;
-
-            elfo.defenderse(hechizo);
-
-            imprimirHablaDefensa(elfo, defensor, hechizo);
-        }
 
     }
 
@@ -1625,7 +1694,18 @@ public class JuegoHP {
 
     // Calcula el total de puntos de vida después de ganar o perder puntos
 
-    public void calcularPuntosVida(Personaje personaje, int numero) {
+    public void procesarPuntosVida(Personaje personaje, int numero, String motivo) {
+
+        if (numero < 0) {
+            System.out.println(" ");
+            System.out.println(" [ Perdiste " + numero + " puntos de vida " + motivo + " ] ");
+            System.out.println(" ");
+        } else {
+
+            System.out.println(" ");
+            System.out.println(" [ Ganaste " + numero + " puntos de vida " + motivo + " ] ");
+            System.out.println(" ");
+        }
 
         int b = personaje.getSalud() + numero;
         personaje.setSalud(b);
@@ -1642,24 +1722,50 @@ public class JuegoHP {
         System.out.println(" ");
     }
 
-    public void procesarAtaqueDementor(Dementor dementor, Personaje defensor) {
+    public void procesarAtaquePoder(Personaje atacante, Personaje defensor) {
 
-        int a;
+        int a = 0;
+        String nombreAtaque = " ";
 
-        if (dementor.getSalud() < 10 && defensor.getSalud() < 30) {
+        if (atacante instanceof Dementor) {
+            Dementor dementor = (Dementor) atacante;
 
-            a = dementor.atacar(defensor, dementor.getUltimate());
+            if (atacante.getSalud() < 10 && defensor.getSalud() < 30) {
 
-        } else {
+                a = dementor.atacar(defensor, dementor.getUltimate());
 
-            a = dementor.atacar(defensor, dementor.getPoderInicial());
+                nombreAtaque = dementor.getUltimate().getNombre();
+
+            } else {
+
+                a = dementor.atacar(defensor, dementor.getPoderInicial());
+
+                nombreAtaque = dementor.getPoderInicial().getNombre();
+            }
+
+        } else if (atacante instanceof Basilisco) {
+            Basilisco basilisco = (Basilisco) atacante;
+
+            if (atacante.getSalud() < 10 && defensor.getSalud() < 30) {
+
+                a = basilisco.atacar(defensor, basilisco.getUltimate());
+
+                nombreAtaque = basilisco.getUltimate().getNombre();
+
+            } else {
+
+                a = basilisco.atacar(defensor, basilisco.getPoderInicial());
+
+                nombreAtaque = basilisco.getPoderInicial().getNombre();
+            }
+
         }
 
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");
-        System.out.println(" [ " + dementor.getNombre() + " atacó " + defensor.getNombre() + " con el poder "
-                + dementor.getPoderInicial().getNombre() + " ] ");
-        System.out.println(" [ " + dementor.getNombre() + " consumió " + a + " de energia mágica ] ");
+        System.out.println(" [ " + atacante.getNombre() + " atacó " + defensor.getNombre() + " con el poder "
+                + nombreAtaque + " ] ");
+        System.out.println(" [ " + atacante.getNombre() + " consumió " + a + " de energia mágica ] ");
         System.out.println(" [ La salud actual de " + defensor.getNombre() + " es de " + defensor.getSalud() + " ] ");
         System.out.println("_______________________________________________________________________");
         System.out.println(" ");

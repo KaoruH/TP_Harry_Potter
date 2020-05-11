@@ -123,15 +123,15 @@ public class Wizard extends Persona implements IHaceHechizo {
 
             b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
 
+        } else {
+
+            b = c;
         }
 
         if (this.artefacto != null) {
 
-            b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+            b += (int) Math.round(c * this.artefacto.getAmplificadorDeDanio());
 
-        } else {
-
-            b = c;
         }
 
         int a = personaje.getSalud() - b;
@@ -146,6 +146,7 @@ public class Wizard extends Persona implements IHaceHechizo {
         }
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+
         this.setEnergiaMagica(a);
 
     }

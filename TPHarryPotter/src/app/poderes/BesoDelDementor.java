@@ -6,15 +6,12 @@ public class BesoDelDementor extends Poder{
         super(nombre);
         this.ataqueMaximo = ataqueMaximo;
         this.ataqueMinimo = ataqueMinimo;
+
     }
 
     private int ataqueMaximo;
 
     private int ataqueMinimo;
-
-    private int energiaMagicaMaxima;
-
-    private int energiaMagicaMinima;
 
     public int getAtaqueMaximo() {
         return ataqueMaximo;
@@ -32,20 +29,5 @@ public class BesoDelDementor extends Poder{
         this.ataqueMinimo = ataqueMinimo;
     }
 
-    public int getEnergiaMagicaMaxima() {
-        return energiaMagicaMaxima;
-    }
-
-    public void setEnergiaMagicaMaxima(int energiaMagicaMaxima) {
-        this.energiaMagicaMaxima = energiaMagicaMaxima;
-    }
-
-    public int getEnergiaMagicaMinima() {
-        return energiaMagicaMinima;
-    }
-
-    public void setEnergiaMagicaMinima(int energiaMagicaMinima) {
-        this.energiaMagicaMinima = energiaMagicaMinima;
-    }
     
 }

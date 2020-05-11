@@ -8,10 +8,8 @@ import app.poderes.hechizos.*;
 
 public class Dementor extends Criatura implements IHaceMagia {
 
-    public Dementor(String nombre, int salud, int energiaMagica, boolean magoOscuro, Poder poderInicial) {
+    public Dementor(String nombre, int salud, Poder poderInicial) {
         super(nombre, salud);
-        this.energiaMagica = energiaMagica;
-        this.magoOscuro = magoOscuro;
         this.poderInicial = poderInicial;
     }
 
@@ -19,22 +17,15 @@ public class Dementor extends Criatura implements IHaceMagia {
 
     private Poder poderInicial;
 
-    private int energiaMagica;
-
-    private boolean magoOscuro;
-
-    private Artefacto artefacto;
-
     private Poder ultimate;
 
     @Override
     public int getEnergiaMagica() {
-        return this.energiaMagica;
+        return 0;
     }
 
     @Override
     public void setEnergiaMagica(int energiaMagica) {
-        this.energiaMagica = energiaMagica;
     }
 
     @Override
@@ -50,7 +41,7 @@ public class Dementor extends Criatura implements IHaceMagia {
 
     @Override
     public Artefacto getArtefacto() {
-        return this.artefacto;
+        return null;
     }
 
     @Override
@@ -72,49 +63,32 @@ public class Dementor extends Criatura implements IHaceMagia {
 
         int ataqueMaximo;
         int ataqueMinimo;
-        int energiaMagicaMaxima;
-        int energiaMagicaMinima;
+        int a, b;
 
         if (poder instanceof AbsorberFelicidad) {
             AbsorberFelicidad absorberFelicidad = (AbsorberFelicidad) poder;
 
             ataqueMaximo = absorberFelicidad.getAtaqueMaximo();
             ataqueMinimo = absorberFelicidad.getAtaqueMinimo();
-            energiaMagicaMaxima = absorberFelicidad.getEnergiaMagicaMaxima();
-            energiaMagicaMinima = absorberFelicidad.getAtaqueMinimo();
             
         } else {
             BesoDelDementor besoDelDementor = (BesoDelDementor) poder;
 
             ataqueMaximo = besoDelDementor.getAtaqueMaximo();
             ataqueMinimo = besoDelDementor.getAtaqueMinimo();
-            energiaMagicaMaxima = besoDelDementor.getEnergiaMagicaMaxima();
-            energiaMagicaMinima = besoDelDementor.getAtaqueMinimo();
         }
 
-        int a = (int) (Math.random() * ((ataqueMaximo - ataqueMinimo) + 1)) + ataqueMinimo;
+        a = (int) (Math.random() * ((ataqueMaximo - ataqueMinimo) + 1)) + ataqueMinimo;
 
-        int b = personaje.getSalud() - a;
+        b = personaje.getSalud() - a;
 
         personaje.setSalud(b);
-
-        a = (int) (Math.random() * ((energiaMagicaMaxima - energiaMagicaMinima) + 1)) + energiaMagicaMinima;
-
-        this.energiaMagica -= a;
 
         return a;
     }
 
     public void setPoderInicial(Poder poderInicial) {
         this.poderInicial = poderInicial;
-    }
-
-    public boolean isMagoOscuro() {
-        return magoOscuro;
-    }
-
-    public void setMagoOscuro(boolean magoOscuro) {
-        this.magoOscuro = magoOscuro;
     }
 
     public List<Hechizo> getHechizos() {
@@ -126,7 +100,6 @@ public class Dementor extends Criatura implements IHaceMagia {
     }
 
     public void setArtefacto(Artefacto artefacto) {
-        this.artefacto = artefacto;
     }
 
     public Poder getUltimate() {

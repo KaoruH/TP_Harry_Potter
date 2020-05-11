@@ -8,12 +8,13 @@ import app.poderes.hechizos.*;
 
 public class Elfo extends Criatura implements IHaceHechizo {
 
-    public Elfo(String nombre, int salud) {
+    public Elfo(String nombre, int salud, int energiaMagica) {
         super(nombre, salud);
+        this.energiaMagica = energiaMagica;
 
     }
 
-    private int energiaMagica = 150;
+    private int energiaMagica;
 
     private Artefacto artefacto;
 
@@ -67,6 +68,7 @@ public class Elfo extends Criatura implements IHaceHechizo {
         int b;
         int c = hechizo.getNivelDanio();
 
+
         if (personaje instanceof Wizard && ((Wizard) personaje).getArtefacto() != null) {
 
             b = (int) Math.round(c - (c * ((Wizard) personaje).getArtefacto().getAmplificadorDeCuración()));
@@ -75,14 +77,15 @@ public class Elfo extends Criatura implements IHaceHechizo {
 
             b = (int) Math.round(c - (c * ((Elfo) personaje).getArtefacto().getAmplificadorDeCuración()));
 
+        } else {
+
+            b = c;
         }
 
         if (this.artefacto != null) {
 
-            b = (int) Math.round(c + (c * this.artefacto.getAmplificadorDeDanio()));
+            b += (int) Math.round(c * this.artefacto.getAmplificadorDeDanio());
 
-        } else {
-            b = c;
         }
 
         int a = personaje.getSalud() - b;
@@ -97,6 +100,7 @@ public class Elfo extends Criatura implements IHaceHechizo {
         }
 
         a = this.getEnergiaMagica() - hechizo.getEnergiaMagica();
+
         this.setEnergiaMagica(a);
 
     }

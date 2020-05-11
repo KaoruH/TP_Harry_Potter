@@ -1,12 +1,11 @@
 package app.poderes;
 
-public class AbsorberFelicidad extends Poder{
+public class Embestida extends Poder{
 
-    public AbsorberFelicidad(String nombre, int ataqueMaximo, int ataqueMinimo) {
+    public Embestida(String nombre, int ataqueMaximo, int ataqueMinimo) {
         super(nombre);
         this.ataqueMaximo = ataqueMaximo;
         this.ataqueMinimo = ataqueMinimo;
-
     }
 
     private int ataqueMaximo;
@@ -28,6 +27,5 @@ public class AbsorberFelicidad extends Poder{
     public void setAtaqueMinimo(int ataqueMinimo) {
         this.ataqueMinimo = ataqueMinimo;
     }
-
     
 }

@@ -8,65 +8,55 @@ import app.poderes.hechizos.*;
 
 public class Basilisco extends Criatura implements IHaceMagia {
 
-    public Basilisco(String nombre, int salud, int energiaMagica, boolean magoOscuro) {
+    public Basilisco(String nombre, int salud, Poder poderInicial) {
         super(nombre, salud);
-        this.energiaMagica = energiaMagica;
-        this.magoOscuro = magoOscuro;
+        this.poderInicial = poderInicial;
+        
     }
 
     private List<Hechizo> hechizos = new ArrayList<>();
 
-    private int energiaMagica;
+    private Poder poderInicial;
 
-    private boolean magoOscuro;
-
-
+    private Poder ultimate;
 
     @Override
     public int getEnergiaMagica() {
-        return energiaMagica;
+        return 0;
     }
 
     @Override
     public void setEnergiaMagica(int energiaMagica) {
-        this.energiaMagica = energiaMagica;
 
     }
 
     @Override
     public Poder getPoderInicial() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.poderInicial;
     }
 
     @Override
     public void setPoder(Poder poder) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public Artefacto getArtefacto() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void aprender(Hechizo h) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void atacar(Personaje personaje, String hechizo) { //TODO radom de hechizos de la lista danioMedio2
-        // TODO Auto-generated method stub
-
+    public void atacar(Personaje personaje, String hechizo) { 
     }
 
     public List<Hechizo> getHechizos() {
@@ -77,14 +67,44 @@ public class Basilisco extends Criatura implements IHaceMagia {
         this.hechizos = hechizos;
     }
 
-    public boolean isMagoOscuro() {
-        return magoOscuro;
+    public int atacar(Personaje personaje, Poder poder) {
+
+        int ataqueMaximo;
+        int ataqueMinimo;
+        int a, b;
+
+        if (poder instanceof AbsorberFelicidad) {
+            AbsorberFelicidad absorberFelicidad = (AbsorberFelicidad) poder;
+
+            ataqueMaximo = absorberFelicidad.getAtaqueMaximo();
+            ataqueMinimo = absorberFelicidad.getAtaqueMinimo();
+            
+        } else {
+            BesoDelDementor besoDelDementor = (BesoDelDementor) poder;
+
+            ataqueMaximo = besoDelDementor.getAtaqueMaximo();
+            ataqueMinimo = besoDelDementor.getAtaqueMinimo();
+        }
+
+        a = (int) (Math.random() * ((ataqueMaximo - ataqueMinimo) + 1)) + ataqueMinimo;
+
+        b = personaje.getSalud() - a;
+
+        personaje.setSalud(b);
+
+        return a;
     }
 
-    public void setMagoOscuro(boolean magoOscuro) {
-        this.magoOscuro = magoOscuro;
+    public void setPoderInicial(Poder poderInicial) {
+        this.poderInicial = poderInicial;
     }
 
+    public Poder getUltimate() {
+        return ultimate;
+    }
 
+    public void setUltimate(Poder ultimate) {
+        this.ultimate = ultimate;
+    }
 
 }
