@@ -73,17 +73,17 @@ public class Basilisco extends Criatura implements IHaceMagia {
         int ataqueMinimo;
         int a, b;
 
-        if (poder instanceof AbsorberFelicidad) {
-            AbsorberFelicidad absorberFelicidad = (AbsorberFelicidad) poder;
+        if (poder instanceof Embestida) {
+            Embestida embestida = (Embestida) poder;
 
-            ataqueMaximo = absorberFelicidad.getAtaqueMaximo();
-            ataqueMinimo = absorberFelicidad.getAtaqueMinimo();
+            ataqueMaximo = embestida.getAtaqueMaximo();
+            ataqueMinimo = embestida.getAtaqueMinimo();
             
         } else {
-            BesoDelDementor besoDelDementor = (BesoDelDementor) poder;
+            MiradaMortal miradaMortal = (MiradaMortal) poder;
 
-            ataqueMaximo = besoDelDementor.getAtaqueMaximo();
-            ataqueMinimo = besoDelDementor.getAtaqueMinimo();
+            ataqueMaximo = miradaMortal.getAtaqueMaximo();
+            ataqueMinimo = miradaMortal.getAtaqueMinimo();
         }
 
         a = (int) (Math.random() * ((ataqueMaximo - ataqueMinimo) + 1)) + ataqueMinimo;
