@@ -52,11 +52,6 @@ public class JuegoHP {
         }
     }
 
-    // public void inicializarSegunBloque() {
-    // this.caminoHogwardsExpreso();
-
-    // }
-
     public void inicializarBloqueArmazon(int numeroBloque) { // TODO Bloque armazon
 
         switch (numeroBloque) {
@@ -231,7 +226,6 @@ public class JuegoHP {
                 imprimirRecibirSegundaMision();
                 System.out.println(" ");
                 imprimirBusquedaCamara1();
-
                 return teclado.nextInt();
 
             case 9:
@@ -241,15 +235,44 @@ public class JuegoHP {
                 return teclado.nextInt();
 
             case 10:
+                System.out.println("_______________________________________________________________________");
+                System.out.println(" ");
+                System.out.println("Sus días en Hogwards estan siendo increíbles");
+                System.out.println("Pero no te puedes olvidar del objetivo. ");
+                System.out.println(" ");
+                System.out.println("Mientras las clases encuentras una puerta que todavia no habias visto");
+                System.out.println("Ingrese 1 para esperar todos dormiren y adentrar a la puerta");
+                System.out.println("u 2 para preguntar a Hagrid sobre la puerta.");
 
                 return teclado.nextInt();
 
             case 11:
+                System.out.println(" ");
+                System.out.println("Sientes que el tiempo está se quedando corto");
+                System.out.println("Tenés que encontrar la última reliquia.");
+                System.out.println("...");
+                System.out.println("Su mascota te trae una carta, pero dentro solo hay");
+                System.out.println("una gran pluma negra con un poco de sangre.");
+                System.out.println("Sabes lo que significa: los comensales estan llegando!");
+                continuar();
+                System.out.println(" ");
+                System.out.println("Algo que estás evitando deve ser hecho:");
+                System.out.println("Conversar con Albus Dumbledore.");
+                System.out.println("...");
+                System.out.println("Llegando a su mesa, Dumbledore te pregunta");
+                System.out.println("Dumblendore: estás listo para confrontar los comensales? ");
+                System.out.println("Ingrese 1 para sí, 2 para no. ");
 
                 return teclado.nextInt();
 
             case 12:
-
+            System.out.println(" ");
+            System.out.println("Tenés dos cajas en la mesa");
+            System.out.println("Respiras y las abre!");
+            System.out.println("Una es una Varita linda, hecha de sauco. ");
+            System.out.println(" La otra es un anillo con una piedra azul de energia impresionante.");
+            System.out.println(" ");
+            System.out.println("Ingrese 1 para elergir la Horrocrucx o ingrese 2 para la Varita de Sauco");
                 return teclado.nextInt();
 
             default:
@@ -307,7 +330,7 @@ public class JuegoHP {
 
                 break;
 
-            case 5: // Por que en el subbloque 5 y no en el 6 (final del bloque)?
+            case 5: 
                 System.out.println("Como sos MUY CURIOS@, fuiste con sus amigos");
                 System.out.println("en busca del sonido.");
                 System.out.println(" ");
@@ -337,7 +360,7 @@ public class JuegoHP {
 
                 break;
 
-            case 7: // Sólo continuar?
+            case 7: 
                 continuar();
                 break;
 
@@ -356,7 +379,7 @@ public class JuegoHP {
 
                 break;
 
-            case 9: // 1 No es la biblioteca?
+            case 9:
                 System.out.println(" ");
                 System.out.println("Al entrar en el baño escuchas alguien llorando");
                 System.out.println("Encontras uno de los fantasmas del castillo");
@@ -381,14 +404,45 @@ public class JuegoHP {
                 break;
 
             case 10:
-
+                System.out.println(" ");
+                System.out.println("Mientras todos durmian, hasta tus amigos ");
+                System.out.println("saliste a ver que habia por atrás de la puerta");
+                System.out.println(" ");
+                System.out.println("No está trancada, entonces abres rápido y entras para no");
+                System.out.println("avistaren vos en los pasillos tan tarde.");
+                System.out.println("...");
+                continuar();
+                System.out.println(" ... ");
+                System.out.println("Está todo oscuro, pero hay un viento caliente.");
+                System.out.println("sigues... ");
+                System.out.println(" !! ES UM GRAN PERRO CON 3 CABEZAS !! ");
+                procesarPuntosVida(this.brujoElegido, -15, "por el perro te hacer una herida");
+                System.out.println("Saliste corriendo, pusiste la capa de invisibilidad y");
+                System.out.println("volviste a su habitacion");
                 break;
 
             case 11:
+                System.out.println(" ");
+                System.out.println("Dumbledore: 'Humm!! Crees que estás list@," + a + ".");
+                System.out.println("Que bueno, pues lo peor se aproxima. Te voy a explicarte!'");
+                System.out.println(" ");
+                System.out.println("Dumbledore te explicó toda la história de las Relíquias.");
+                System.out.println("Te enseño un Hechizo");
+
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
+                System.out.println(" ");
+                System.out.println("Y te dijo que tenía la última Reliquia ");
 
                 break;
 
             case 12:
+            System.out.println(" ");
+            System.out.println("Elegiste la Horrocrux");
+            System.out.println("Pero esa relíquia no es una de las Reliquias de La muerte! ");
+            System.out.println(" ");
+            reinicializarBloque(5);
 
                 break;
 
@@ -401,6 +455,7 @@ public class JuegoHP {
     public void decision2Subbloque(int numeroSubbloque) {
 
         Hechizo hechizo;
+        String a = this.getBrujoElegido().getNombre();
 
         switch (numeroSubbloque) {
 
@@ -499,8 +554,7 @@ public class JuegoHP {
 
                 break;
 
-            case 8: // no se supone que sea el baño femenino? creo que biblioteca es en el subbloque
-                    // 9
+            case 8:
                 System.out.println(" ");
                 System.out.println("Muchos y muchos libros, pero solo uno habla de la camara");
                 System.out.println("La página esta rota, pero hay algo que dice:");
@@ -523,19 +577,86 @@ public class JuegoHP {
                 break;
 
             case 9:
+                System.out.println(" ");
+                System.out.println("Mismo no siendo un lugar mucho amigable, aqui estan!");
+                System.out.println("Sientaste con tus amigos y pidieron unas cervezas amantegadas");
+                System.out.println("Mientras piensan sobre lo que pueden hacer, alguén se aproxima...");
+                System.out.println("...");
+                continuar();
+                System.out.println("Misterioso: 'Hola! Supe que buscan informaciones sobre la camara'");
+                System.out.println("Vos: 'Si! Sabes de algo?' preguntas intentando identificar la persona");
+                System.out.println("Misterioso: 'Sugiro que hablen con la Myrtle la llorona...'");
+                System.out.println("Vos: 'pero...' lo misterioso no dejate terminar la frase");
+                System.out.println("Misterioso: '...pero sean amigables y propongan ayuda!'");
+                System.out.println("Habla las ultimas frases se levantando de la mesa para irse");
+                System.out.println("Vos: 'Quien eres vos?'");
+                System.out.println("Misterioso: 'Van y hablen con ella. Soy un amigo...'");
+                continuar();
+                System.out.println(" ");
+                System.out.println("Que raro!!!!");
+                System.out.println("Luego buscaron la Myrte en el baño feminino");
+                System.out.println(" ");
+                System.out.println("Vos: 'Hola? Myrte?'");
+                System.out.println("Myrtle la llorona: 'Que haces aqui, " + a + "? Me deje sola!!!'");
+                System.out.println("Vos: 'Perdon, Myrte! No quiero molestarte'");
+                System.out.println("Vos: 'Porque lloras? Quiero ayudarte!'");
+                System.out.println("impresionante como las palabras que dijiste la dejaron amigable.");
+                System.out.println(" ");
+                continuar();
+                System.out.println("La Myrtle contó toda la história");
+                System.out.println("Desde entonces, ya supieron como abrir la Camara");
+                System.out.println("Para ayudarla, prometiste matar la criatura que se esconde");
+                System.out.println("en la Camara. La misma que mató la Myrtle.");
+                System.out.println("[ Siga para abrir la Camara Secreta ] ");
 
                 break;
 
             case 10:
+                System.out.println(" ");
+                System.out.println("vos: 'Hola, Hagrid! Puedes me ayudar?'");
+                System.out.println("Hagrid: 'Ya viene a me hacer preguntas que no puedo responder?'");
+                System.out.println("Vos: 'Jajaja, es solo una curiosidad. Por favor!'");
+                System.out.println("Hagrid: 'Dale!' ");
+                System.out.println("Vos: 'Vi una puerta rara, en la torre norte, abajo de la clase de pociones");
+                System.out.println("Sabes lo que hay ahí?'");
+                continuar();
+                System.out.println("Hagrid: 'Uh, que bueno que me preguntaste, " + a);
+                System.out.println("Ahí está una de las criaturas que yá te habia dicho otro día,");
+                System.out.println("una de esas que guarda las cosas de Dumbledore. Pero me parece que");
+                System.out.println("lo que habia aí, recien fue retirado, solo hay la criatura.'");
+                System.out.println(" ");
+                System.out.println("[ Por no tener ido al peligro, aprendiste un nuevo hechizo con Hagrid ]");
+                System.out.println(" ");
 
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
                 break;
 
             case 11:
+                System.out.println(" ");
+                System.out.println("Dumbledore: '" + a + ", creo que no hay más tiempo!");
+                System.out.println("Tu confronto con los comensales es inevitable!'");
+                System.out.println(" ");
+                System.out.println("Dumbledore te explicó toda la história de las Relíquias.");
+                System.out.println("Te enseño un Hechizo");
+
+                hechizo = hechizoRandomSegunPersonaje(this.brujoElegido, hechizosRecibir);
+
+                procesarAprender(this.brujoElegido, hechizo);
+                System.out.println(" ");
+                System.out.println("Y te dijo que tenía la última Reliquia ");
 
                 break;
 
             case 12:
-
+            System.out.println(" ");
+            System.out.println("Elegiste la Varita de Sauco");
+            System.out.println("Felicitaciones! Esa es la última Reliquias de La muerte! ");
+            System.out.println(" ");
+            System.out.println(" !!!! Buena Suerte !!!!");
+            System.out.println(" ");
+            continuar();
                 break;
 
             default:
@@ -574,7 +695,7 @@ public class JuegoHP {
                 break;
 
             case 4:
-            llenarLosPuntos();
+                llenarLosPuntos();
                 System.out.println(" ");
                 System.out.println("Por hacer amigos, aprendiste nuevas cosas");
                 System.out.println(" ");
@@ -585,6 +706,7 @@ public class JuegoHP {
                 procesarAprender(this.brujoElegido, hechizo);
                 System.out.println(" ");
                 continuar();
+                break;
 
             case 5:
 
@@ -592,8 +714,7 @@ public class JuegoHP {
 
                 break;
 
-            case 6: // hay que ver esto porque está imprimindo lo mismo al final de case 5 y 6. Los
-                    // separé y pude un continue en el case 5.
+            case 6: 
                 System.out.println("Sirius le regala una linda Capa");
                 System.out.println(" ");
 
@@ -605,7 +726,7 @@ public class JuegoHP {
                 break;
 
             case 7:
-            llenarLosPuntos();
+                llenarLosPuntos();
 
                 break;
 
@@ -616,6 +737,7 @@ public class JuegoHP {
                 procesarPuntosVida(this.brujoElegido, -10, "por el cansacio");
 
                 continuar();
+                break;
 
             case 9:
                 System.out.println(" ");
@@ -630,6 +752,7 @@ public class JuegoHP {
                 }
                 System.out.println("_______________________________________________________________________");
                 System.out.println(" ");
+                System.out.println(" !! Mision 2 concluída !!");
                 System.out.println("La Myrtle se quedó feliz por cumpriren la promesa.");
                 System.out.println("Tan feliz que no más lloró");
                 System.out.println("Y le regalo una piedra valiosa");
@@ -645,16 +768,40 @@ public class JuegoHP {
                 break;
 
             case 10:
-            llenarLosPuntos();
+                llenarLosPuntos();
 
                 break;
             case 11:
+            System.out.println(" ");
+            System.out.println("É pone dos cajas en la mesa y explicate una cosa antes de");
+            System.out.println("de dejarte sol@ en su oficina:");
+            System.out.println("Dumbledore: 'Siempre creí que solo tu puedes hacer esto'");
+            System.out.println("'Así, vas a tener que elegir cual es la relíquia que quieres'");
+            System.out.println("'sí estás realmiente lis@, vas elegir la correcta!'");
+            System.out.println(" ");
 
                 continuar();
 
                 break;
 
             case 12:
+            System.out.println(" ");
+            System.out.println("Los comensales Llegaron a Hogwads");
+            System.out.println("Y Bellatrix Lestrange procura las relíquas, ");
+            System.out.println(" ! Es la hora ! ");
+
+            Poder poderInicial = new ParseTongue("Parse Tongue");
+            poderInicial.setDescripcion("Puede Hablar la lenga de las cobras");
+            Wizard bellatrix = new Wizard("Bellatrix", 100, 150, true, poderInicial);
+            bellatrix.setEdad(39);
+            this.getBrujos().add(bellatrix);
+            for (int i = 0; i < this.brujoElegido.getHechizos().size(); i++) {
+                bellatrix.getHechizos().add(hechizoRandomSegunPersonaje(bellatrix, hechizosRecibir));
+
+            }
+
+            procesarLucha(bellatrix, 1);
+            
 
                 break;
 
@@ -1159,10 +1306,10 @@ public class JuegoHP {
         System.out.println("Dobby dejó un regalo para ayudarte a llegar a Hogwards");
         System.out.println(" ");
 
-        Hechizo hechizo = new Obliviate("Obliviate", false, 5);
-        hechizo.setDescripcion("Es un hechizo para borrar algo de la memória de um Wizard o Muggle");
+        Hechizo hechizo = new Opugno("Opugno", false, 10);
+        hechizo.setDescripcion("Hace con que objector cercanos ataquen el oponente.");
         hechizo.setNivelCuracion(0);
-        hechizo.setNivelDanio(0);
+        hechizo.setNivelDanio(15);
         procesarAprender(this.brujoElegido, hechizo);
 
         play();
@@ -1295,15 +1442,14 @@ public class JuegoHP {
     public void imprimirBusquedaCamara1() {
         System.out.println("[ Ingrese el número del lugar que quieres buscar informaciones ]");
         System.out.println("1 - Casa de Hagrid");
-        System.out.println("2 - Baño feminino");
-        teclado.nextInt();
+        System.out.println("2 - Biblioteca");
+
     }
 
     public void imprimirBusquedaCamara2() {
         System.out.println("[ Ingrese el número del lugar que quieres buscar informaciones ]");
-        System.out.println("1 - Biblioteca");
+        System.out.println("1 - Baño feminino");
         System.out.println("2 - El Caldero Chorreante");
-        teclado.nextInt();
     }
     // Carga todos los hechizos
 
@@ -1478,11 +1624,12 @@ public class JuegoHP {
         hechizo.setNivelDanio(20);
         this.hechizosRecibir.add(hechizo);
 
-        hechizo = new Opugno("Opugno", false, 10);
-        hechizo.setDescripcion("Hace con que objector cercanos ataquen el oponente.");
+        hechizo = new Obliviate("Obliviate", false, 5);
+        hechizo.setDescripcion("Es un hechizo para borrar algo de la memória de um Wizard o Muggle");
         hechizo.setNivelCuracion(0);
-        hechizo.setNivelDanio(15);
+        hechizo.setNivelDanio(0);
         this.hechizosRecibir.add(hechizo);
+        
 
         hechizo = new PetrificusTotalus("Petrificus Totalus", false, 10);
         hechizo.setDescripcion("Paraliza al oponente.");
