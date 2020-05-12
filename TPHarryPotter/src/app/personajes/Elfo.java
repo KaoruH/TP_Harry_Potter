@@ -51,19 +51,19 @@ public class Elfo extends Criatura implements IHaceHechizo {
     }
 
     @Override
-    public void setPoder(Poder poder) { // El elfo no tiene "Poder"... Tenemos que crear uno? si
+    public void setPoder(Poder poder) { 
 
     }
 
     @Override
-    public void aprender(Hechizo h) { // Está igual que en Wizard
+    public void aprender(Hechizo h) {
 
         this.hechizos.add(h);
 
     }
 
     @Override
-    public void atacar(Personaje personaje, Hechizo hechizo) { // Está igual que en Wizard
+    public void atacar(Personaje personaje, Hechizo hechizo) { 
 
         int b;
         int c = hechizo.getNivelDanio();

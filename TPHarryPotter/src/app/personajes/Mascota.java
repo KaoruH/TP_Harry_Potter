@@ -10,7 +10,7 @@ public class Mascota extends Personaje {
 
     private int bonusVida; // cuanto add o saca de la vida del jugador
     private int bonusEnergiaMagica; // cuanto add o saca de la vida del jugador
-    private String descripcion; // algo básico por add o saca ^ y personalidad?
+    private String descripcion; 
 
     public String getDescripcion() {
         return descripcion;

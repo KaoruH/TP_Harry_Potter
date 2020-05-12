@@ -14,7 +14,7 @@ public abstract class Personaje {
     private int edad;
 
     public boolean estaVivo(){
-        //TODO
+      
         return false;
     }
 

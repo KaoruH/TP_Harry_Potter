@@ -111,7 +111,7 @@ public class Wizard extends Persona implements IHaceHechizo {
 
             JuegoHP juego = new JuegoHP();
 
-            juego.imprimirConversionMagoOscuro(this.getNombre()); // TODO
+            juego.imprimirConversionMagoOscuro(this.getNombre()); 
 
         }
 

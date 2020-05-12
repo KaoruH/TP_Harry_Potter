@@ -7,19 +7,8 @@ import app.interfaces.*;
 import app.personajes.*;
 import app.poderes.*;
 import app.poderes.hechizos.*;
-//import app.transportes.*; TODO
 
 public class JuegoHP {
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static Scanner teclado = new Scanner(System.in);
 
@@ -31,8 +20,6 @@ public class JuegoHP {
     private List<Hechizo> hechizosDanioMedio = new ArrayList<>();
     private List<Artefacto> contenedoArtefactos = new ArrayList<>();
 
-    // Ver si debo crear siempre una nueva variable (int, string) para cada método o
-    // si puedo reutilizarlas
 
     public void inicializarJuego() {
         this.inicializarBrujosBloque1();
@@ -45,14 +32,14 @@ public class JuegoHP {
         this.inicializarBloques();
     }
 
-    public void inicializarBloques() { // TODO inicializar bloques
+    public void inicializarBloques() { 
         for (int i = 1; i <= 4; i++) {
 
             inicializarBloqueArmazon(i);
         }
     }
 
-    public void inicializarBloqueArmazon(int numeroBloque) { // TODO Bloque armazon
+    public void inicializarBloqueArmazon(int numeroBloque) {
 
         switch (numeroBloque) {
 
@@ -86,7 +73,7 @@ public class JuegoHP {
         }
     }
 
-    public void inicializarSubbloques(int primer, int ultimo) { // TODO subbloques
+    public void inicializarSubbloques(int primer, int ultimo) { 
 
         for (int i = primer; i <= ultimo; i++) {
 
@@ -96,7 +83,7 @@ public class JuegoHP {
 
     }
 
-    public void inicializarSubbloqueArmazon(int numeroSubbloque) { // TODO subbloque armazon
+    public void inicializarSubbloqueArmazon(int numeroSubbloque) { 
 
         int a = aperturaSubbloque(numeroSubbloque);
 
@@ -114,11 +101,11 @@ public class JuegoHP {
 
     }
 
-    public int aperturaSubbloque(int numeroSubbloque) { // TODO apertura subbloque
+    public int aperturaSubbloque(int numeroSubbloque) { 
 
         switch (numeroSubbloque) {
 
-            case 1: // bloque 1
+            case 1: 
 
                 System.out.println(".");
                 System.out.println(".");
@@ -152,7 +139,7 @@ public class JuegoHP {
 
                 return teclado.nextInt();
 
-            case 4: // bloque 2
+            case 4: 
                 System.out.println("_______________________________________________________________________");
                 System.out.println(" ");
                 System.out.println("Felicitaciones! Lograste llegar al Tren Expreso de Hogward!");
@@ -200,7 +187,7 @@ public class JuegoHP {
 
                 return teclado.nextInt();
 
-            case 7: // bloque 3
+            case 7: 
                 System.out.println("_______________________________________________________________________");
                 System.out.println(" ");
                 System.out.println("***   Bienvenid@ a Hogwards!   ***");
@@ -442,7 +429,7 @@ public class JuegoHP {
             System.out.println("Elegiste la Horrocrux");
             System.out.println("Pero esa relíquia no es una de las Reliquias de La muerte! ");
             System.out.println(" ");
-            reinicializarBloque(5);
+            reinicializarBloque(4);
 
                 break;
 
@@ -890,11 +877,7 @@ public class JuegoHP {
 
             }
 
-            // if (!(hechizo instanceof HechizoDefensa)) {
 
-            // turno1 = !turno1;
-
-            // }
 
         }
 
@@ -1123,57 +1106,7 @@ public class JuegoHP {
 
     }
 
-    // Esto carga todos los Artefactos ---
 
-    public void inicializarArtefactos() {
-
-        /*
-         * Yo adicioné las varitas a cada personaje... Si hay una lista de artefactos,
-         * hay que adicionarlas en "inicializarBrujos" o algo asi
-         * 
-         * Artefacto artefacto = new Varita("Varita de Harry", 0.1, 0.1); artefacto.
-         * setDescripcion("28cm, hecha de acebo, con una pluma de fénix en su centro.");
-         * 
-         * this.artefactos.add(artefacto);
-         * 
-         * artefacto = new Varita("Varita de Ronald", 0.1, 0.1); artefacto.
-         * setDescripcion("36 cm, hecha de sauce, con un núcleo de Pelo de Unicornio.");
-         * 
-         * this.artefactos.add(artefacto);
-         * 
-         * artefacto = new Varita("Varita de Hermione", 0.1, 0.1); artefacto.
-         * setDescripcion("27,3cm, hecha de vid, con núcleo de fibra de corazón de dragón."
-         * );
-         * 
-         * this.artefactos.add(artefacto);
-         */
-
-        /*
-         * Definir si se va a subir los conforme los bloques o si se sube todo a la vez.
-         * Si se sube todo junto esto de abajo, entonces hay que cambiar el medoto
-         * eligirVarita eligirunPersonaje...
-         * 
-         * Artefacto artefacto = new VaritaSauco("Varita de Saúco", 0.8, 0.1);
-         * artefacto.setDescripcion(
-         * "Fabricada de Saúco, mide treinta y cuatro centímetros y medio de largo y su núcleo es un pelo de cola de Thestral."
-         * );
-         * 
-         * this.artefactos.add(artefacto);
-         * 
-         * artefacto = new PiedraResurreccion("Piedra de la resurreccion", 0, 0.3);
-         * artefacto.setDescripcion(
-         * "Tiene el poder de traer a la gente de vuelta de la muerte como espíritus definidos, no como personas vivas."
-         * );
-         * 
-         * this.artefactos.add(artefacto);
-         * 
-         * artefacto = new CapaInvisibilidad("Capa de Invisibilidad", 0, 0.3);
-         * artefacto.setDescripcion("Prenda mágica que hace invisible lo que cubre.");
-         * 
-         * this.artefactos.add(artefacto);
-         */
-
-    }
 
     // Esto Elige un personaje en el primer bloque
 
@@ -1248,10 +1181,10 @@ public class JuegoHP {
         System.out.println("Brujo Oscuro: " + transformarTrueEnSiYFalseEnNo(this.brujoElegido.getMagoOscuro())
                 + "     |   Mascota: " + this.brujoElegido.getMascota().getNombre());
         System.out.println("Varita: " + this.brujoElegido.getVarita().getDescripcion());
-        if (this.brujoElegido.getArtefacto() != null) { // Hay que mejorar esta Linea. Duda cuanto a la responsabilidad
+        if (this.brujoElegido.getArtefacto() != null) { 
             System.out.println("Artefacto: " + this.brujoElegido.getArtefacto().getNombre());
         }
-        if (this.brujoElegido.getEscoba() != null) { // Hay que mejorar esta Linea
+        if (this.brujoElegido.getEscoba() != null) { 
             System.out.println("Escoba: " + this.brujoElegido.getEscoba().getNombre());
         }
         System.out.println("_______________________________________________________________________");
@@ -1454,44 +1387,44 @@ public class JuegoHP {
     // Carga todos los hechizos
 
     public void inicializarHechizosDanioBajo() {
-        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); // ataque
+        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); 
         hechizo.setDescripcion("paralisa la victima");
         hechizo.setNivelDanio(25);
         hechizo.setNivelCuracion(0);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10); // ocio
+        hechizo = new WingardumLeviosa("Wingwardum Leviosa", false, 10); 
         hechizo.setDescripcion("Es un encantamiento usado para hacer que los objetos vuelen o leviten.");
         hechizo.setNivelDanio(0);
         hechizo.setNivelCuracion(0);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new Stupefy("Confusion", false, 15); // ataque
+        hechizo = new Stupefy("Confusion", false, 15); 
         hechizo.setDescripcion("Confusion mental por un rato a la victima");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(10);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new Stupefy("Fecho explosivo", false, 15); // ataque
+        hechizo = new Stupefy("Fecho explosivo", false, 15); 
         hechizo.setDescripcion("Genera un fehco de luz como si fuera foguetes");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(20);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new Protego("Escudo de protecion", false, 10); // defensa
+        hechizo = new Protego("Escudo de protecion", false, 10); 
         hechizo.setDescripcion(
                 "es un encantamiento que protege al lanzador con un escudo invisible que refleja hechizos y bloquea entidades física");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new Stupefy("Fecho de luz verde", false, 15); // ataque
+        hechizo = new Stupefy("Fecho de luz verde", false, 15); 
         hechizo.setDescripcion("hace un fecho de luz de danio");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(15);
         this.hechizosDanioBajo.add(hechizo);
 
-        hechizo = new Stupefy("Fecho de luz roja", false, 15); // ataque
+        hechizo = new Stupefy("Fecho de luz roja", false, 15); 
         hechizo.setDescripcion("hace un fecho de luz de danio");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(15);
@@ -1500,43 +1433,43 @@ public class JuegoHP {
     }
 
     public void inicializarHechizosMedioDanio() {
-        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); // ataque
+        Hechizo hechizo = new Expelliarmus("Paralizante", false, 15); 
         hechizo.setDescripcion("paralisa la victima");
         hechizo.setNivelDanio(25);
         hechizo.setNivelCuracion(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new WingardumLeviosa("Vulto", false, 10); // ocio
+        hechizo = new WingardumLeviosa("Vulto", false, 10); 
         hechizo.setDescripcion("Hace sombras por todos los lados, confundindo la victma");
         hechizo.setNivelDanio(0);
         hechizo.setNivelCuracion(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Rebatada", false, 10); // ataque
+        hechizo = new Stupefy("Rebatada", false, 10); 
         hechizo.setDescripcion("Arrebata la victima");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(20);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Rebatada dupla", false, 20); // ataque
+        hechizo = new Stupefy("Rebatada dupla", false, 20); 
         hechizo.setDescripcion("Arrebata la victima dos veces");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(30);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Protego("Rechazo", false, 10); // defensa
+        hechizo = new Protego("Rechazo", false, 10); 
         hechizo.setDescripcion("Rechaza hechizo");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(0);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Jato de água", false, 15); // ataque
+        hechizo = new Stupefy("Jato de água", false, 15); 
         hechizo.setDescripcion("hace un jato de água fuerte contra la victma");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(25);
         this.hechizosDanioMedio.add(hechizo);
 
-        hechizo = new Stupefy("Fecho de luz roja", false, 15); // ataque
+        hechizo = new Stupefy("Fecho de luz roja", false, 15);
         hechizo.setDescripcion("hace un fecho de luz de danio");
         hechizo.setNivelCuracion(0);
         hechizo.setNivelDanio(15);
@@ -1546,7 +1479,7 @@ public class JuegoHP {
 
     public void inicializarHechizosARecibir() {
 
-        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 15); // ataque
+        Hechizo hechizo = new Expelliarmus("Expelliarmus", false, 15); 
         hechizo.setDescripcion(
                 "También conocido como el encantamiento desarmador, es un encantamiento defensivo que fuerza a la víctima a soltar lo que sea que esté sujetando.");
         hechizo.setNivelDanio(25);
